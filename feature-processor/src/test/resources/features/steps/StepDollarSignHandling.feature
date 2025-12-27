@@ -18,8 +18,7 @@ Feature: StepDollarSignHandling
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -35,14 +34,13 @@ Feature: StepDollarSignHandling
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^price is \\$100$")
             public abstract void givenPriceIs$100();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given price is $100
                  */
                 givenPriceIs$100();
@@ -60,8 +58,7 @@ Feature: StepDollarSignHandling
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -77,14 +74,13 @@ Feature: StepDollarSignHandling
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^converting \\$50 to \\$100$")
             public abstract void whenConverting$50To$100();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When converting $50 to $100
                  */
                 whenConverting$50To$100();
@@ -102,8 +98,7 @@ Feature: StepDollarSignHandling
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Then;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -120,14 +115,13 @@ Feature: StepDollarSignHandling
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^balance shows \\$100 for account (?<p1>.*)$")
             public abstract void thenBalanceShows$100ForAccount$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then balance shows $100 for account "ACC123"
                  */
                 thenBalanceShows$100ForAccount$p1("ACC123");
@@ -145,8 +139,7 @@ Feature: StepDollarSignHandling
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -162,14 +155,13 @@ Feature: StepDollarSignHandling
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^\\$USD currency with \\$100 value\\$$")
             public abstract void given$usdCurrencyWith$100Value$();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given $USD currency with $100 value$
                  */
                 given$usdCurrencyWith$100Value$();
@@ -196,8 +188,7 @@ Feature: StepDollarSignHandling
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -214,14 +205,13 @@ Feature: StepDollarSignHandling
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^document contains:$")
             public abstract void givenDocumentContains(String docString);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given document contains:
                  */
                 givenDocumentContains(\"\"\"

@@ -4,7 +4,7 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import dev.specbinder.common.*;
-import dev.specbinder.feature2junit.gherkin.utils.*;
+import dev.specbinder.feature2junit.utils.*;
 import io.cucumber.messages.types.*;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;

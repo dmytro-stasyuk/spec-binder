@@ -1,10 +1,12 @@
 package dev.specbinder.feature2junit.steps;
 
-import dev.specbinder.feature2junit.Feature2JUnit;
+import dev.specbinder.annotations.Feature2JUnit;
 import dev.specbinder.feature2junit.Feature2JUnitGenerator;
-import dev.specbinder.feature2junit.Feature2JUnitOptions;
+import dev.specbinder.annotations.Feature2JUnitOptions;
 import dev.specbinder.feature2junit.mocks.Mocks;
+import dev.specbinder.feature2junit.utils.GlobPatternMatcher;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,237 +16,257 @@ import org.mockito.Mockito;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.NoType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 import javax.tools.FileObject;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.squareup.javapoet.ClassName;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class Steps {
+
+    protected Feature2JUnitGenerator generator;
+
+    protected Exception generatorException;
 
     protected RoundEnvironment roundEnv;
 
     protected ProcessingEnvironment processingEnvironment;
 
-    protected Feature2JUnitGenerator generator;
-
     protected Set<TypeElement> annotationSetToProcess;
-
-    protected Feature2JUnit feature2JUnitAnnotation;
-
-    protected Feature2JUnitOptions feature2JUnitOptions;
-
-    protected TypeElement annotatedBaseClass;
 
     protected Filer filer;
 
     protected StringWriter generatedClassWriter;
 
-    protected Exception generatorException;
+    // Track multiple base classes for inheritance hierarchy
+    protected List<BaseClassInfo> baseClassHierarchy = new ArrayList<>();
 
+    // Store the current feature file path (relative to src/test/resources)
+    protected String currentFeatureFilePath;
+
+    // Store the feature file path from @Feature2JUnit annotation
+    protected String annotatedFeatureFilePath;
+
+    // Map to store multiple feature files with their paths and contents
+    protected Map<String, String> featureFiles = new HashMap<>();
+
+    // Map to store multiple generated classes (className -> content)
+    protected Map<String, String> generatedClasses = new HashMap<>();
+
+    // Set to false to skip compilation verification and speed up tests by ~5x
+    public static boolean verifyCompilation = false;
 
     public Steps() {
 
-        processingEnvironment = Mocks.processingEnvironment();
+        processingEnvironment = Mocks.processingEnvironment(baseClassHierarchy);
 
         filer = Mocks.filer(processingEnvironment);
 
-        generatedClassWriter = Mocks.generatedClassWriter(filer);
+        generatedClassWriter = Mocks.generatedClassWriter(filer, generatedClasses);
 
         generator = Mocks.generator(processingEnvironment);
 
-        feature2JUnitAnnotation = Mocks.feature2junit();
-        feature2JUnitOptions = Mocks.feature2junitOptions();
-
-        // Pass feature2JUnitOptions so the annotated class returns it when asked for the annotation
-        annotatedBaseClass = Mocks.annotatedBaseClass(feature2JUnitAnnotation, feature2JUnitOptions);
+        roundEnv = Mocks.roundEnvironment();
 
         TypeElement feature2junitAnnotationType = Mocks.feature2junitAnnotationTypeMirror();
-
-        roundEnv = Mocks.roundEnvironment(annotatedBaseClass, feature2junitAnnotationType);
-
         annotationSetToProcess = Set.of(feature2junitAnnotationType);
+
+        // Create a default annotated base class for tests that don't use "Given the following base class"
+        Feature2JUnit defaultAnnotation = Mocks.feature2junit();
+        Feature2JUnitOptions defaultOptions = Mocks.defaultFeature2junitOptions();
+        TypeElement defaultAnnotatedClass = Mocks.annotatedBaseClass(defaultAnnotation, defaultOptions);
+
+        // Set up roundEnv to return this default annotated class
+        @SuppressWarnings("rawtypes")
+        Set mockedAnnotatedElements = Set.of(defaultAnnotatedClass);
+        when(roundEnv.getElementsAnnotatedWith(feature2junitAnnotationType))
+                .thenReturn(mockedAnnotatedElements);
     }
 
     @Before
-    public void beforeEach() {
+    public void beforeEach(Scenario scenario) {
         // Reset the generatorException before each scenario
         generatorException = null;
+        baseClassHierarchy.clear();
+        featureFiles.clear();
+        generatedClasses.clear();
+        annotatedFeatureFilePath = null;
+
+        // Capture feature file information
+        if (scenario != null) {
+            URI featureUri = scenario.getUri();
+            String fullPath = featureUri.toString();
+
+            // Extract path after "classpath:" prefix for Cucumber URIs
+            if (fullPath.startsWith("classpath:")) {
+                currentFeatureFilePath = fullPath.substring("classpath:".length());
+            } else {
+                // Extract path after "src/test/resources/" for file URIs
+                String marker = "src/test/resources/";
+                int index = fullPath.indexOf(marker);
+                if (index != -1) {
+                    currentFeatureFilePath = fullPath.substring(index + marker.length());
+                } else {
+                    // Fallback to the full path
+                    currentFeatureFilePath = fullPath;
+                }
+            }
+        }
+
     }
 
     @Given("the following base class:")
     public void the_following_base_class(String docString) {
-        // Parse the @Feature2JUnit annotation value from the base class
-        String featureFilePath = extractFeature2JUnitPath(docString);
-
-        if (featureFilePath != null) {
-            // Update the mock to return the extracted path
-            Mockito.when(feature2JUnitAnnotation.value()).thenReturn(featureFilePath);
-        }
-
-        // Extract and apply @Feature2JUnitOptions annotation values
-        extractAndApplyOptions(docString);
 
         // Extract the package name and class name from the base class
-        String packageName = extractPackageName(docString);
-        String className = extractClassName(docString);
+        String packageName = BaseClassCodeParser.extractPackageName(docString);
+        String className = BaseClassCodeParser.extractClassName(docString);
 
-        if (className != null) {
-            // Update the annotatedBaseClass mock to return the extracted class name
-            javax.lang.model.element.Name simpleName = Mockito.mock(javax.lang.model.element.Name.class);
-            Mockito.when(simpleName.toString()).thenReturn(className);
-            Mockito.when(annotatedBaseClass.getSimpleName()).thenReturn(simpleName);
+        // Create BaseClassInfo and add to hierarchy
+        BaseClassInfo classInfo = new BaseClassInfo(packageName, className, docString);
+        baseClassHierarchy.add(classInfo);
 
-            // Build qualified name from extracted package and class name
-            String qualifiedNameStr = packageName != null && !packageName.isEmpty()
-                    ? packageName + "." + className
-                    : className;
-            javax.lang.model.element.Name qualifiedName = Mockito.mock(javax.lang.model.element.Name.class);
-            Mockito.when(qualifiedName.toString()).thenReturn(qualifiedNameStr);
-            Mockito.when(annotatedBaseClass.getQualifiedName()).thenReturn(qualifiedName);
+        // For the first base class with @Feature2JUnit, reuse the existing annotatedBaseClass mock
+        // to maintain compatibility with existing tests
+        TypeElement typeElement = mock(TypeElement.class);
+        classInfo.typeElement = typeElement;
+        // Set up basic TypeElement properties
+        when(typeElement.getKind()).thenReturn(ElementKind.CLASS);
+        // Set up type parameters and type mirror
+        when(typeElement.getTypeParameters()).thenReturn(Collections.emptyList());
+        // Create NEW Name mock for simple name
+        Name simpleName = mock(Name.class);
+        when(simpleName.toString()).thenReturn(className);
+        when(typeElement.getSimpleName()).thenReturn(simpleName);
+        // Create NEW Name mock for qualified name
+        String qualifiedNameStr = packageName != null && !packageName.isEmpty()
+                ? packageName + "." + className
+                : className;
+        Name qualifiedName = mock(Name.class);
+        when(qualifiedName.toString()).thenReturn(qualifiedNameStr);
+        when(typeElement.getQualifiedName()).thenReturn(qualifiedName);
+        // Update package element
+        if (packageName != null && !packageName.isEmpty()) {
+            PackageElement packageElement =
+                    mock(PackageElement.class);
+            Name pkgName = mock(Name.class);
+            when(pkgName.toString()).thenReturn(packageName);
+            when(packageElement.getQualifiedName()).thenReturn(pkgName);
+            when(typeElement.getEnclosingElement()).thenReturn(packageElement);
+        } else {
+            when(typeElement.getEnclosingElement()).thenReturn(null);
+        }
+        // Update JavaPoet visitor for ClassName - CRITICAL for correct class name generation
+        DeclaredType typeMirror = mock(DeclaredType.class);
+        when(typeMirror.accept(Mockito.any(), Mockito.any())).thenAnswer(invocation -> {
+            String pkgName = packageName != null ? packageName : "";
+            return ClassName.get(pkgName, className);
+        });
+        when(typeElement.asType()).thenReturn(typeMirror);
+        when(typeMirror.getKind()).thenReturn(TypeKind.DECLARED);
+        when(typeMirror.asElement()).thenReturn(typeElement);
+        when(typeMirror.getTypeArguments()).thenReturn(Collections.emptyList());
 
-            // Update the enclosing element based on whether package was specified
-            if (packageName != null && !packageName.isEmpty()) {
-                // Package specified - create and set a PackageElement mock
-                javax.lang.model.element.PackageElement packageElement =
-                        Mockito.mock(javax.lang.model.element.PackageElement.class);
-                javax.lang.model.element.Name pkgName = Mockito.mock(javax.lang.model.element.Name.class);
-                Mockito.when(pkgName.toString()).thenReturn(packageName);
-                Mockito.when(packageElement.getQualifiedName()).thenReturn(pkgName);
-                Mockito.when(annotatedBaseClass.getEnclosingElement()).thenReturn(packageElement);
-            } else {
-                // No package specified - enclosing element should be null (default package)
-                Mockito.when(annotatedBaseClass.getEnclosingElement()).thenReturn(null);
-            }
+        NoType noType = mock(NoType.class);
+        when(noType.getKind()).thenReturn(TypeKind.NONE);
+        when(typeMirror.getEnclosingType()).thenReturn(noType);
+
+        // Parse the @Feature2JUnit annotation value from the base class
+        Feature2JUnit feature2junit = BaseClassCodeParser.extractFeature2junitAnnotation(docString);
+        if (feature2junit != null) {
+            classInfo.feature2JUnitAnnotation = feature2junit;
+            // Store the feature file path from the annotation for use in feature file setup
+            annotatedFeatureFilePath = feature2junit.value();
+        }
+        when(typeElement.getAnnotation(Feature2JUnit.class)).thenReturn(feature2junit);
+        Feature2JUnitOptions feature2JUnitOptions = BaseClassCodeParser.extractFeature2junitOptionsAnnotation(docString);
+        if (feature2JUnitOptions != null) {
+            classInfo.feature2JUnitOptions = feature2JUnitOptions;
+        }
+        when(typeElement.getAnnotation(Feature2JUnitOptions.class)).thenReturn(feature2JUnitOptions);
+
+        // Set up superclass link to previous class in hierarchy
+        if (baseClassHierarchy.size() > 1) {
+            BaseClassInfo superClassInfo = baseClassHierarchy.get(baseClassHierarchy.size() - 2);
+            TypeMirror superclassTypeMirror = superClassInfo.typeElement.asType();
+            when(typeElement.getSuperclass()).thenReturn(superclassTypeMirror);
+        } else {
+            // No superclass in our hierarchy - return NoType indicating no superclass
+            NoType noSuperclass = mock(NoType.class);
+            when(noSuperclass.getKind()).thenReturn(TypeKind.NONE);
+            when(typeElement.getSuperclass()).thenReturn(noSuperclass);
+        }
+
+        // If this class has @Feature2JUnit, it's the annotated class
+        if (feature2junit != null) {
+            // Get the annotation type element from annotationSetToProcess
+            TypeElement feature2junitAnnotationType = annotationSetToProcess.iterator().next();
+
+            // Update the roundEnv to return this element
+            @SuppressWarnings("rawtypes")
+            Set mockedAnnotatedElements = Set.of(typeElement);
+            when(roundEnv.getElementsAnnotatedWith(feature2junitAnnotationType))
+                    .thenReturn(mockedAnnotatedElements);
         }
     }
 
-    private String extractFeature2JUnitPath(String baseClassCode) {
-        // Extract the path from @Feature2JUnit("path/to/file.feature")
-        // or detect @Feature2JUnit without parentheses (default value)
-        String patternWithValue = "@Feature2JUnit\\(\"([^\"]+)\"\\)";
-        java.util.regex.Pattern regexWithValue = java.util.regex.Pattern.compile(patternWithValue);
-        java.util.regex.Matcher matcherWithValue = regexWithValue.matcher(baseClassCode);
-
-        if (matcherWithValue.find()) {
-            return matcherWithValue.group(1);
-        }
-
-        // Check if @Feature2JUnit exists without parentheses or with empty value
-        String patternNoValue = "@Feature2JUnit(?:\\(\\)|(?![\\(]))";
-        java.util.regex.Pattern regexNoValue = java.util.regex.Pattern.compile(patternNoValue);
-        if (regexNoValue.matcher(baseClassCode).find()) {
-            return ""; // Return empty string to trigger path construction
-        }
-
-        return null;
+    @Given("the following feature file:")
+    public void the_following_feature_file(String docString) throws IOException {
+        // Use the path from @Feature2JUnit annotation if available, otherwise use default
+        String path = annotatedFeatureFilePath != null
+            ? annotatedFeatureFilePath
+            : "MockedAnnotatedTestClass.feature";
+        featureFiles.put(path, docString);
+        setupFeatureFileMocks();
     }
 
-    private String extractPackageName(String baseClassCode) {
-        // Extract the package name from "package com.example.foo;"
-        String pattern = "package\\s+([\\w.]+)\\s*;";
-        java.util.regex.Pattern regex = java.util.regex.Pattern.compile(pattern);
-        java.util.regex.Matcher matcher = regex.matcher(baseClassCode);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
+    @Given("a feature file under path {string} with the following content:")
+    public void a_feature_file_under_path_with_the_following_content(String path, String docString) throws IOException {
+        featureFiles.put(path, docString);
+        setupFeatureFileMocks();
     }
 
-    private String extractClassName(String baseClassCode) {
-        // Extract the class name from patterns like:
-        // "public class FeatureTestBase" or "public abstract class FeatureTestBase"
-        String pattern = "(?:public|private|protected)?\\s*(?:abstract)?\\s*class\\s+(\\w+)";
-        java.util.regex.Pattern regex = java.util.regex.Pattern.compile(pattern);
-        java.util.regex.Matcher matcher = regex.matcher(baseClassCode);
+    private void setupFeatureFileMocks() throws IOException {
 
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
-    }
+        Filer filer = processingEnvironment.getFiler();
 
-    private void extractAndApplyOptions(String baseClassCode) {
-        // Extract shouldBeAbstract
-        Boolean shouldBeAbstract = extractBooleanOption(baseClassCode, "shouldBeAbstract");
-        if (shouldBeAbstract != null) {
-            Mockito.when(feature2JUnitOptions.shouldBeAbstract()).thenReturn(shouldBeAbstract);
-        }
+        // Mock getResource to return different content based on the requested path
+        when(filer.getResource(Mockito.any(), Mockito.any(), Mockito.any()))
+                .thenAnswer(invocation -> {
+                    String requestedPath = invocation.getArgument(2, String.class);
 
-        // Extract classSuffixIfAbstract
-        String classSuffixIfAbstract = extractStringOption(baseClassCode, "classSuffixIfAbstract");
-        if (classSuffixIfAbstract != null) {
-            Mockito.when(feature2JUnitOptions.classSuffixIfAbstract()).thenReturn(classSuffixIfAbstract);
-        }
+                    // Find matching feature file content
+                    String content = featureFiles.get(requestedPath);
 
-        // Extract classSuffixIfConcrete
-        String classSuffixIfConcrete = extractStringOption(baseClassCode, "classSuffixIfConcrete");
-        if (classSuffixIfConcrete != null) {
-            Mockito.when(feature2JUnitOptions.classSuffixIfConcrete()).thenReturn(classSuffixIfConcrete);
-        }
+                    // If still not found and the requestedPath is explicitly specified (not null), throw FileNotFoundException
+                    if (content == null && requestedPath != null && !requestedPath.isEmpty()) {
+                        throw new java.io.FileNotFoundException("Feature file not found: " + requestedPath);
+                    }
 
-        // Extract failRulesWithNoScenarios
-        Boolean failRulesWithNoScenarios = extractBooleanOption(baseClassCode, "failRulesWithNoScenarios");
-        if (failRulesWithNoScenarios != null) {
-            Mockito.when(feature2JUnitOptions.failRulesWithNoScenarios()).thenReturn(failRulesWithNoScenarios);
-        }
+                    FileObject specFile = mock(FileObject.class);
+                    String finalContent = content;
+                    when(specFile.getCharContent(Mockito.anyBoolean())).thenReturn(finalContent);
 
-        // Extract tagForRulesWithNoScenarios
-        String tagForRulesWithNoScenarios = extractStringOption(baseClassCode, "tagForRulesWithNoScenarios");
-        if (tagForRulesWithNoScenarios != null) {
-            Mockito.when(feature2JUnitOptions.tagForRulesWithNoScenarios()).thenReturn(tagForRulesWithNoScenarios);
-        }
-
-        // Extract failScenariosWithNoSteps
-        Boolean failScenariosWithNoSteps = extractBooleanOption(baseClassCode, "failScenariosWithNoSteps");
-        if (failScenariosWithNoSteps != null) {
-            Mockito.when(feature2JUnitOptions.failScenariosWithNoSteps()).thenReturn(failScenariosWithNoSteps);
-        }
-
-        // Extract tagForScenariosWithNoSteps
-        String tagForScenariosWithNoSteps = extractStringOption(baseClassCode, "tagForScenariosWithNoSteps");
-        if (tagForScenariosWithNoSteps != null) {
-            Mockito.when(feature2JUnitOptions.tagForScenariosWithNoSteps()).thenReturn(tagForScenariosWithNoSteps);
-        }
-
-        // Extract addCucumberStepAnnotations
-        Boolean addCucumberStepAnnotations = extractBooleanOption(baseClassCode, "addCucumberStepAnnotations");
-        if (addCucumberStepAnnotations != null) {
-            Mockito.when(feature2JUnitOptions.addCucumberStepAnnotations()).thenReturn(addCucumberStepAnnotations);
-        }
-
-        // Extract addSourceLineAnnotations
-        Boolean addSourceLineAnnotations = extractBooleanOption(baseClassCode, "addSourceLineAnnotations");
-        if (addSourceLineAnnotations != null) {
-            Mockito.when(feature2JUnitOptions.addSourceLineAnnotations()).thenReturn(addSourceLineAnnotations);
-        }
-    }
-
-    private Boolean extractBooleanOption(String code, String optionName) {
-        // Extract boolean option like: shouldBeAbstract = true
-        // Pattern handles multi-line formatting with DOTALL flag
-        String pattern = optionName + "\\s*=\\s*(true|false)";
-        java.util.regex.Pattern regex = java.util.regex.Pattern.compile(pattern, java.util.regex.Pattern.DOTALL);
-        java.util.regex.Matcher matcher = regex.matcher(code);
-
-        if (matcher.find()) {
-            return Boolean.parseBoolean(matcher.group(1));
-        }
-        return null;
-    }
-
-    private String extractStringOption(String code, String optionName) {
-        // Extract string option like: classSuffixIfAbstract = "TestCases"
-        // Pattern handles multi-line formatting with DOTALL flag
-        String pattern = optionName + "\\s*=\\s*\"([^\"]+)\"";
-        java.util.regex.Pattern regex = java.util.regex.Pattern.compile(pattern, java.util.regex.Pattern.DOTALL);
-        java.util.regex.Matcher matcher = regex.matcher(code);
-
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
+                    return specFile;
+                });
     }
 
     @When("the generator is run")
@@ -253,7 +275,23 @@ public class Steps {
         //        throw new io.cucumber.java.PendingException();
 
         try {
-            boolean finished = generator.process(annotationSetToProcess, roundEnv);
+            // Mock the pattern matcher to return test files
+            if (!featureFiles.isEmpty()) {
+                GlobPatternMatcher mockMatcher = mock(GlobPatternMatcher.class);
+
+                // Mock findMatchingFiles to use our test utility for pattern matching
+                when(mockMatcher.findMatchingFiles(Mockito.anyString())).thenAnswer(invocation -> {
+                    String pattern = invocation.getArgument(0);
+                    return TestPatternMatcher.matchFilesAgainstPattern(
+                            new ArrayList<>(featureFiles.keySet()),
+                            pattern
+                    );
+                });
+
+                when(generator.createGlobPatternMatcher()).thenReturn(mockMatcher);
+            }
+
+            generator.process(annotationSetToProcess, roundEnv);
         } catch (Exception e) {
             // Store the exception for later verification in Then steps
             generatorException = e;
@@ -273,6 +311,51 @@ public class Steps {
         String generatedClas = generatedClassWriter.toString().trim();
         String expectedClass = docString.trim();
         Assertions.assertEquals(expectedClass, generatedClas);
+
+        // Verify that the generated code actually compiles (if enabled)
+        if (verifyCompilation) {
+            String generatedClassName = CompilationVerifier.extractFullyQualifiedClassName(generatedClas);
+            if (generatedClassName != null) {
+                // Create a map of source files to compile
+                Map<String, String> sourceFiles = new HashMap<>();
+                sourceFiles.put(generatedClassName, generatedClas);
+
+                // Create stubs for all classes in the hierarchy
+                if (baseClassHierarchy.isEmpty()) {
+                    // No explicit base class setup - create stub for default MockedAnnotatedTestClass
+                    // Include @Feature2JUnit annotation to match what the generator expects
+                    String baseClassSource =
+                            "import dev.specbinder.annotations.Feature2JUnit;\n\n" +
+                            "@Feature2JUnit(\"MockedAnnotatedTestClass.feature\")\n" +
+                            "public abstract class MockedAnnotatedTestClass {\n" +
+                            "}\n";
+                    sourceFiles.put("MockedAnnotatedTestClass", baseClassSource);
+                } else {
+                    // Create stubs for all classes in hierarchy based on insert order
+                    for (int i = 0; i < baseClassHierarchy.size(); i++) {
+                        BaseClassInfo classInfo = baseClassHierarchy.get(i);
+
+                        // Each class extends the previous one in insert order
+                        String extendsClause = i > 0
+                            ? " extends " + baseClassHierarchy.get(i - 1).className
+                            : "";
+
+                        String baseClassSource = BaseClassStubGenerator.createBaseClassStubWithSuperclass(
+                                classInfo.packageName,
+                                classInfo.className,
+                                extendsClause);
+
+                        String baseClassQualifiedName = classInfo.packageName != null && !classInfo.packageName.isEmpty()
+                                ? classInfo.packageName + "." + classInfo.className
+                                : classInfo.className;
+                        sourceFiles.put(baseClassQualifiedName, baseClassSource);
+                    }
+                }
+
+                // Compile all source files together
+                CompilationVerifier.verifyCompilation(sourceFiles, currentFeatureFilePath);
+            }
+        }
     }
 
     @Then("the generator should report an error:")
@@ -287,24 +370,57 @@ public class Steps {
         String expectedMessage = expectedErrorMessage.trim();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
-
-        // Check if the actual exception message contains the expected error description
-        //Assertions.assertTrue(
-        //        actualMessage.contains(expectedMessage) || actualMessage.contains(expectedMessage),
-        //        "Expected error message about - \"" + expectedMessage + "\", but got: " + actualMessage
     }
 
-    @Given("the following feature file:")
-    public void the_following_feature_file(String docString) throws IOException {
+    @Then("{int} test classes should be generated")
+    public void test_classes_should_be_generated(Integer expectedCount) {
+        if (generatorException != null) {
+            Assertions.fail("Expected the generator to complete without exceptions, but an exception was thrown: "
+                    + generatorException.getMessage(), generatorException);
+        }
 
-        Filer filer = processingEnvironment.getFiler();
+        int actualCount = generatedClasses.size();
+        Assertions.assertEquals(expectedCount, actualCount,
+                "Expected " + expectedCount + " test classes but got " + actualCount + ". Generated classes: " + generatedClasses.keySet());
+    }
 
-        FileObject specFile = Mockito.mock(FileObject.class);
-        Mockito.when(filer.getResource(Mockito.any(), Mockito.any(), Mockito.any()))
-                .thenReturn(specFile);
+    @Then("a class named {string} should be generated with content:")
+    public void a_class_named_should_be_generated_with_content(String className, String expectedContent) {
+        if (generatorException != null) {
+            Assertions.fail("Expected the generator to complete without exceptions, but an exception was thrown: "
+                    + generatorException.getMessage(), generatorException);
+        }
 
-        Mockito.when(specFile.getCharContent(Mockito.anyBoolean()))
-                .thenReturn(docString);
+        Assertions.assertTrue(generatedClasses.containsKey(className),
+                "Expected class '" + className + "' to be generated, but it was not found. Generated classes: " + generatedClasses.keySet());
+
+        String actualContent = generatedClasses.get(className).trim();
+        String expectedContentTrimmed = expectedContent.trim();
+
+        Assertions.assertEquals(expectedContentTrimmed, actualContent);
+    }
+
+    /**
+     * Creates a minimal stub for the base class that the generated code extends.
+     * This allows the generated code to compile successfully.
+     *
+     * @param packageName the package name (can be null for default package)
+     * @param className   the simple class name
+     * @return the source code for the base class stub
+     */
+    private String createBaseClassStub(String packageName, String className) {
+        StringBuilder stub = new StringBuilder();
+
+        // Add package declaration if present
+        if (packageName != null && !packageName.isEmpty()) {
+            stub.append("package ").append(packageName).append(";\n\n");
+        }
+
+        // Create a minimal abstract class stub
+        stub.append("public abstract class ").append(className).append(" {\n");
+        stub.append("}\n");
+
+        return stub.toString();
     }
 
 }

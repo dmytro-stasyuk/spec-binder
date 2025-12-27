@@ -20,10 +20,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
-        import io.cucumber.java.en.Then;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -40,28 +37,25 @@ Feature: StepMethodJavaDocComments
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user (?<p1>.*) exists$")
             public abstract void givenUser$p1Exists(String p1);
 
-            @When("^user clicks (?<p1>.*) button$")
             public abstract void whenUserClicks$p1Button(String p1);
 
-            @Then("^message (?<p1>.*) is displayed$")
             public abstract void thenMessage$p1IsDisplayed(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user "Alice" exists
                  */
                 givenUser$p1Exists("Alice");
-                /**
+                /*
                  * When user clicks "Submit" button
                  */
                 whenUserClicks$p1Button("Submit");
-                /**
+                /*
                  * Then message "Success" is displayed
                  */
                 thenMessage$p1IsDisplayed("Success");
@@ -81,8 +75,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -98,28 +91,25 @@ Feature: StepMethodJavaDocComments
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
-            @Given("^user is active$")
             public abstract void givenUserIsActive();
 
-            @Given("^user has permissions$")
             public abstract void givenUserHasPermissions();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
-                /**
+                /*
                  * And user is active
                  */
                 givenUserIsActive();
-                /**
+                /*
                  * And user has permissions
                  */
                 givenUserHasPermissions();
@@ -138,8 +128,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Then;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -155,21 +144,19 @@ Feature: StepMethodJavaDocComments
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^username is visible$")
             public abstract void thenUsernameIsVisible();
 
-            @Then("^password is not visible$")
             public abstract void thenPasswordIsNotVisible();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then username is visible
                  */
                 thenUsernameIsVisible();
-                /**
+                /*
                  * But password is not visible
                  */
                 thenPasswordIsNotVisible();
@@ -189,8 +176,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -206,28 +192,25 @@ Feature: StepMethodJavaDocComments
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^system is ready$")
             public abstract void givenSystemIsReady();
 
-            @Given("^database is connected$")
             public abstract void givenDatabaseIsConnected();
 
-            @Given("^cache is warm$")
             public abstract void givenCacheIsWarm();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given system is ready
                  */
                 givenSystemIsReady();
-                /**
+                /*
                  * * database is connected
                  */
                 givenDatabaseIsConnected();
-                /**
+                /*
                  * * cache is warm
                  */
                 givenCacheIsWarm();
@@ -261,11 +244,8 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.common.SourceLine;
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
-        import io.cucumber.java.en.Then;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
+        import dev.specbinder.annotations.output.SourceLine;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -281,13 +261,10 @@ Feature: StepMethodJavaDocComments
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
-            @When("^user clicks button$")
             public abstract void whenUserClicksButton();
 
-            @Then("^result is displayed$")
             public abstract void thenResultIsDisplayed();
 
             @Test
@@ -295,19 +272,16 @@ Feature: StepMethodJavaDocComments
             @SourceLine(2)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
-                 * (source line - 3)
                  */
                 givenUserExists();
-                /**
+                /*
                  * When user clicks button
-                 * (source line - 4)
                  */
                 whenUserClicksButton();
-                /**
+                /*
                  * Then result is displayed
-                 * (source line - 5)
                  */
                 thenResultIsDisplayed();
             }

@@ -16,8 +16,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -34,14 +33,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user (?<p1>.*) exists$")
             public abstract void givenUser$p1Exists(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user "John" exists
                  */
                 givenUser$p1Exists("John");
@@ -59,8 +57,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -77,14 +74,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^user (?<p1>.*) sends message (?<p2>.*)$")
             public abstract void whenUser$p1SendsMessage$p2(String p1, String p2);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When user "Alice" sends message "Hello"
                  */
                 whenUser$p1SendsMessage$p2("Alice", "Hello");
@@ -102,8 +98,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Then;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -120,14 +115,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^order (?<p1>.*) for customer (?<p2>.*) has status (?<p3>.*)$")
             public abstract void thenOrder$p1ForCustomer$p2HasStatus$p3(String p1, String p2, String p3);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then order "12345" for customer "Bob" has status "shipped"
                  */
                 thenOrder$p1ForCustomer$p2HasStatus$p3("12345", "Bob", "shipped");
@@ -145,8 +139,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -162,14 +155,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^system is ready$")
             public abstract void givenSystemIsReady();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given system is ready
                  */
                 givenSystemIsReady();
@@ -187,8 +179,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -205,14 +196,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^I search for (?<p1>.*)$")
             public abstract void whenISearchFor$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When I search for "hello world"
                  */
                 whenISearchFor$p1("hello world");
@@ -230,8 +220,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -248,14 +237,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^password is (?<p1>.*)$")
             public abstract void givenPasswordIs$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given password is "P@ssw0rd!"
                  */
                 givenPasswordIs$p1("P@ssw0rd!");
@@ -273,8 +261,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -290,14 +277,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^field is set to \"\"$")
             public abstract void whenFieldIsSetTo();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When field is set to ""
                  */
                 whenFieldIsSetTo();
@@ -315,8 +301,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -333,14 +318,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^(?<p1>.*) role is assigned$")
             public abstract void given$p1RoleIsAssigned(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given "Admin" role is assigned
                  */
                 given$p1RoleIsAssigned("Admin");
@@ -358,8 +342,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -376,14 +359,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^transfer from (?<p1>.*) to (?<p2>.*) completes$")
             public abstract void givenTransferFrom$p1To$p2Completes(String p1, String p2);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given transfer from "ACC001" to "ACC002" completes
                  */
                 givenTransferFrom$p1To$p2Completes("ACC001", "ACC002");
@@ -404,8 +386,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -422,14 +403,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^quantity is set to (?<p1>.*)$")
             public abstract void whenQuantityIsSetTo$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When quantity is set to "42"
                  */
                 whenQuantityIsSetTo$p1("42");
@@ -447,8 +427,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -465,14 +444,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^feature flag is (?<p1>.*)$")
             public abstract void givenFeatureFlagIs$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given feature flag is "true"
                  */
                 givenFeatureFlagIs$p1("true");
@@ -490,8 +468,7 @@ Feature: MappingStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -508,14 +485,13 @@ Feature: MappingStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^date is set to (?<p1>.*)$")
             public abstract void whenDateIsSetTo$p1(String p1);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When date is set to "2024-12-20"
                  */
                 whenDateIsSetTo$p1("2024-12-20");

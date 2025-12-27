@@ -30,10 +30,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -51,13 +48,10 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^I have (?<p1>.*) and (?<p2>.*)$")
           public abstract void givenIHave$p1And$p2(String p1, String p2);
 
-          @When("^I add them$")
           public abstract void whenIAddThem();
 
-          @Then("^the result is (?<p1>.*)$")
           public abstract void thenTheResultIs$p1(String p1);
 
           @ParameterizedTest(
@@ -74,15 +68,15 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Adding numbers")
           public void scenario_1(String a, String b, String sum) {
-              /**
+              /*
                * Given I have <a> and <b>
                */
               givenIHave$p1And$p2(a, b);
-              /**
+              /*
                * When I add them
                */
               whenIAddThem();
-              /**
+              /*
                * Then the result is <sum>
                */
               thenTheResultIs$p1(sum);
@@ -106,8 +100,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -125,7 +118,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*) and (?<p3>.*)$")
           public abstract void given$p1And$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -143,7 +135,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Mixed lengths")
           public void scenario_1(String shortValue, String mediumValue, String veryLongValue) {
-              /**
+              /*
                * Given <shortValue> and <mediumValue> and <veryLongValue>
                */
               given$p1And$p2And$p3(shortValue, mediumValue, veryLongValue);
@@ -166,8 +158,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -185,7 +176,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^user (?<p1>.*) has (?<p2>.*) and (?<p3>.*)$")
           public abstract void givenUser$p1Has$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -202,7 +192,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column name conversion")
           public void scenario_1(String firstName, String lastName, String userId) {
-              /**
+              /*
                * Given user <first name> has <last name> and <user id>
                */
               givenUser$p1Has$p2And$p3(firstName, lastName, userId);
@@ -223,8 +213,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -242,7 +231,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^user (?<p1>.*) has (?<p2>.*) and (?<p3>.*)$")
           public abstract void givenUser$p1Has$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -259,7 +247,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column name conversion")
           public void scenario_1(String first_name, String last_name, String user_id) {
-              /**
+              /*
                * Given user <first_name> has <last_name> and <user_id>
                */
               givenUser$p1Has$p2And$p3(first_name, last_name, user_id);
@@ -280,8 +268,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -299,7 +286,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^user (?<p1>.*) has (?<p2>.*) and (?<p3>.*)$")
           public abstract void givenUser$p1Has$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -316,7 +302,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names with special characters")
           public void scenario_1(String userid, String username, String ordernumber) {
-              /**
+              /*
                * Given user <user-id> has <user.name> and <order#number>
                */
               givenUser$p1Has$p2And$p3(userid, username, ordernumber);
@@ -337,8 +323,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -356,7 +341,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*)$")
           public abstract void given$p1And$p2(String p1, String p2);
 
           @ParameterizedTest(
@@ -373,7 +357,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: SCREAMING_SNAKE_CASE column names")
           public void scenario_1(String user_id, String first_name) {
-              /**
+              /*
                * Given <USER_ID> and <FIRST_NAME>
                */
               given$p1And$p2(user_id, first_name);
@@ -394,8 +378,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -413,7 +396,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*)$")
           public abstract void given$p1And$p2(String p1, String p2);
 
           @ParameterizedTest(
@@ -430,7 +412,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names with multiple consecutive separators")
           public void scenario_1(String firstName, String user__id) {
-              /**
+              /*
                * Given <first  name> and <user__id>
                */
               given$p1And$p2(firstName, user__id);
@@ -451,8 +433,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -470,7 +451,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*) and (?<p3>.*)$")
           public abstract void given$p1And$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -487,7 +467,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names with leading/trailing characters")
           public void scenario_1(String firstname, String lastname, String _userid_) {
-              /**
+              /*
                * Given <!firstName> and <lastName@> and <_userId_>
                */
               given$p1And$p2And$p3(firstname, lastname, _userid_);
@@ -508,8 +488,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -527,7 +506,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*)$")
           public abstract void given$p1And$p2(String p1, String p2);
 
           @ParameterizedTest(
@@ -544,7 +522,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names with mixed separator types")
           public void scenario_1(String firstname_value, String useridnumber) {
-              /**
+              /*
                * Given <first-name_value> and <user.id-number>
                */
               given$p1And$p2(firstname_value, useridnumber);
@@ -565,8 +543,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -584,7 +561,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*) and (?<p3>.*)$")
           public abstract void given$p1And$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -601,7 +577,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names containing numbers")
           public void scenario_1(String value1, String user2Id, String test_3_name) {
-              /**
+              /*
                * Given <value1> and <user 2 id> and <test_3_name>
                */
               given$p1And$p2And$p3(value1, user2Id, test_3_name);
@@ -622,8 +598,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -641,7 +616,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*) and (?<p3>.*)$")
           public abstract void given$p1And$p2And$p3(String p1, String p2, String p3);
 
           @ParameterizedTest(
@@ -658,7 +632,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Column names already in camelCase")
           public void scenario_1(String firstName, String userId, String orderTotal) {
-              /**
+              /*
                * Given <firstName> and <userId> and <orderTotal>
                */
               given$p1And$p2And$p3(firstName, userId, orderTotal);
@@ -679,8 +653,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -698,7 +671,6 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^(?<p1>.*) and (?<p2>.*)$")
           public abstract void given$p1And$p2(String p1, String p2);
 
           @ParameterizedTest(
@@ -715,7 +687,7 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Outline: Single character column names")
           public void scenario_1(String a, String xYZ) {
-              /**
+              /*
                * Given <a> and <x y z>
                */
               given$p1And$p2(a, xYZ);
@@ -761,10 +733,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -782,13 +751,10 @@ Feature: ScenarioOutline
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^I have (?<p1>.*) and (?<p2>.*)$")
           public abstract void givenIHave$p1And$p2(String p1, String p2);
 
-          @When("^I add them$")
           public abstract void whenIAddThem();
 
-          @Then("^the result is (?<p1>.*)$")
           public abstract void thenTheResultIs$p1(String p1);
 
           @ParameterizedTest(
@@ -805,15 +771,15 @@ Feature: ScenarioOutline
           @Order(1)
           @DisplayName("Scenario Template: Adding numbers")
           public void scenario_1(String a, String b, String sum) {
-              /**
+              /*
                * Given I have <a> and <b>
                */
               givenIHave$p1And$p2(a, b);
-              /**
+              /*
                * When I add them
                */
               whenIAddThem();
-              /**
+              /*
                * Then the result is <sum>
                */
               thenTheResultIs$p1(sum);

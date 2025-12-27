@@ -21,9 +21,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -42,14 +41,13 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^the following users exist:$")
             public abstract void givenTheFollowingUsersExist(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Create users")
             public void scenario_1() {
-                /**
+                /*
                  * Given the following users exist:
                  */
                 givenTheFollowingUsersExist(createDataTable(\"\"\"
@@ -98,9 +96,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.When;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -119,14 +116,13 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^user (?<p1>.*) has permissions:$")
             public abstract void whenUser$p1HasPermissions(String p1, DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Set permissions")
             public void scenario_1() {
-                /**
+                /*
                  * When user "Alice" has permissions:
                  */
                 whenUser$p1HasPermissions("Alice", createDataTable(\"\"\"
@@ -175,9 +171,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Then;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -196,7 +191,6 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^order (?<p1>.*) for customer (?<p2>.*) contains:$")
             public abstract void thenOrder$p1ForCustomer$p2Contains(String p1, String p2,
                     DataTable dataTable);
 
@@ -204,7 +198,7 @@ Feature: MappingStepDataTables
             @Order(1)
             @DisplayName("Scenario: View order details")
             public void scenario_1() {
-                /**
+                /*
                  * Then order "12345" for customer "Bob" contains:
                  */
                 thenOrder$p1ForCustomer$p2Contains("12345", "Bob", createDataTable(\"\"\"
@@ -255,9 +249,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -276,21 +269,19 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^initial state$")
             public abstract void givenInitialState();
 
-            @Given("^an And step has a DataTable:$")
             public abstract void givenAnAndStepHasADatatable(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given initial state
                  */
                 givenInitialState();
-                /**
+                /*
                  * And an And step has a DataTable:
                  */
                 givenAnAndStepHasADatatable(createDataTable(\"\"\"
@@ -341,11 +332,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
-        import io.cucumber.java.en.Then;
-        import io.cucumber.java.en.When;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -364,35 +352,31 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^initial state$")
             public abstract void givenInitialState();
 
-            @When("^action is performed$")
             public abstract void whenActionIsPerformed();
 
-            @Then("^result is verified$")
             public abstract void thenResultIsVerified();
 
-            @Then("^exceptions exist:$")
             public abstract void thenExceptionsExist(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given initial state
                  */
                 givenInitialState();
-                /**
+                /*
                  * When action is performed
                  */
                 whenActionIsPerformed();
-                /**
+                /*
                  * Then result is verified
                  */
                 thenResultIsVerified();
-                /**
+                /*
                  * But exceptions exist:
                  */
                 thenExceptionsExist(createDataTable(\"\"\"
@@ -442,9 +426,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -463,21 +446,19 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^initial context$")
             public abstract void givenInitialContext();
 
-            @Given("^a wildcard step has a DataTable:$")
             public abstract void givenAWildcardStepHasADatatable(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given initial context
                  */
                 givenInitialContext();
-                /**
+                /*
                  * * a wildcard step has a DataTable:
                  */
                 givenAWildcardStepHasADatatable(createDataTable(\"\"\"
@@ -533,9 +514,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.When;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -555,7 +535,6 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^checking inventory for product:$")
             public abstract void whenCheckingInventoryForProduct(DataTable dataTable);
 
             @ParameterizedTest(
@@ -573,7 +552,7 @@ Feature: MappingStepDataTables
             @Order(1)
             @DisplayName("Scenario Outline: Check product availability")
             public void scenario_1(String name, String status) {
-                /**
+                /*
                  * When checking inventory for product:
                  */
                 whenCheckingInventoryForProduct(createDataTable(\"\"\"
@@ -626,9 +605,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -648,7 +626,6 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user with credentials:$")
             public abstract void givenUserWithCredentials(DataTable dataTable);
 
             @ParameterizedTest(
@@ -666,7 +643,7 @@ Feature: MappingStepDataTables
             @Order(1)
             @DisplayName("Scenario Outline: Create user with permissions")
             public void scenario_1(String username, String role, String department) {
-                /**
+                /*
                  * Given user with credentials:
                  */
                 givenUserWithCredentials(createDataTable(\"\"\"
@@ -721,9 +698,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Then;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -743,7 +719,6 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^order (?<p1>.*) contains items:$")
             public abstract void thenOrder$p1ContainsItems(String p1, DataTable dataTable);
 
             @ParameterizedTest(
@@ -761,7 +736,7 @@ Feature: MappingStepDataTables
             @Order(1)
             @DisplayName("Scenario Outline: Process order with items")
             public void scenario_1(String orderId, String product, String qty, String status) {
-                /**
+                /*
                  * Then order "<orderId>" contains items:
                  */
                 thenOrder$p1ContainsItems(orderId, createDataTable(\"\"\"
@@ -817,9 +792,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -838,14 +812,13 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^available permissions:$")
             public abstract void givenAvailablePermissions(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: List permissions")
             public void scenario_1() {
-                /**
+                /*
                  * Given available permissions:
                  */
                 givenAvailablePermissions(createDataTable(\"\"\"
@@ -895,9 +868,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -916,14 +888,13 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^data with varying widths:$")
             public abstract void givenDataWithVaryingWidths(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test alignment")
             public void scenario_1() {
-                /**
+                /*
                  * Given data with varying widths:
                  */
                 givenDataWithVaryingWidths(createDataTable(\"\"\"
@@ -978,9 +949,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -999,24 +969,22 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^scenario has step 1 with a DataTable:$")
             public abstract void givenScenarioHasStep1WithADatatable(DataTable dataTable);
 
-            @Given("^scenario has step 2 with a DataTable:$")
             public abstract void givenScenarioHasStep2WithADatatable(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Multiple tables")
             public void scenario_1() {
-                /**
+                /*
                  * Given scenario has step 1 with a DataTable:
                  */
                 givenScenarioHasStep1WithADatatable(createDataTable(\"\"\"
                         | col1 | col2 |
                         | a    | b    |
                         \"\"\"));
-                /**
+                /*
                  * And scenario has step 2 with a DataTable:
                  */
                 givenScenarioHasStep2WithADatatable(createDataTable(\"\"\"
@@ -1065,9 +1033,8 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
         import java.lang.String;
         import java.util.ArrayList;
         import java.util.List;
@@ -1086,14 +1053,13 @@ Feature: MappingStepDataTables
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^a DataTable:$")
             public abstract void givenADatatable(DataTable dataTable);
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given a DataTable:
                  */
                 givenADatatable(createDataTable(\"\"\"

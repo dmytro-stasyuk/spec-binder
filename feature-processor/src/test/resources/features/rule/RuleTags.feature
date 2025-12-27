@@ -20,10 +20,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
       import org.junit.jupiter.api.DisplayName;
@@ -43,13 +40,10 @@ Feature: RuleTags
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^an email address$")
           public abstract void givenAnEmailAddress();
 
-          @When("^validation is performed$")
           public abstract void whenValidationIsPerformed();
 
-          @Then("^the email format should be valid$")
           public abstract void thenTheEmailFormatShouldBeValid();
 
           @Nested
@@ -62,15 +56,15 @@ Feature: RuleTags
               @Order(1)
               @DisplayName("Scenario: Validate email format")
               public void scenario_1() {
-                  /**
+                  /*
                    * Given an email address
                    */
                   givenAnEmailAddress();
-                  /**
+                  /*
                    * When validation is performed
                    */
                   whenValidationIsPerformed();
-                  /**
+                  /*
                    * Then the email format should be valid
                    */
                   thenTheEmailFormatShouldBeValid();
@@ -96,10 +90,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
       import org.junit.jupiter.api.DisplayName;
@@ -120,13 +111,10 @@ Feature: RuleTags
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^a password$")
           public abstract void givenAPassword();
 
-          @When("^strength validation is performed$")
           public abstract void whenStrengthValidationIsPerformed();
 
-          @Then("^the password should meet requirements$")
           public abstract void thenThePasswordShouldMeetRequirements();
 
           @Nested
@@ -143,15 +131,15 @@ Feature: RuleTags
               @Order(1)
               @DisplayName("Scenario: Validate password strength")
               public void scenario_1() {
-                  /**
+                  /*
                    * Given a password
                    */
                   givenAPassword();
-                  /**
+                  /*
                    * When strength validation is performed
                    */
                   whenStrengthValidationIsPerformed();
-                  /**
+                  /*
                    * Then the password should meet requirements
                    */
                   thenThePasswordShouldMeetRequirements();
@@ -178,10 +166,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
       import org.junit.jupiter.api.DisplayName;
@@ -206,13 +191,10 @@ Feature: RuleTags
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^valid input$")
           public abstract void givenValidInput();
 
-          @When("^validation runs$")
           public abstract void whenValidationRuns();
 
-          @Then("^input should be accepted$")
           public abstract void thenInputShouldBeAccepted();
 
           @Nested
@@ -228,15 +210,15 @@ Feature: RuleTags
               @Order(1)
               @DisplayName("Scenario: Validate input")
               public void scenario_1() {
-                  /**
+                  /*
                    * Given valid input
                    */
                   givenValidInput();
-                  /**
+                  /*
                    * When validation runs
                    */
                   whenValidationRuns();
-                  /**
+                  /*
                    * Then input should be accepted
                    */
                   thenInputShouldBeAccepted();

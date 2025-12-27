@@ -15,12 +15,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 
 **IMPORTANT: Running Tests**
-- **ALWAYS use IntelliJ IDEA's MCP server to run tests**, NOT Maven
+- **Use a hybrid approach** to ensure reliable test execution:
+  1. **First**, run `mvn test-compile` to ensure all source and test code is compiled
+  2. **Then**, execute tests using IntelliJ IDEA's MCP server tools
+- This two-step approach is necessary because IntelliJ's automatic build is asynchronous - running tests immediately after code changes may execute against stale compiled classes
 - Use the `mcp__jetbrains__get_run_configurations` tool to list available run configurations
 - Use the `mcp__jetbrains__execute_run_configuration` tool to execute specific tests
 - To run ALL tests in the feature-processor module, run the test class: `dev.specbinder.feature2junit.tests.AllTests`
-- This provides better integration, faster feedback, and proper IDE support
+- This hybrid approach provides compile-time guarantees + IntelliJ's better test integration and IDE support
 - **Never use `mvn test` commands** unless explicitly requested by the user
+
+**Example test execution workflow:**
+```bash
+# Step 1: Ensure compilation is complete
+mvn test-compile
+
+# Step 2: Run tests via IntelliJ MCP server
+mcp__jetbrains__execute_run_configuration(configurationName="AllTests")
+```
 
 **IMPORTANT: Compilation**
 - **NEVER use Maven for compilation** - Do NOT run `mvn clean compile`, `mvn compile`, or any Maven build commands
@@ -142,22 +154,15 @@ Commented out in parent POM. Contains usage examples for feature2junit.
 4. Processors convert Gherkin AST to JavaPoet code model
 5. Generated test class written to `target/generated-test-sources/test-annotations/`
 
-### Two Generation Patterns
+### Generation Pattern
 
-**Pattern A - Abstract (default):**
+The generator always produces abstract test classes:
 ```
 UserFeature.java (@Feature2JUnit, abstract marker)
   ↓ generates
 UserFeatureScenarios.java (abstract test class with abstract step methods)
   ↓ user creates
 UserFeatureTest.java (implements abstract step methods)
-```
-
-**Pattern B - Concrete:**
-```
-UserFeature.java (@Feature2JUnit, implements step methods)
-  ↓ generates
-UserFeatureTest.java (concrete test class, calls base methods)
 ```
 
 ### Key Architectural Patterns
@@ -187,6 +192,16 @@ Key mappings:
 - DataTables → DataTable objects
 - DocStrings → String parameters
 
+## Code Style Guidelines
+
+**CRITICAL: Always Use Import Statements**
+
+When writing or modifying Java code, **NEVER use fully qualified class names directly in the code**. Always add proper import statements at the top of the file instead.
+
+**IMPORTANT: Avoid Java Reflection**
+
+When creating or updating Java code, **avoid using Java reflection** (e.g., `Class.forName()`, `Method.invoke()`, `Field.set()`, etc.) unless the existing class or method being modified already uses reflection. The project emphasizes compile-time safety and type safety, which reflection undermines.
+
 ## Technology Stack
 
 - **Java:** 17+
@@ -207,7 +222,7 @@ Key mappings:
 
 ### Modifying Generation Behavior
 1. Add option to `common/src/main/java/dev/specbinder/common/GeneratorOptions.java`
-2. Add annotation parameter to `annotations/src/main/java/dev/specbinder/feature2junit/Feature2JUnitOptions.java`
+2. Add annotation parameter to `annotations/src/main/java/dev/specbinder/annotations/Feature2JUnitOptions.java`
 3. Update GeneratorOptions construction in `feature-processor/src/main/java/dev/specbinder/feature2junit/Feature2JUnitGenerator.process()`
 4. Use option in relevant processor
 5. Update tests

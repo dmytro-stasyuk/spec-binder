@@ -19,10 +19,7 @@ Feature: ScenarioTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -39,13 +36,10 @@ Feature: ScenarioTags
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^a payment request$")
           public abstract void givenAPaymentRequest();
 
-          @When("^payment is processed$")
           public abstract void whenPaymentIsProcessed();
 
-          @Then("^payment should succeed$")
           public abstract void thenPaymentShouldSucceed();
 
           @Test
@@ -53,15 +47,15 @@ Feature: ScenarioTags
           @Tag("critical")
           @DisplayName("Scenario: Process payment")
           public void scenario_1() {
-              /**
+              /*
                * Given a payment request
                */
               givenAPaymentRequest();
-              /**
+              /*
                * When payment is processed
                */
               whenPaymentIsProcessed();
-              /**
+              /*
                * Then payment should succeed
                */
               thenPaymentShouldSucceed();
@@ -85,10 +79,7 @@ Feature: ScenarioTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -106,13 +97,10 @@ Feature: ScenarioTags
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^a user account$")
           public abstract void givenAUserAccount();
 
-          @When("^user logs in$")
           public abstract void whenUserLogsIn();
 
-          @Then("^login should succeed$")
           public abstract void thenLoginShouldSucceed();
 
           @Test
@@ -124,15 +112,15 @@ Feature: ScenarioTags
           })
           @DisplayName("Scenario: Validate user login")
           public void scenario_1() {
-              /**
+              /*
                * Given a user account
                */
               givenAUserAccount();
-              /**
+              /*
                * When user logs in
                */
               whenUserLogsIn();
-              /**
+              /*
                * Then login should succeed
                */
               thenLoginShouldSucceed();
@@ -159,10 +147,7 @@ Feature: ScenarioTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
       import org.junit.jupiter.api.DisplayName;
@@ -183,13 +168,10 @@ Feature: ScenarioTags
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^a transaction$")
           public abstract void givenATransaction();
 
-          @When("^processing occurs$")
           public abstract void whenProcessingOccurs();
 
-          @Then("^transaction completes$")
           public abstract void thenTransactionCompletes();
 
           @Nested
@@ -203,15 +185,15 @@ Feature: ScenarioTags
               @Tag("scenario-tag")
               @DisplayName("Scenario: Process transaction")
               public void scenario_1() {
-                  /**
+                  /*
                    * Given a transaction
                    */
                   givenATransaction();
-                  /**
+                  /*
                    * When processing occurs
                    */
                   whenProcessingOccurs();
-                  /**
+                  /*
                    * Then transaction completes
                    */
                   thenTransactionCompletes();
@@ -242,10 +224,7 @@ Feature: ScenarioTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -262,13 +241,10 @@ Feature: ScenarioTags
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^critical setup$")
           public abstract void givenCriticalSetup();
 
-          @When("^critical action$")
           public abstract void whenCriticalAction();
 
-          @Then("^critical result$")
           public abstract void thenCriticalResult();
 
           @Test
@@ -276,27 +252,24 @@ Feature: ScenarioTags
           @Tag("critical")
           @DisplayName("Scenario: Critical test")
           public void scenario_1() {
-              /**
+              /*
                * Given critical setup
                */
               givenCriticalSetup();
-              /**
+              /*
                * When critical action
                */
               whenCriticalAction();
-              /**
+              /*
                * Then critical result
                */
               thenCriticalResult();
           }
 
-          @Given("^optional setup$")
           public abstract void givenOptionalSetup();
 
-          @When("^optional action$")
           public abstract void whenOptionalAction();
 
-          @Then("^optional result$")
           public abstract void thenOptionalResult();
 
           @Test
@@ -304,15 +277,15 @@ Feature: ScenarioTags
           @Tag("optional")
           @DisplayName("Scenario: Optional test")
           public void scenario_2() {
-              /**
+              /*
                * Given optional setup
                */
               givenOptionalSetup();
-              /**
+              /*
                * When optional action
                */
               whenOptionalAction();
-              /**
+              /*
                * Then optional result
                */
               thenOptionalResult();

@@ -21,8 +21,7 @@ Feature: StepMethodDeduplication
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -38,14 +37,13 @@ Feature: StepMethodDeduplication
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: First scenario")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
@@ -55,7 +53,7 @@ Feature: StepMethodDeduplication
             @Order(2)
             @DisplayName("Scenario: Second scenario")
             public void scenario_2() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();

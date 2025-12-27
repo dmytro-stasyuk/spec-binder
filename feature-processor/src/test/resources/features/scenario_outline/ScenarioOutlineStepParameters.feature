@@ -22,8 +22,7 @@ Feature: ScenarioOutlineStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -41,7 +40,6 @@ Feature: ScenarioOutlineStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user (?<p1>.*) exists$")
             public abstract void givenUser$p1Exists(String p1);
 
             @ParameterizedTest(
@@ -59,7 +57,7 @@ Feature: ScenarioOutlineStepParameters
             @Order(1)
             @DisplayName("Scenario Outline: Test")
             public void scenario_1(String username) {
-                /**
+                /*
                  * Given user <username> exists
                  */
                 givenUser$p1Exists(username);
@@ -81,8 +79,7 @@ Feature: ScenarioOutlineStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -100,7 +97,6 @@ Feature: ScenarioOutlineStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^user (?<p1>.*) sends message (?<p2>.*) to (?<p3>.*)$")
             public abstract void whenUser$p1SendsMessage$p2To$p3(String p1, String p2, String p3);
 
             @ParameterizedTest(
@@ -118,7 +114,7 @@ Feature: ScenarioOutlineStepParameters
             @Order(1)
             @DisplayName("Scenario Outline: Test")
             public void scenario_1(String username, String message, String recipient) {
-                /**
+                /*
                  * When user <username> sends message <message> to <recipient>
                  */
                 whenUser$p1SendsMessage$p2To$p3(username, message, recipient);
@@ -140,8 +136,7 @@ Feature: ScenarioOutlineStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -159,7 +154,6 @@ Feature: ScenarioOutlineStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user (?<p1>.*) assigns role (?<p2>.*) to user (?<p3>.*)$")
             public abstract void givenUser$p1AssignsRole$p2ToUser$p3(String p1, String p2, String p3);
 
             @ParameterizedTest(
@@ -177,7 +171,7 @@ Feature: ScenarioOutlineStepParameters
             @Order(1)
             @DisplayName("Scenario Outline: Test")
             public void scenario_1(String username, String role) {
-                /**
+                /*
                  * Given user "admin" assigns role <role> to user <username>
                  */
                 givenUser$p1AssignsRole$p2ToUser$p3("admin", role, username);
@@ -199,8 +193,7 @@ Feature: ScenarioOutlineStepParameters
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Then;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import java.lang.String;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -218,7 +211,6 @@ Feature: ScenarioOutlineStepParameters
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^status is (?<p1>.*) and code is (?<p2>.*)$")
             public abstract void thenStatusIs$p1AndCodeIs$p2(String p1, String p2);
 
             @ParameterizedTest(
@@ -236,7 +228,7 @@ Feature: ScenarioOutlineStepParameters
             @Order(1)
             @DisplayName("Scenario Outline: Test")
             public void scenario_1(String status, String code) {
-                /**
+                /*
                  * Then status is <status> and code is <code>
                  */
                 thenStatusIs$p1AndCodeIs$p2(status, code);

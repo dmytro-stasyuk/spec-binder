@@ -64,10 +64,7 @@ Feature: GherkinComments
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
@@ -91,47 +88,37 @@ Feature: GherkinComments
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^a background step$")
           public abstract void givenABackgroundStep();
 
-          @Given("^another background step$")
           public abstract void givenAnotherBackgroundStep();
 
           @BeforeEach
           @DisplayName("Background:")
           public void featureBackground(TestInfo testInfo) {
-              /**
+              /*
                * Given a background step
                */
               givenABackgroundStep();
-              /**
+              /*
                * And another background step
                */
               givenAnotherBackgroundStep();
           }
 
-          @Given("^a rule step$")
           public abstract void givenARuleStep();
 
-          @When("^another rule step$")
           public abstract void whenAnotherRuleStep();
 
-          @Given("^a step$")
           public abstract void givenAStep();
 
-          @When("^another step$")
           public abstract void whenAnotherStep();
 
-          @Then("^final step$")
           public abstract void thenFinalStep();
 
-          @Given("^yet another step$")
           public abstract void givenYetAnotherStep();
 
-          @Given("^I have (?<p1>.*)$")
           public abstract void givenIHave$p1(String p1);
 
-          @When("^I use (?<p1>.*)$")
           public abstract void whenIUse$p1(String p1);
 
           @Nested
@@ -143,11 +130,11 @@ Feature: GherkinComments
               @Order(1)
               @DisplayName("Scenario: scenario in rule")
               public void scenario_1() {
-                  /**
+                  /*
                    * Given a rule step
                    */
                   givenARuleStep();
-                  /**
+                  /*
                    * When another rule step
                    */
                   whenAnotherRuleStep();
@@ -157,15 +144,15 @@ Feature: GherkinComments
               @Order(2)
               @DisplayName("Scenario: first scenario")
               public void scenario_2() {
-                  /**
+                  /*
                    * Given a step
                    */
                   givenAStep();
-                  /**
+                  /*
                    * When another step
                    */
                   whenAnotherStep();
-                  /**
+                  /*
                    * Then final step
                    */
                   thenFinalStep();
@@ -175,7 +162,7 @@ Feature: GherkinComments
               @Order(3)
               @DisplayName("Scenario: second scenario")
               public void scenario_3() {
-                  /**
+                  /*
                    * Given yet another step
                    */
                   givenYetAnotherStep();
@@ -196,11 +183,11 @@ Feature: GherkinComments
               @Order(4)
               @DisplayName("Scenario Outline: parameterized scenario")
               public void scenario_4(String value) {
-                  /**
+                  /*
                    * Given I have <value>
                    */
                   givenIHave$p1(value);
-                  /**
+                  /*
                    * When I use <value>
                    */
                   whenIUse$p1(value);

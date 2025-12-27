@@ -24,7 +24,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.simple;
 
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -72,7 +72,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.rules;
 
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -137,7 +137,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.workflow;
 
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;

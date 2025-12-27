@@ -15,7 +15,7 @@ Feature: MappingRuleBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -60,7 +60,7 @@ Feature: MappingRuleBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -110,7 +110,7 @@ Feature: MappingRuleBlock
 
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;

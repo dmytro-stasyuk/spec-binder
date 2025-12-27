@@ -1,9 +1,11 @@
 Feature: MappingFeatureBackgroundBlock
   As a developer
-  I want Background sections to be mapped to @BeforeEach methods
+  I want feature Background sections to be mapped to @BeforeEach methods in the generated test classes
   So that setup steps run automatically before each test method in the generated class
 
   Rule: Background keyword should be mapped to a @BeforeEach method in the generated class
+    - Background section doesn't have to have steps, it can be empty
+    - Background name is put into the @DisplayName of the @BeforeEach method
 
     Scenario: with just the keyword
       Given the following feature file:
@@ -15,7 +17,7 @@ Feature: MappingFeatureBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.DisplayName;
@@ -45,7 +47,7 @@ Feature: MappingFeatureBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.DisplayName;
@@ -65,89 +67,141 @@ Feature: MappingFeatureBackgroundBlock
       }
       """
 
-    Scenario: Scenario Outline with Feature Background
+  Rule: steps in Background section should be mapped to calls within the @BeforeEach method
+
+    Scenario: with multiple steps
       Given the following feature file:
       """
-      Feature: data processing
+      Feature: feature with background
 
         Background:
-          Given data processor is initialized
-
-        Scenario Outline: process data
-          When data "<input>" is processed
-          Then result should be "<output>"
-          Examples:
-            | input | output  |
-            | abc   | ABC     |
-            | xyz   | XYZ     |
+          Given precondition one
+          And precondition two
       """
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
-      import java.lang.String;
+      import dev.specbinder.annotations.output.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.BeforeEach;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.TestInfo;
+
+      /**
+       * Feature: feature with background
+       */
+      @DisplayName("MockedAnnotatedTestClass")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
+      @FeatureFilePath("MockedAnnotatedTestClass.feature")
+      public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+          public abstract void givenPreconditionOne();
+
+          public abstract void givenPreconditionTwo();
+
+          @BeforeEach
+          @DisplayName("Background:")
+          public void featureBackground(TestInfo testInfo) {
+              /*
+               * Given precondition one
+               */
+              givenPreconditionOne();
+              /*
+               * And precondition two
+               */
+              givenPreconditionTwo();
+          }
+      }
+      """
+
+  Rule: background steps can be the same steps as in the Scenario section
+
+    Scenario: with steps that are also in Scenarios
+      Given the following feature file:
+      """
+      Feature: feature with background
+
+        Background:
+          Given shared precondition
+
+        Scenario: first scenario
+          When action one is performed
+          Then outcome one is expected
+
+        Scenario: second scenario
+          Given shared precondition
+          When action two is performed
+          Then outcome two is expected
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
       import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Test;
       import org.junit.jupiter.api.TestInfo;
       import org.junit.jupiter.api.TestMethodOrder;
-      import org.junit.jupiter.params.ParameterizedTest;
-      import org.junit.jupiter.params.provider.CsvSource;
 
       /**
-       * Feature: data processing
+       * Feature: feature with background
        */
       @DisplayName("MockedAnnotatedTestClass")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^data processor is initialized$")
-          public abstract void givenDataProcessorIsInitialized();
+          public abstract void givenSharedPrecondition();
 
           @BeforeEach
           @DisplayName("Background:")
           public void featureBackground(TestInfo testInfo) {
-              /**
-               * Given data processor is initialized
+              /*
+               * Given shared precondition
                */
-              givenDataProcessorIsInitialized();
+              givenSharedPrecondition();
           }
 
-          @When("^data (?<p1>.*) is processed$")
-          public abstract void whenData$p1IsProcessed(String p1);
+          public abstract void whenActionOneIsPerformed();
 
-          @Then("^result should be (?<p1>.*)$")
-          public abstract void thenResultShouldBe$p1(String p1);
+          public abstract void thenOutcomeOneIsExpected();
 
-          @ParameterizedTest(
-                  name = "Example {index}: [{arguments}]"
-          )
-          @CsvSource(
-                  useHeadersInDisplayName = true,
-                  delimiter = '|',
-                  textBlock = \"\"\"
-                          input | output
-                          abc   | ABC
-                          xyz   | XYZ
-                          \"\"\"
-          )
+          @Test
           @Order(1)
-          @DisplayName("Scenario Outline: process data")
-          public void scenario_1(String input, String output) {
-              /**
-               * When data "<input>" is processed
+          @DisplayName("Scenario: first scenario")
+          public void scenario_1() {
+              /*
+               * When action one is performed
                */
-              whenData$p1IsProcessed(input);
-              /**
-               * Then result should be "<output>"
+              whenActionOneIsPerformed();
+              /*
+               * Then outcome one is expected
                */
-              thenResultShouldBe$p1(output);
+              thenOutcomeOneIsExpected();
+          }
+
+          public abstract void whenActionTwoIsPerformed();
+
+          public abstract void thenOutcomeTwoIsExpected();
+
+          @Test
+          @Order(2)
+          @DisplayName("Scenario: second scenario")
+          public void scenario_2() {
+              /*
+               * Given shared precondition
+               */
+              givenSharedPrecondition();
+              /*
+               * When action two is performed
+               */
+              whenActionTwoIsPerformed();
+              /*
+               * Then outcome two is expected
+               */
+              thenOutcomeTwoIsExpected();
           }
       }
       """
@@ -165,7 +219,7 @@ Feature: MappingFeatureBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.DisplayName;
@@ -190,119 +244,6 @@ Feature: MappingFeatureBackgroundBlock
       """
 
   Rule: Background interaction with Feature children
-
-    Scenario: Feature with Background and Rules
-      Given the following feature file:
-      """
-      Feature: product management
-
-        Background:
-          Given system is ready
-
-        Rule: product creation
-
-          Scenario: create product
-            When new product is created
-            Then product should exist
-
-        Rule: product deletion
-
-          Scenario: delete product
-            When product is deleted
-            Then product should not exist
-      """
-      When the generator is run
-      Then the content of the generated class should be:
-      """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
-      import javax.annotation.processing.Generated;
-      import org.junit.jupiter.api.BeforeEach;
-      import org.junit.jupiter.api.ClassOrderer;
-      import org.junit.jupiter.api.DisplayName;
-      import org.junit.jupiter.api.MethodOrderer;
-      import org.junit.jupiter.api.Nested;
-      import org.junit.jupiter.api.Order;
-      import org.junit.jupiter.api.Test;
-      import org.junit.jupiter.api.TestClassOrder;
-      import org.junit.jupiter.api.TestInfo;
-      import org.junit.jupiter.api.TestMethodOrder;
-
-      /**
-       * Feature: product management
-       */
-      @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
-      @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-      @FeatureFilePath("MockedAnnotatedTestClass.feature")
-      public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^system is ready$")
-          public abstract void givenSystemIsReady();
-
-          @BeforeEach
-          @DisplayName("Background:")
-          public void featureBackground(TestInfo testInfo) {
-              /**
-               * Given system is ready
-               */
-              givenSystemIsReady();
-          }
-
-          @When("^new product is created$")
-          public abstract void whenNewProductIsCreated();
-
-          @Then("^product should exist$")
-          public abstract void thenProductShouldExist();
-
-          @When("^product is deleted$")
-          public abstract void whenProductIsDeleted();
-
-          @Then("^product should not exist$")
-          public abstract void thenProductShouldNotExist();
-
-          @Nested
-          @Order(1)
-          @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-          @DisplayName("Rule: product creation")
-          public class Rule_1 {
-              @Test
-              @Order(1)
-              @DisplayName("Scenario: create product")
-              public void scenario_1() {
-                  /**
-                   * When new product is created
-                   */
-                  whenNewProductIsCreated();
-                  /**
-                   * Then product should exist
-                   */
-                  thenProductShouldExist();
-              }
-          }
-
-          @Nested
-          @Order(2)
-          @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-          @DisplayName("Rule: product deletion")
-          public class Rule_2 {
-              @Test
-              @Order(1)
-              @DisplayName("Scenario: delete product")
-              public void scenario_1() {
-                  /**
-                   * When product is deleted
-                   */
-                  whenProductIsDeleted();
-                  /**
-                   * Then product should not exist
-                   */
-                  thenProductShouldNotExist();
-              }
-          }
-      }
-      """
 
     Scenario: Feature with Background and mixed children (Scenarios and Rules)
       Given the following feature file:
@@ -329,10 +270,7 @@ Feature: MappingFeatureBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
-      import io.cucumber.java.en.Then;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.ClassOrderer;
@@ -354,48 +292,41 @@ Feature: MappingFeatureBackgroundBlock
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^customer database is connected$")
           public abstract void givenCustomerDatabaseIsConnected();
 
           @BeforeEach
           @DisplayName("Background:")
           public void featureBackground(TestInfo testInfo) {
-              /**
+              /*
                * Given customer database is connected
                */
               givenCustomerDatabaseIsConnected();
           }
 
-          @When("^new customer is created$")
           public abstract void whenNewCustomerIsCreated();
 
-          @Then("^customer should exist in database$")
           public abstract void thenCustomerShouldExistInDatabase();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: create customer at feature level")
           public void scenario_1() {
-              /**
+              /*
                * When new customer is created
                */
               whenNewCustomerIsCreated();
-              /**
+              /*
                * Then customer should exist in database
                */
               thenCustomerShouldExistInDatabase();
           }
 
-          @When("^customer details are updated$")
           public abstract void whenCustomerDetailsAreUpdated();
 
-          @Then("^changes should be saved$")
           public abstract void thenChangesShouldBeSaved();
 
-          @When("^customer is deleted$")
           public abstract void whenCustomerIsDeleted();
 
-          @Then("^customer should be removed$")
           public abstract void thenCustomerShouldBeRemoved();
 
           @Nested
@@ -407,11 +338,11 @@ Feature: MappingFeatureBackgroundBlock
               @Order(1)
               @DisplayName("Scenario: update customer details")
               public void scenario_1() {
-                  /**
+                  /*
                    * When customer details are updated
                    */
                   whenCustomerDetailsAreUpdated();
-                  /**
+                  /*
                    * Then changes should be saved
                    */
                   thenChangesShouldBeSaved();
@@ -421,11 +352,11 @@ Feature: MappingFeatureBackgroundBlock
               @Order(2)
               @DisplayName("Scenario: delete customer at feature level")
               public void scenario_2() {
-                  /**
+                  /*
                    * When customer is deleted
                    */
                   whenCustomerIsDeleted();
-                  /**
+                  /*
                    * Then customer should be removed
                    */
                   thenCustomerShouldBeRemoved();

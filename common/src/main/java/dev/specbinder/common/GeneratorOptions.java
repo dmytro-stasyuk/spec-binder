@@ -9,23 +9,12 @@ import lombok.Getter;
 public class GeneratorOptions {
 
     /**
-     * If set to true, the generated test class will be abstract, and it will contain abstract method declarations for
-     * that would be required to run the Feature file test.
-     */
-    private final boolean shouldBeAbstract;
-
-    /**
      * Suffix that will be used for the name of the generated test class if it is abstract.
      */
-    private final String classSuffixIfAbstract;
+    private final String generatedClassSuffix;
 
     /**
-     * Suffix that will be used for the name of the generated test class if it is concrete.
-     */
-    private final String classSuffixIfConcrete;
-
-    /**
-     * If set to true, the generator will add {@link dev.specbinder.common.SourceLine} annotation to test methods and
+     * If set to true, the generator will add {@link dev.specbinder.annotations.output.SourceLine} annotation to test methods and
      * nested test classes containing line numbers where these elements appear in the Feature file.
      */
     private final boolean addSourceLineAnnotations;
@@ -76,25 +65,21 @@ public class GeneratorOptions {
      * Default options
      */
     public GeneratorOptions() {
-        this.shouldBeAbstract = true;
-        this.classSuffixIfAbstract = "Scenarios";
-        this.classSuffixIfConcrete = "Test";
+        this.generatedClassSuffix = "Scenarios";
         this.addSourceLineAnnotations = false;
         this.addSourceLineBeforeStepCalls = false;
         this.failScenariosWithNoSteps = true;
         this.failRulesWithNoScenarios = true;
         this.tagForScenariosWithNoSteps = "new";
         this.tagForRulesWithNoScenarios = "new";
-        this.addCucumberStepAnnotations = true;
+        this.addCucumberStepAnnotations = false;
         this.placeGeneratedClassNextToAnnotatedClass = false;
     }
 
     /**
      * Custom options
      *
-     * @param shouldBeAbstract             see {@link #shouldBeAbstract}
-     * @param classSuffixIfAbstract        see {@link #classSuffixIfAbstract}
-     * @param classSuffixIfConcrete        see {@link #classSuffixIfConcrete}
+     * @param generatedClassSuffix        see {@link #generatedClassSuffix}
      * @param addSourceLineAnnotations     see {@link #addSourceLineAnnotations}
      * @param addSourceLineBeforeStepCalls see {@link #addSourceLineBeforeStepCalls}
      * @param failScenariosWithNoSteps     see {@link #failScenariosWithNoSteps}
@@ -105,9 +90,7 @@ public class GeneratorOptions {
      * @param placeGeneratedClassNextToAnnotatedClass see {@link #placeGeneratedClassNextToAnnotatedClass}
      */
     public GeneratorOptions(
-            boolean shouldBeAbstract,
-            String classSuffixIfAbstract,
-            String classSuffixIfConcrete,
+            String generatedClassSuffix,
             boolean addSourceLineAnnotations,
             boolean addSourceLineBeforeStepCalls,
             boolean failScenariosWithNoSteps,
@@ -117,9 +100,7 @@ public class GeneratorOptions {
             boolean addCucumberStepAnnotations,
             boolean placeGeneratedClassNextToAnnotatedClass
     ) {
-        this.shouldBeAbstract = shouldBeAbstract;
-        this.classSuffixIfAbstract = classSuffixIfAbstract;
-        this.classSuffixIfConcrete = classSuffixIfConcrete;
+        this.generatedClassSuffix = generatedClassSuffix;
         this.addSourceLineAnnotations = addSourceLineAnnotations;
         this.addSourceLineBeforeStepCalls = addSourceLineBeforeStepCalls;
         this.failScenariosWithNoSteps = failScenariosWithNoSteps;

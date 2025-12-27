@@ -21,8 +21,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -38,14 +37,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^user$")
           public abstract void givenUser();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * Given user
                */
               givenUser();
@@ -63,8 +61,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -80,14 +77,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @When("^the user clicks the button$")
           public abstract void whenTheUserClicksTheButton();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * When the user clicks the button
                */
               whenTheUserClicksTheButton();
@@ -105,8 +101,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Then;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -122,14 +117,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Then("^the user's email@domain\\.com is verified!$")
           public abstract void thenTheUsersEmailDomainComIsVerified();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * Then the user's email@domain.com is verified!
                */
               thenTheUsersEmailDomainComIsVerified();
@@ -147,8 +141,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -164,14 +157,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^user123 exists$")
           public abstract void givenUser123Exists();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * Given user123 exists
                */
               givenUser123Exists();
@@ -189,8 +181,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.Given;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.MethodOrderer;
@@ -206,14 +197,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @Given("^3 users exist in the system$")
           public abstract void given3UsersExistInTheSystem();
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * Given 3 users exist in the system
                */
               given3UsersExistInTheSystem();
@@ -231,8 +221,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
-      import io.cucumber.java.en.When;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import java.lang.String;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -249,14 +238,13 @@ Feature: StepMethodName
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          @When("^I enter (?<p1>.*) with \\$100 & tax!$")
           public abstract void whenIEnter$p1With$100Tax(String p1);
 
           @Test
           @Order(1)
           @DisplayName("Scenario: Test")
           public void scenario_1() {
-              /**
+              /*
                * When I enter "hello@world.com" with $100 & tax!
                */
               whenIEnter$p1With$100Tax("hello@world.com");
@@ -279,8 +267,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -296,21 +283,19 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
-            @Given("^user is authenticated$")
             public abstract void givenUserIsAuthenticated();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
-                /**
+                /*
                  * And user is authenticated
                  */
                 givenUserIsAuthenticated();
@@ -329,8 +314,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.When;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -346,21 +330,19 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @When("^user logs in$")
             public abstract void whenUserLogsIn();
 
-            @When("^user clicks button$")
             public abstract void whenUserClicksButton();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When user logs in
                  */
                 whenUserLogsIn();
-                /**
+                /*
                  * And user clicks button
                  */
                 whenUserClicksButton();
@@ -379,8 +361,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Then;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -396,21 +377,19 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Then("^password is visible$")
             public abstract void thenPasswordIsVisible();
 
-            @Then("^username is not visible$")
             public abstract void thenUsernameIsNotVisible();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then password is visible
                  */
                 thenPasswordIsVisible();
-                /**
+                /*
                  * But username is not visible
                  */
                 thenUsernameIsNotVisible();
@@ -429,8 +408,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -446,21 +424,19 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^system is ready$")
             public abstract void givenSystemIsReady();
 
-            @Given("^database is connected$")
             public abstract void givenDatabaseIsConnected();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given system is ready
                  */
                 givenSystemIsReady();
-                /**
+                /*
                  * * database is connected
                  */
                 givenDatabaseIsConnected();
@@ -480,8 +456,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -497,28 +472,25 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
-            @Given("^user is active$")
             public abstract void givenUserIsActive();
 
-            @Given("^user has permissions$")
             public abstract void givenUserHasPermissions();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
-                /**
+                /*
                  * And user is active
                  */
                 givenUserIsActive();
-                /**
+                /*
                  * And user has permissions
                  */
                 givenUserHasPermissions();
@@ -539,8 +511,7 @@ Feature: StepMethodName
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
-        import io.cucumber.java.en.Given;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -556,35 +527,31 @@ Feature: StepMethodName
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^user exists$")
             public abstract void givenUserExists();
 
-            @Given("^user is active$")
             public abstract void givenUserIsActive();
 
-            @Given("^user is not locked$")
             public abstract void givenUserIsNotLocked();
 
-            @Given("^user has permissions$")
             public abstract void givenUserHasPermissions();
 
             @Test
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
-                /**
+                /*
                  * And user is active
                  */
                 givenUserIsActive();
-                /**
+                /*
                  * But user is not locked
                  */
                 givenUserIsNotLocked();
-                /**
+                /*
                  * * user has permissions
                  */
                 givenUserHasPermissions();

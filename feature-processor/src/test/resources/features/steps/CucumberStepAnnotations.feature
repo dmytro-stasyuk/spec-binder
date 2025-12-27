@@ -8,6 +8,16 @@ Feature: CucumberStepAnnotations
   - all step annotation regex patterns start with ^ (caret) and end with $ (dollar sign), this ensures exact matching of the entire step text
 
     Scenario: Given step generates @Given annotation with simple regex
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Simple Given
@@ -17,7 +27,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -41,7 +51,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
@@ -50,6 +60,16 @@ Feature: CucumberStepAnnotations
         """
 
     Scenario: When step generates @When annotation with simple regex
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Simple When
@@ -59,7 +79,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.When;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -83,7 +103,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When user clicks button
                  */
                 whenUserClicksButton();
@@ -92,6 +112,16 @@ Feature: CucumberStepAnnotations
         """
 
     Scenario: Then step generates @Then annotation with simple regex
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Simple Then
@@ -101,7 +131,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Then;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -125,7 +155,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then result is displayed
                  */
                 thenResultIsDisplayed();
@@ -136,6 +166,16 @@ Feature: CucumberStepAnnotations
   Rule: Steps with And/But/* keywords inherit annotation from the previous step
 
     Scenario: And step generates annotation according to the keyword from previous step
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: And Inherits Annotation
@@ -150,7 +190,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
         import io.cucumber.java.en.When;
@@ -191,27 +231,27 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();
-                /**
+                /*
                  * And user is active
                  */
                 givenUserIsActive();
-                /**
+                /*
                  * When user logs in
                  */
                 whenUserLogsIn();
-                /**
+                /*
                  * And user navigates to dashboard
                  */
                 whenUserNavigatesToDashboard();
-                /**
+                /*
                  * Then dashboard is displayed
                  */
                 thenDashboardIsDisplayed();
-                /**
+                /*
                  * And user menu is visible
                  */
                 thenUserMenuIsVisible();
@@ -220,6 +260,16 @@ Feature: CucumberStepAnnotations
         """
 
     Scenario: But step generates annotation according to the keyword from previous step
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: But Inherits Annotation
@@ -234,7 +284,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
         import io.cucumber.java.en.When;
@@ -275,27 +325,27 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user is logged in
                  */
                 givenUserIsLoggedIn();
-                /**
+                /*
                  * But user is not admin
                  */
                 givenUserIsNotAdmin();
-                /**
+                /*
                  * When user requests admin page
                  */
                 whenUserRequestsAdminPage();
-                /**
+                /*
                  * But request is denied
                  */
                 whenRequestIsDenied();
-                /**
+                /*
                  * Then error message is shown
                  */
                 thenErrorMessageIsShown();
-                /**
+                /*
                  * But user remains on current page
                  */
                 thenUserRemainsOnCurrentPage();
@@ -304,6 +354,16 @@ Feature: CucumberStepAnnotations
         """
 
     Scenario: * step generates annotation according to the keyword from previous step
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Asterisk Inherits Annotation
@@ -318,7 +378,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
         import io.cucumber.java.en.When;
@@ -359,27 +419,27 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given system is ready
                  */
                 givenSystemIsReady();
-                /**
+                /*
                  * * database is connected
                  */
                 givenDatabaseIsConnected();
-                /**
+                /*
                  * When user submits form
                  */
                 whenUserSubmitsForm();
-                /**
+                /*
                  * * validation passes
                  */
                 whenValidationPasses();
-                /**
+                /*
                  * Then form is saved
                  */
                 thenFormIsSaved();
-                /**
+                /*
                  * * confirmation is sent
                  */
                 thenConfirmationIsSent();
@@ -390,6 +450,16 @@ Feature: CucumberStepAnnotations
   Rule: Steps with quoted parameters generate regex with named capture groups: (?<p1>.*), (?<p2>.*), etc.
 
     Scenario: with one quoted parameter
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Parameter Capture
@@ -399,7 +469,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import java.lang.String;
         import javax.annotation.processing.Generated;
@@ -424,7 +494,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user "Alice" exists
                  */
                 givenUser$p1Exists("Alice");
@@ -433,6 +503,16 @@ Feature: CucumberStepAnnotations
         """
 
     Scenario: Step with multiple quoted parameters
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Multiple Captures
@@ -442,7 +522,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.When;
         import java.lang.String;
         import javax.annotation.processing.Generated;
@@ -467,7 +547,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * When user "Bob" sends message "Hello World" to "Alice"
                  */
                 whenUser$p1SendsMessage$p2To$p3("Bob", "Hello World", "Alice");
@@ -478,6 +558,16 @@ Feature: CucumberStepAnnotations
   Rule: Steps with special regex characters generate regex with those characters escaped
 
     Scenario: Step with special regex characters
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: Regex Escaping
@@ -487,7 +577,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Then;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -511,7 +601,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Then balance is $100.50 (verified)
                  */
                 thenBalanceIs$10050Verified();
@@ -522,6 +612,16 @@ Feature: CucumberStepAnnotations
   Rule: DocString steps generate regex without any marker for the DocString
 
     Scenario: Step with DocString
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: DocString Annotation
@@ -534,7 +634,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import java.lang.String;
         import javax.annotation.processing.Generated;
@@ -559,7 +659,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given document contains:
                  */
                 givenDocumentContains(\"\"\"
@@ -572,6 +672,16 @@ Feature: CucumberStepAnnotations
   Rule: steps with a data table parameter generate regex without any marker for the data table
 
     Scenario: Step with DataTable
+      Given the following base class:
+        """
+        import dev.specbinder.annotations.Feature2JUnit;
+        import dev.specbinder.annotations.Feature2JUnitOptions;
+
+        @Feature2JUnit
+        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+        public abstract class MockedAnnotatedTestClass {
+        }
+        """
       Given the following feature file:
         """
         Feature: DataTable Annotation
@@ -584,7 +694,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -612,7 +722,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given the following users exist:
                  */
                 givenTheFollowingUsersExist(createDataTable(\"\"\"
@@ -670,7 +780,7 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.specbinder.feature2junit.FeatureFilePath;
+        import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
         import org.junit.jupiter.api.MethodOrderer;
@@ -692,7 +802,7 @@ Feature: CucumberStepAnnotations
             @Order(1)
             @DisplayName("Scenario: Test")
             public void scenario_1() {
-                /**
+                /*
                  * Given user exists
                  */
                 givenUserExists();

@@ -2,14 +2,79 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="mulesoft-releases" />
+      <option name="name" value="Mulesoft Releases" />
+      <option name="url" value="https://repository.mulesoft.org/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central-portal-snapshots" />
+      <option name="name" value="Central Portal Snapshots" />
+      <option name="url" value="https://central.sonatype.com/repository/maven-snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="typesafe" />
+      <option name="name" value="Typesafe" />
+      <option name="url" value="https://repo.typesafe.com/typesafe/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jenkins-releases" />
+      <option name="name" value="Jenkins" />
+      <option name="url" value="https://repo.jenkins-ci.org/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-central" />
+      <option name="name" value="Maven Central" />
+      <option name="url" value="https://repo1.maven.org/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="mulesoft" />
+      <option name="name" value="Mulesoft" />
+      <option name="url" value="https://maven.anypoint.mulesoft.com/api/v1/maven/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="terracotta" />
+      <option name="name" value="Terracotta" />
+      <option name="url" value="https://repo.terracotta.org/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="clojars" />
+      <option name="name" value="Clojars" />
+      <option name="url" value="https://clojars.org/repo/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="mulesoft-public" />
+      <option name="name" value="mulesoft public" />
+      <option name="url" value="https://repository.mulesoft.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="aspose" />
+      <option name="name" value="Aspose" />
+      <option name="url" value="https://releases.aspose.com/java/repo/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="sonatype forge" />
+      <option name="name" value="Sonatype forge" />
+      <option name="url" value="https://repository.sonatype.org/content/repositories/forge/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="gradle-plugins" />
+      <option name="name" value="Gragle Plugins" />
+      <option name="url" value="https://plugins.gradle.org/m2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="atlassian-proxy" />
+      <option name="name" value="Atlassian Maven 2 Proxy" />
+      <option name="url" value="https://packages.atlassian.com/artifactory/maven-atlassian-all/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="jboss.community" />

@@ -1,7 +1,7 @@
 Feature: MappingFeatureBlock
   As a developer reviewing or maintaining generated test code
-  I want the feature description and user story to appear as JavaDoc comments in the generated class
-  So that I can quickly understand the purpose and intended users without switching to the original feature file
+  I want the feature description to appear as JavaDoc comments in the generated class
+  So that I can quickly understand the purpose without switching to the original feature file
 
   Rule: "Feature:" keyword should be mapped to a javadoc comment in the generated class followed by the feature name
   and description lines verbatim
@@ -16,7 +16,7 @@ Feature: MappingFeatureBlock
 
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -42,7 +42,7 @@ Feature: MappingFeatureBlock
 
       Then the content of the generated class should be:
       """
-      import dev.specbinder.feature2junit.FeatureFilePath;
+      import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
