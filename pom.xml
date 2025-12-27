@@ -11,8 +11,8 @@
   <packaging>pom</packaging>
   <scm>
     <connection>scm:git:git://github.com/dmytro-sharedspec/spec2test.git</connection>
-    <developerConnection>scm:git:ssh://github.com:dmytro-sharedspec/spec2test.git</developerConnection>
-    <url>http://github.com/dmytro-sharedspec/spec2test/tree/main</url>
+    <developerConnection>scm:git:ssh://github.com:dmytro-stasyuk/spec-binder.git</developerConnection>
+    <url>http://github.com/dmytro-stasyuk/spec-binder/tree/main</url>
   </scm>
   <developers>
     <developer>

@@ -11,7 +11,7 @@ import org.junit.platform.suite.api.Suite;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
 //@SelectClasspathResource("features/steps/CucumberStepAnnotations.feature")
-@IncludeTags(value = {"troubleshoot", "wip"})
+//@IncludeTags(value = {"troubleshoot", "wip"})
 public class RunTaggedScenariosTest {
 
 }
