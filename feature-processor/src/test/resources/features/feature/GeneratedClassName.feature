@@ -24,7 +24,7 @@ Feature: GeneratedClassName
       """
       package com.example.cart;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -38,7 +38,7 @@ Feature: GeneratedClassName
        * Feature: Shopping Cart
        */
       @DisplayName("cart")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("cart.feature")
       public abstract class CartFeatureScenarios extends CartFeature {
@@ -74,7 +74,7 @@ Feature: GeneratedClassName
       """
       package com.example.payment;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -88,7 +88,7 @@ Feature: GeneratedClassName
        * Feature: Payment Processing
        */
       @DisplayName("payment")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("payment.feature")
       public abstract class PaymentFeatureTestCases extends PaymentFeature {

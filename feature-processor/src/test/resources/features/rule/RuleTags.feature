@@ -20,7 +20,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -39,7 +39,7 @@ Feature: RuleTags
        * Feature: feature with tagged rule
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -96,7 +96,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -116,7 +116,7 @@ Feature: RuleTags
        * Feature: feature with multi-tagged rule
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -178,7 +178,7 @@ Feature: RuleTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -202,7 +202,7 @@ Feature: RuleTags
               @Tag("smoke")
       })
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

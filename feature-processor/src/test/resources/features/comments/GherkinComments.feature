@@ -64,7 +64,7 @@ Feature: GherkinComments
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -87,7 +87,7 @@ Feature: GherkinComments
        * Feature: feature with comprehensive comments
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

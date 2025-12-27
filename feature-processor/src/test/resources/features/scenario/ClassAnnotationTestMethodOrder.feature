@@ -14,7 +14,7 @@ Feature: ClassAnnotationTestMethodOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -23,7 +23,7 @@ Feature: ClassAnnotationTestMethodOrder
        *   This feature has no scenarios yet
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
       }
@@ -38,7 +38,7 @@ Feature: ClassAnnotationTestMethodOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -52,7 +52,7 @@ Feature: ClassAnnotationTestMethodOrder
        * Feature: Test Ordering
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -79,7 +79,7 @@ Feature: ClassAnnotationTestMethodOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -93,7 +93,7 @@ Feature: ClassAnnotationTestMethodOrder
        * Feature: Sequential Scenarios
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

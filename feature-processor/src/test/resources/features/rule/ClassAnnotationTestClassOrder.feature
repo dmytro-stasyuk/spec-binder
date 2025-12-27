@@ -24,7 +24,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.simple;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.DisplayName;
@@ -38,7 +38,7 @@ Feature: ClassAnnotationTestClassOrder
        * Feature: Simple Feature
        */
       @DisplayName("simple")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("simple.feature")
       public abstract class SimpleFeatureScenarios extends SimpleFeature {
@@ -72,7 +72,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.rules;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -89,7 +89,7 @@ Feature: ClassAnnotationTestClassOrder
        * Feature: Business Rules
        */
       @DisplayName("business-rules")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("business-rules.feature")
       public abstract class BusinessRulesScenarios extends BusinessRules {
@@ -137,7 +137,7 @@ Feature: ClassAnnotationTestClassOrder
       """
       package com.example.workflow;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -154,7 +154,7 @@ Feature: ClassAnnotationTestClassOrder
        * Feature: Workflow Processing
        */
       @DisplayName("workflow")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("workflow.feature")
       public abstract class WorkflowTestsScenarios extends WorkflowTests {

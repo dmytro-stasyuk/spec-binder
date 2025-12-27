@@ -1,13 +1,13 @@
-# spec2test
+# Spec Binder
 
-**spec2test** turns natural-language Gherkin specs into **pure JUnit** test code at **compile time**.
+**Spec Binder** turns natural-language Gherkin specs into **pure JUnit** test code at **compile time**.
 No regex “glue,” no runtime step discovery. Your `.feature` files become first-class Java code that compiles, runs, and fails fast.
 
 > Built around an annotation-processor approach (`feature2junit`) that parses feature files during `javac`, generating JUnit test skeletons where each **Given/When/Then** is converted into a strongly-named Java method call.
 
 ---
 
-## Why spec2test?
+## Why Spec Binder?
 
 * **Compile-time safety:** Eliminates “undefined step” surprises at runtime—mismatches surface as **compiler errors**.
 
@@ -66,7 +66,7 @@ Feature: Online shopping cart
 ```java
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.Feature2JUnit;
+import dev.specbinder.feature2junit.Feature2JUnit;
 
 @Feature2JUnit("specs/cart.feature")
 public abstract class CartFeature {
@@ -92,7 +92,7 @@ public abstract class CartFeature {
 ```java
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.FeatureFilePath;
+import dev.specbinder.feature2junit.FeatureFilePath;
 import java.lang.String;
 import javax.annotation.processing.Generated;
 import org.junit.jupiter.api.ClassOrderer;
@@ -107,7 +107,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 /**
  * To implement tests in this generated class, extend it and implement all abstract methods.
  */
-@Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+@Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @FeatureFilePath("specs/cart.feature")
@@ -233,7 +233,7 @@ public class CartFeatureTest extends CartFeatureScenarios {
 ```java
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.FeatureFilePath;
+import dev.specbinder.feature2junit.FeatureFilePath;
 import java.lang.String;
 import javax.annotation.processing.Generated;
 import org.junit.jupiter.api.Assertions;
@@ -250,7 +250,7 @@ import org.junit.jupiter.api.TestMethodOrder;
  * To implement tests in this generated class, move any methods with failing assumptions into the base
  * class and implement them.
  */
-@Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+@Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @FeatureFilePath("specs/cart.feature")
@@ -339,8 +339,8 @@ public class CartFeatureTest extends CartFeature {
 ```java
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.Feature2JUnit;
-import dev.spec2test.feature2junit.Feature2JUnitOptions;
+import dev.specbinder.feature2junit.Feature2JUnit;
+import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
 @Feature2JUnitOptions(
     shouldBeAbstract = false
@@ -384,7 +384,7 @@ public class CartFeature {
 ```java
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.FeatureFilePath;
+import dev.specbinder.feature2junit.FeatureFilePath;
 import javax.annotation.processing.Generated;
 import org.junit.jupiter.api.ClassOrderer;
 import org.junit.jupiter.api.DisplayName;
@@ -399,7 +399,7 @@ import org.junit.jupiter.api.TestMethodOrder;
  * To implement tests in this generated class, move any methods with failing assumptions into the base
  * class and implement them.
  */
-@Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+@Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @FeatureFilePath("specs/cart.feature")
@@ -1060,7 +1060,7 @@ Feature: Shopping cart totals and shipping
 
 ```java
 
-@Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+@Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @FeatureFilePath("specs/cart.feature")
@@ -1601,7 +1601,7 @@ Rule: Free shipping applies when subtotal is at least €50
 
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.FeatureFilePath;
+import dev.specbinder.feature2junit.FeatureFilePath;
 
 import java.lang.String;
 import javax.annotation.processing.Generated;
@@ -1621,7 +1621,7 @@ import org.junit.jupiter.api.TestMethodOrder;
         @Tag("fast"),
         @Tag("cart")
 })
-@Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+@Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 @FeatureFilePath("specs/cart.feature")
@@ -1695,8 +1695,8 @@ A typical option controls whether the generated test class should be **abstract 
 <summary>Example — per‑feature options on the marker class</summary>
 
 ```java
-import dev.spec2test.feature2junit.Feature2JUnit;
-import dev.spec2test.feature2junit.Feature2JUnitOptions;
+import dev.specbinder.feature2junit.Feature2JUnit;
+import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
 @Feature2JUnitOptions(shouldBeAbstract = true) // or false for concrete + failing bodies
 @Feature2JUnit("specs/cart.feature")
@@ -1710,8 +1710,8 @@ public abstract class CartFeature { }
  <summary>Example — inherited options via a base class</summary>
 
 ```java
-import dev.spec2test.feature2junit.Feature2JUnit;
-import dev.spec2test.feature2junit.Feature2JUnitOptions;
+import dev.specbinder.feature2junit.Feature2JUnit;
+import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
 @Feature2JUnitOptions(shouldBeAbstract = false)
 public abstract class BaseFeatureOptions { }
@@ -1737,11 +1737,11 @@ public abstract class CartFeature extends BaseFeatureOptions { }
 
 ```xml
 <dependencies>
-  <!-- spec2test annotation + SPI -->
+  <!-- specbinder annotation + SPI -->
   <dependency>
-    <groupId>com.yourorg.spec2test</groupId>
+    <groupId>dev.specbinder</groupId>
     <artifactId>feature2junit</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.6</version>
     <scope>test</scope>
   </dependency>
 </dependencies>
@@ -1757,9 +1757,9 @@ public abstract class CartFeature extends BaseFeatureOptions { }
           <!-- specifying annotation processor paths like this is usually optional -->
           <!-- as they are typically auto discovered from the classpath            -->
           <path>
-            <groupId>com.yourorg.spec2test</groupId>
+            <groupId>dev.specbinder</groupId>
             <artifactId>feature2junit</artifactId>
-            <version>0.1.4</version>
+            <version>0.1.6</version>
           </path>
         </annotationProcessorPaths>
       </configuration>
@@ -1802,10 +1802,10 @@ GNU General Public License v3.0
 
 ---
 
-## Appendix: Cucumber/JBehave vs spec2test
+## Appendix: Cucumber/JBehave vs Spec Binder
 
-| Topic                     | Cucumber/JBehave                                              | spec2test                                           |
-| ------------------------- | ------------------------------------------------------------- | --------------------------------------------------- |
+| Topic                     | Cucumber/JBehave                                              | Spec Binder                                         |
+| ------------------------- | ------------------------------------------------------------- |-----------------------------------------------------|
 | Wiring                    | Regex in annotations; runtime discovery                       | **Compile-time** generated JUnit                    |
 | Failure surface           | Often runtime “undefined step”                                | **Compiler errors** on mismatch                     |
 | Step scope                | Shared/global libraries                                       | **Per-feature scoped**                              |

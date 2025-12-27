@@ -22,7 +22,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -42,7 +42,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: payment processing
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -107,7 +107,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -127,7 +127,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: order processing
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -210,7 +210,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -230,7 +230,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: authentication
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -308,7 +308,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -328,7 +328,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: notification system
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -404,7 +404,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -426,7 +426,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: data validation
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -501,7 +501,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.datatable.DataTable;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
@@ -525,7 +525,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: configuration management
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -622,7 +622,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -642,7 +642,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: inventory management
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -726,7 +726,7 @@ Feature: MappingRuleBackgroundBlock
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -746,7 +746,7 @@ Feature: MappingRuleBackgroundBlock
        * Feature: e-commerce platform
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

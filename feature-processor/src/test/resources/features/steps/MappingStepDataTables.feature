@@ -21,7 +21,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -38,7 +38,7 @@ Feature: MappingStepDataTables
          * Feature: Users Management
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -98,7 +98,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.When;
         import java.lang.String;
@@ -115,7 +115,7 @@ Feature: MappingStepDataTables
          * Feature: Permissions Management
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -175,7 +175,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Then;
         import java.lang.String;
@@ -192,7 +192,7 @@ Feature: MappingStepDataTables
          * Feature: Order Management
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -255,7 +255,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -272,7 +272,7 @@ Feature: MappingStepDataTables
          * Feature: And Step
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -341,7 +341,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
@@ -360,7 +360,7 @@ Feature: MappingStepDataTables
          * Feature: But Step
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -442,7 +442,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -459,7 +459,7 @@ Feature: MappingStepDataTables
          * Feature: Asterisk Step
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -533,7 +533,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.When;
         import java.lang.String;
@@ -551,7 +551,7 @@ Feature: MappingStepDataTables
          * Feature: Product Inventory
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -626,7 +626,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -644,7 +644,7 @@ Feature: MappingStepDataTables
          * Feature: User Management
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -721,7 +721,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Then;
         import java.lang.String;
@@ -739,7 +739,7 @@ Feature: MappingStepDataTables
          * Feature: Order Processing
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -817,7 +817,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -834,7 +834,7 @@ Feature: MappingStepDataTables
          * Feature: Permissions
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -895,7 +895,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -912,7 +912,7 @@ Feature: MappingStepDataTables
          * Feature: Column Alignment
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -978,7 +978,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -995,7 +995,7 @@ Feature: MappingStepDataTables
          * Feature: Shared Helper
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -1065,7 +1065,7 @@ Feature: MappingStepDataTables
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.datatable.DataTable;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -1082,7 +1082,7 @@ Feature: MappingStepDataTables
          * Feature: Header Only
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

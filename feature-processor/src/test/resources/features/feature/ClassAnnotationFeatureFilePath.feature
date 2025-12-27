@@ -25,7 +25,7 @@ Feature: ClassAnnotationFeatureFilePath
       """
       package com.example.shop;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -35,7 +35,7 @@ Feature: ClassAnnotationFeatureFilePath
        *   I want to manage items in my cart
        */
       @DisplayName("cart")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("features/shopping/cart.feature")
       public abstract class CartFeatureBaseScenarios extends CartFeatureBase {
       }
@@ -61,7 +61,7 @@ Feature: ClassAnnotationFeatureFilePath
       """
       package com.example.payment;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -71,7 +71,7 @@ Feature: ClassAnnotationFeatureFilePath
        *   I want to process payments
        */
       @DisplayName("PaymentProcessing")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("com/example/payment/PaymentProcessing.feature")
       public abstract class PaymentProcessingScenarios extends PaymentProcessing {
       }

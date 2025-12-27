@@ -3,7 +3,7 @@ Feature: ClassAnnotationGenerated
   I want generated test classes to be clearly marked with @Generated annotation
   So that my development tools can automatically exclude them from code coverage, static analysis, and formatting rules
 
-  Rule: @Generated annotation value is always "dev.spec2test.feature2junit.Feature2JUnitGenerator".
+  Rule: @Generated annotation value is always "dev.specbinder.feature2junit.Feature2JUnitGenerator".
 
     Scenario: generated class has @Generated annotation with processor name
       Given the following base class:
@@ -25,7 +25,7 @@ Feature: ClassAnnotationGenerated
       """
       package com.example.inventory;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -35,7 +35,7 @@ Feature: ClassAnnotationGenerated
        *   I want to track inventory
        */
       @DisplayName("stock")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("stock.feature")
       public abstract class StockManagementScenarios extends StockManagement {
       }

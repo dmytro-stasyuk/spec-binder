@@ -30,7 +30,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -47,7 +47,7 @@ Feature: ScenarioOutline
        * Feature: Calculator
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -106,7 +106,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -121,7 +121,7 @@ Feature: ScenarioOutline
        * Feature: Formatting
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -166,7 +166,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -181,7 +181,7 @@ Feature: ScenarioOutline
        * Feature: Naming
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -223,7 +223,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -238,7 +238,7 @@ Feature: ScenarioOutline
        * Feature: Naming
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -280,7 +280,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -295,7 +295,7 @@ Feature: ScenarioOutline
        * Feature: Special Characters
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -337,7 +337,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -352,7 +352,7 @@ Feature: ScenarioOutline
        * Feature: Uppercase Names
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -394,7 +394,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -409,7 +409,7 @@ Feature: ScenarioOutline
        * Feature: Multiple Separators
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -451,7 +451,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -466,7 +466,7 @@ Feature: ScenarioOutline
        * Feature: Leading Trailing
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -508,7 +508,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -523,7 +523,7 @@ Feature: ScenarioOutline
        * Feature: Mixed Separators
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -565,7 +565,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -580,7 +580,7 @@ Feature: ScenarioOutline
        * Feature: Numbers
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -622,7 +622,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -637,7 +637,7 @@ Feature: ScenarioOutline
        * Feature: CamelCase
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -679,7 +679,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -694,7 +694,7 @@ Feature: ScenarioOutline
        * Feature: Single Chars
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -761,7 +761,7 @@ Feature: ScenarioOutline
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import io.cucumber.java.en.Then;
       import io.cucumber.java.en.When;
@@ -778,7 +778,7 @@ Feature: ScenarioOutline
        * Feature: Calculator
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

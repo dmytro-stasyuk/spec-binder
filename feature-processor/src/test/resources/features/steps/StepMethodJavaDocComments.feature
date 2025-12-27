@@ -20,7 +20,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
         import io.cucumber.java.en.When;
@@ -36,7 +36,7 @@ Feature: StepMethodJavaDocComments
          * Feature: JavaDoc Preservation
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -81,7 +81,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -94,7 +94,7 @@ Feature: StepMethodJavaDocComments
          * Feature: And Keyword Preservation
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -138,7 +138,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Then;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -151,7 +151,7 @@ Feature: StepMethodJavaDocComments
          * Feature: But Keyword Preservation
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -189,7 +189,7 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -202,7 +202,7 @@ Feature: StepMethodJavaDocComments
          * Feature: Asterisk Preservation
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -242,8 +242,8 @@ Feature: StepMethodJavaDocComments
     Scenario: JavaDoc comments include source line numbers when option is enabled
       Given the following base class:
         """
-        import dev.spec2test.feature2junit.Feature2JUnit;
-        import dev.spec2test.feature2junit.Feature2JUnitOptions;
+        import dev.specbinder.feature2junit.Feature2JUnit;
+        import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
         @Feature2JUnit
         @Feature2JUnitOptions(addSourceLineAnnotations = true)
@@ -261,8 +261,8 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.common.SourceLine;
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.common.SourceLine;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
         import io.cucumber.java.en.When;
@@ -277,7 +277,7 @@ Feature: StepMethodJavaDocComments
          * Feature: Source Line Annotations
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {

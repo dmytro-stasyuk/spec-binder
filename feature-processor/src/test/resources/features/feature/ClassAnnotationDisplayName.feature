@@ -29,7 +29,7 @@ Feature: ClassAnnotationDisplayName
       """
       package com.example;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -40,7 +40,7 @@ Feature: ClassAnnotationDisplayName
        *   So that I can purchase items
        */
       @DisplayName("ShoppingCart")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("ShoppingCart.feature")
       public abstract class FeatureTestBaseScenarios extends FeatureTestBase {
       }
@@ -66,7 +66,7 @@ Feature: ClassAnnotationDisplayName
 
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -77,7 +77,7 @@ Feature: ClassAnnotationDisplayName
        *   So that I can purchase items
        */
       @DisplayName("ShoppingCart")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("features/ShoppingCart.feature")
       public abstract class FeatureTestBaseScenarios extends FeatureTestBase {
       }
@@ -105,7 +105,7 @@ Feature: ClassAnnotationDisplayName
 
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
 
@@ -116,7 +116,7 @@ Feature: ClassAnnotationDisplayName
        *   So that customers can complete transactions successfully
        */
       @DisplayName("payment")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("specs/payment.feature")
       public abstract class FeatureTestBaseScenarios extends FeatureTestBase {
       }

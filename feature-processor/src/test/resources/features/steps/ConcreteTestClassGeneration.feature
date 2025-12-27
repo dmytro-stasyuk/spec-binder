@@ -17,7 +17,7 @@ Feature: ConcreteTestClassGeneration
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ Feature: ConcreteTestClassGeneration
          * Feature: Abstract Steps
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
@@ -56,8 +56,8 @@ Feature: ConcreteTestClassGeneration
     Scenario: Concrete step method with fail() statement
       Given the following base class:
         """
-        import dev.spec2test.feature2junit.Feature2JUnit;
-        import dev.spec2test.feature2junit.Feature2JUnitOptions;
+        import dev.specbinder.feature2junit.Feature2JUnit;
+        import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
         @Feature2JUnit
         @Feature2JUnitOptions(shouldBeAbstract = false)
@@ -73,7 +73,7 @@ Feature: ConcreteTestClassGeneration
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.Assertions;
@@ -87,7 +87,7 @@ Feature: ConcreteTestClassGeneration
          * Feature: Concrete Steps
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public class MockedAnnotatedTestClassTest extends MockedAnnotatedTestClass {
@@ -111,8 +111,8 @@ Feature: ConcreteTestClassGeneration
     Scenario: Concrete step method with parameters and fail() statement
       Given the following base class:
         """
-        import dev.spec2test.feature2junit.Feature2JUnit;
-        import dev.spec2test.feature2junit.Feature2JUnitOptions;
+        import dev.specbinder.feature2junit.Feature2JUnit;
+        import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
         @Feature2JUnit
         @Feature2JUnitOptions(shouldBeAbstract = false)
@@ -128,7 +128,7 @@ Feature: ConcreteTestClassGeneration
       When the generator is run
       Then the content of the generated class should be:
         """
-        import dev.spec2test.feature2junit.FeatureFilePath;
+        import dev.specbinder.feature2junit.FeatureFilePath;
         import io.cucumber.java.en.When;
         import java.lang.String;
         import javax.annotation.processing.Generated;
@@ -143,7 +143,7 @@ Feature: ConcreteTestClassGeneration
          * Feature: Concrete Steps With Parameters
          */
         @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
         @FeatureFilePath("MockedAnnotatedTestClass.feature")
         public class MockedAnnotatedTestClassTest extends MockedAnnotatedTestClass {

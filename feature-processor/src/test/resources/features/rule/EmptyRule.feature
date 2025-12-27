@@ -25,7 +25,7 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -42,7 +42,7 @@ Feature: EmptyRule
        * Feature: feature with empty rule
        */
       @DisplayName("TestFeature")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
@@ -79,7 +79,7 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
       import org.junit.jupiter.api.DisplayName;
@@ -93,7 +93,7 @@ Feature: EmptyRule
        * Feature: feature with empty rule
        */
       @DisplayName("TestFeature")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
@@ -124,7 +124,7 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -141,7 +141,7 @@ Feature: EmptyRule
        * Feature: feature with empty rule
        */
       @DisplayName("TestFeature")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
@@ -180,7 +180,7 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
       import org.junit.jupiter.api.ClassOrderer;
@@ -197,7 +197,7 @@ Feature: EmptyRule
        * Feature: feature with empty rule
        */
       @DisplayName("TestFeature")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {

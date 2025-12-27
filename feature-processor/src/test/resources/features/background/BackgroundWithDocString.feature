@@ -21,7 +21,7 @@ Feature: BackgroundWithDocString
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -33,7 +33,7 @@ Feature: BackgroundWithDocString
        * Feature: API testing
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
           @Given("^the server responds with:$")
@@ -71,7 +71,7 @@ Feature: BackgroundWithDocString
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import java.lang.String;
       import javax.annotation.processing.Generated;
@@ -83,7 +83,7 @@ Feature: BackgroundWithDocString
        * Feature: email testing
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
           @Given("^the email service is available$")

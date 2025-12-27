@@ -1,7 +1,7 @@
 package org.mycompany.app;
 
-import dev.spec2test.feature2junit.Feature2JUnit;
-import dev.spec2test.feature2junit.Feature2JUnitOptions;
+import dev.specbinder.feature2junit.Feature2JUnit;
+import dev.specbinder.feature2junit.Feature2JUnitOptions;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.DataTableTypeRegistry;

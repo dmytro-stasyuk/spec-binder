@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>dev.spec2test</groupId>
+        <groupId>dev.specbinder</groupId>
         <artifactId>examples</artifactId>
         <version>0.1.6</version>
     </parent>
@@ -12,7 +12,7 @@
     <description>An example demonstrating how to use feature2junit generator</description>
     <dependencies>
         <dependency>
-            <groupId>dev.spec2test</groupId>
+            <groupId>dev.specbinder</groupId>
             <artifactId>feature2junit</artifactId>
             <version>${project.version}</version>
         </dependency>

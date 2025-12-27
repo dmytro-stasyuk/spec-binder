@@ -25,7 +25,7 @@ Feature: FeatureTags
       """
       package com.example.tests;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.Tag;
@@ -36,7 +36,7 @@ Feature: FeatureTags
        */
       @Tag("smoke")
       @DisplayName("smoke-tests")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("smoke-tests.feature")
       public abstract class SmokeTestsScenarios extends SmokeTests {
       }
@@ -64,7 +64,7 @@ Feature: FeatureTags
       """
       package com.example.api;
 
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
       import org.junit.jupiter.api.Tag;
@@ -80,7 +80,7 @@ Feature: FeatureTags
               @Tag("api")
       })
       @DisplayName("user-api")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("user-api.feature")
       public abstract class UserApiTestsScenarios extends UserApiTests {
       }

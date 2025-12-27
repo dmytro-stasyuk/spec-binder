@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>dev.spec2test</groupId>
-  <artifactId>spec2test</artifactId>
+  <groupId>dev.specbinder</groupId>
+  <artifactId>parent</artifactId>
   <version>0.1.6</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Used to generate JUnit test classes from a specification file</description>
-  <url>https://github.com/dmytro-sharedspec/spec2test/tree/main</url>
+  <url>https://github.com/dmytro-stasyuk/spec-binder/tree/main</url>
   <packaging>pom</packaging>
   <scm>
-    <connection>scm:git:git://github.com/dmytro-sharedspec/spec2test.git</connection>
+    <connection>scm:git:git://github.com/dmytro-stasyuk/spec-binder.git</connection>
     <developerConnection>scm:git:ssh://github.com:dmytro-stasyuk/spec-binder.git</developerConnection>
     <url>http://github.com/dmytro-stasyuk/spec-binder/tree/main</url>
   </scm>
@@ -19,7 +19,7 @@
       <name>Dmytro Stasyuk</name>
       <email>dmytro@sharedspec.com</email>
       <organization>SharedSpec</organization>
-      <organizationUrl>https://github.com/dmytro-sharedspec</organizationUrl>
+      <organizationUrl>https://github.com/dmytro-stasyuk</organizationUrl>
     </developer>
   </developers>
   <licenses>

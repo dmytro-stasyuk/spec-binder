@@ -18,7 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **ALWAYS use IntelliJ IDEA's MCP server to run tests**, NOT Maven
 - Use the `mcp__jetbrains__get_run_configurations` tool to list available run configurations
 - Use the `mcp__jetbrains__execute_run_configuration` tool to execute specific tests
-- To run ALL tests in the feature-processor module, run the test class: `dev.spec2test.feature2junit.tests.AllTests`
+- To run ALL tests in the feature-processor module, run the test class: `dev.specbinder.feature2junit.tests.AllTests`
 - This provides better integration, faster feedback, and proper IDE support
 - **Never use `mvn test` commands** unless explicitly requested by the user
 
@@ -114,11 +114,11 @@ Feature2JUnitGenerator (APT entry point)
 ```
 
 **Key processors location:**
-- Entry: `feature-processor/src/main/java/dev/spec2test/feature2junit/Feature2JUnitGenerator.java`
-- Orchestration: `feature-processor/src/main/java/dev/spec2test/feature2junit/TestSubclassCreator.java`
-- Most complex: `feature-processor/src/main/java/dev/spec2test/feature2junit/gherkin/StepProcessor.java` (~478 lines)
+- Entry: `feature-processor/src/main/java/dev/specbinder/feature2junit/Feature2JUnitGenerator.java`
+- Orchestration: `feature-processor/src/main/java/dev/specbinder/feature2junit/TestSubclassCreator.java`
+- Most complex: `feature-processor/src/main/java/dev/specbinder/feature2junit/gherkin/StepProcessor.java` (~478 lines)
 
-**Utilities:** Located in `feature-processor/src/main/java/dev/spec2test/feature2junit/gherkin/utils/`
+**Utilities:** Located in `feature-processor/src/main/java/dev/specbinder/feature2junit/gherkin/utils/`
 - MethodNamingUtils, ParameterNamingUtils, JavaDocUtils, TableUtils, TagUtils, etc.
 
 **Dependencies:** Depends on `annotations`, `common`, and heavy processing libraries (JavaPoet, Cucumber parser, etc.)
@@ -199,16 +199,16 @@ Key mappings:
 ## Common Development Tasks
 
 ### Adding a New Gherkin Element Processor
-1. Create processor class in `feature-processor/src/main/java/dev/spec2test/feature2junit/gherkin/`
+1. Create processor class in `feature-processor/src/main/java/dev/specbinder/feature2junit/gherkin/`
 2. Implement LoggingSupport, OptionsSupport, BaseTypeSupport
 3. Add processing logic in parent processor
 4. Add utilities to `utils/` if needed
 5. Add test cases in `src/test/`
 
 ### Modifying Generation Behavior
-1. Add option to `common/src/main/java/dev/spec2test/common/GeneratorOptions.java`
-2. Add annotation parameter to `annotations/src/main/java/dev/spec2test/feature2junit/Feature2JUnitOptions.java`
-3. Update GeneratorOptions construction in `feature-processor/src/main/java/dev/spec2test/feature2junit/Feature2JUnitGenerator.process()`
+1. Add option to `common/src/main/java/dev/specbinder/common/GeneratorOptions.java`
+2. Add annotation parameter to `annotations/src/main/java/dev/specbinder/feature2junit/Feature2JUnitOptions.java`
+3. Update GeneratorOptions construction in `feature-processor/src/main/java/dev/specbinder/feature2junit/Feature2JUnitGenerator.process()`
 4. Use option in relevant processor
 5. Update tests
 

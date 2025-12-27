@@ -57,8 +57,8 @@ Feature: StepKeywordErrorHandling
     Scenario: And keyword without annotated previous step when annotations disabled
       Given the following base class:
         """
-        import dev.spec2test.feature2junit.Feature2JUnit;
-        import dev.spec2test.feature2junit.Feature2JUnitOptions;
+        import dev.specbinder.feature2junit.Feature2JUnit;
+        import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
         @Feature2JUnit
         @Feature2JUnitOptions(addCucumberStepAnnotations = false)

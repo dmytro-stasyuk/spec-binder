@@ -18,7 +18,7 @@ Feature: BackgroundWithDataTable
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.datatable.DataTable;
       import io.cucumber.java.en.Given;
       import java.lang.String;
@@ -33,7 +33,7 @@ Feature: BackgroundWithDataTable
        * Feature: product catalog
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
           @Given("^the following products exist:$")
@@ -93,7 +93,7 @@ Feature: BackgroundWithDataTable
       When the generator is run
       Then the content of the generated class should be:
       """
-      import dev.spec2test.feature2junit.FeatureFilePath;
+      import dev.specbinder.feature2junit.FeatureFilePath;
       import io.cucumber.datatable.DataTable;
       import io.cucumber.java.en.Given;
       import java.lang.String;
@@ -108,7 +108,7 @@ Feature: BackgroundWithDataTable
        * Feature: user permissions
        */
       @DisplayName("MockedAnnotatedTestClass")
-      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
           @Given("^the system is initialized$")
