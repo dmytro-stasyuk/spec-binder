@@ -1,0 +1,241 @@
+Feature: ScenarioEmpty
+  As a test developer using Gherkin
+  I want to configure how empty Scenarios (Scenarios without steps) are handled
+  So that I can control test behavior and tag incomplete specifications
+
+  Rule: Empty Scenarios generate a failing test method when "failScenariosWithNoSteps" option is enabled
+
+    Scenario: with failScenariosWithNoSteps = enabled
+      Given the following base class:
+      """
+      @Feature2JUnit
+      @Feature2JUnitOptions(
+        failScenariosWithNoSteps = true
+      )
+      public class TestFeature {
+      }
+      """
+      And the following feature file:
+      """
+      Feature: feature with empty scenario
+
+        Scenario: Future implementation
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.spec2test.feature2junit.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.Assertions;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Tag;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
+
+      /**
+       * Feature: feature with empty scenario
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("TestFeature.feature")
+      public abstract class TestFeatureScenarios extends TestFeature {
+          @Test
+          @Order(1)
+          @Tag("new")
+          @DisplayName("Scenario: Future implementation")
+          public void scenario_1() {
+              Assertions.fail("Scenario has no steps");
+          }
+      }
+      """
+
+    Scenario: Empty scenario with failScenariosWithNoSteps disabled
+      Given the following base class:
+      """
+      @Feature2JUnit
+      @Feature2JUnitOptions(
+        failScenariosWithNoSteps = false
+      )
+      public class TestFeature {
+      }
+      """
+      And the following feature file:
+      """
+      Feature: feature with empty scenario
+
+        Scenario: Placeholder test
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.spec2test.feature2junit.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Tag;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
+
+      /**
+       * Feature: feature with empty scenario
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("TestFeature.feature")
+      public abstract class TestFeatureScenarios extends TestFeature {
+          @Test
+          @Order(1)
+          @Tag("new")
+          @DisplayName("Scenario: Placeholder test")
+          public void scenario_1() {
+          }
+      }
+      """
+
+  Rule: Empty Scenarios can be tagged with a custom tag using the "tagForScenariosWithNoSteps" option
+
+    Scenario: Empty scenario with custom tag
+      Given the following base class:
+      """
+      @Feature2JUnit
+      @Feature2JUnitOptions(
+        tagForScenariosWithNoSteps = "todo"
+      )
+      public class TestFeature {
+      }
+      """
+      And the following feature file:
+      """
+      Feature: feature with empty scenario
+
+        Scenario: Not implemented yet
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.spec2test.feature2junit.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.Assertions;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Tag;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
+
+      /**
+       * Feature: feature with empty scenario
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("TestFeature.feature")
+      public abstract class TestFeatureScenarios extends TestFeature {
+          @Test
+          @Order(1)
+          @Tag("todo")
+          @DisplayName("Scenario: Not implemented yet")
+          public void scenario_1() {
+              Assertions.fail("Scenario has no steps");
+          }
+      }
+      """
+
+  Rule: When "tagForScenariosWithNoSteps" is not set, empty Scenarios get a default tag "new"
+
+    Scenario: Empty scenario with default tag
+      Given the following base class:
+      """
+      @Feature2JUnit
+      public class TestFeature {
+      }
+      """
+      And the following feature file:
+      """
+      Feature: feature with empty scenario
+
+        Scenario: Work in progress
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.spec2test.feature2junit.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.Assertions;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Tag;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
+
+      /**
+       * Feature: feature with empty scenario
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("TestFeature.feature")
+      public abstract class TestFeatureScenarios extends TestFeature {
+          @Test
+          @Order(1)
+          @Tag("new")
+          @DisplayName("Scenario: Work in progress")
+          public void scenario_1() {
+              Assertions.fail("Scenario has no steps");
+          }
+      }
+      """
+
+  Rule: The custom tag for empty Scenarios works independently of the failScenariosWithNoSteps option
+
+    Scenario: Empty scenario with custom tag but failScenariosWithNoSteps disabled
+      Given the following base class:
+      """
+      @Feature2JUnit
+      @Feature2JUnitOptions(
+        failScenariosWithNoSteps = false,
+        tagForScenariosWithNoSteps = "wip"
+      )
+      public class TestFeature {
+      }
+      """
+      And the following feature file:
+      """
+      Feature: feature with empty scenario
+
+        Scenario: Under construction
+      """
+      When the generator is run
+      Then the content of the generated class should be:
+      """
+      import dev.spec2test.feature2junit.FeatureFilePath;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Tag;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
+
+      /**
+       * Feature: feature with empty scenario
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.spec2test.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("TestFeature.feature")
+      public abstract class TestFeatureScenarios extends TestFeature {
+          @Test
+          @Order(1)
+          @Tag("wip")
+          @DisplayName("Scenario: Under construction")
+          public void scenario_1() {
+          }
+      }
+      """

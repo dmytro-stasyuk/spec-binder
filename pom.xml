@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>dev.spec2test</groupId>
+  <artifactId>spec2test</artifactId>
+  <version>0.1.6</version>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Used to generate JUnit test classes from a specification file</description>
+  <url>https://github.com/dmytro-sharedspec/spec2test/tree/main</url>
+  <packaging>pom</packaging>
+  <scm>
+    <connection>scm:git:git://github.com/dmytro-sharedspec/spec2test.git</connection>
+    <developerConnection>scm:git:ssh://github.com:dmytro-sharedspec/spec2test.git</developerConnection>
+    <url>http://github.com/dmytro-sharedspec/spec2test/tree/main</url>
+  </scm>
+  <developers>
+    <developer>
+      <name>Dmytro Stasyuk</name>
+      <email>dmytro@sharedspec.com</email>
+      <organization>SharedSpec</organization>
+      <organizationUrl>https://github.com/dmytro-sharedspec</organizationUrl>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+    </license>
+  </licenses>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <modules>
+    <module>common</module>
+    <module>annotations</module>
+    <module>feature-processor</module>
+    <module>user-story-processor</module>
+    <!--<module>examples</module>-->
+  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>com.squareup</groupId>
+      <artifactId>javapoet</artifactId>
+      <version>1.13.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.17.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.18.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.2</version>
+      <scope>provided</scope>
+      <!--            <scope>test</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.10.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.38</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.7.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.10.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.2.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+<!--            <phase>verify</phase>-->
+<!--            <phase>install</phase>-->
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+<!--              <skip>true</skip>-->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <!--    <distributionManagement>-->
+  <!--        <snapshotRepository>-->
+  <!--            <id>ossrh</id>-->
+  <!--            <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+  <!--            <url>https://central.sonatype.com/repository/maven-snapshots/</url>-->
+  <!--        </snapshotRepository>-->
+  <!--        <repository>-->
+  <!--            <id>ossrh</id>-->
+  <!--            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+  <!--        </repository>-->
+  <!--    </distributionManagement>-->
+</project>
