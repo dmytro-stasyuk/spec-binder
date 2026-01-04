@@ -3,7 +3,12 @@ package dev.specbinder.feature2junit.gherkin;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import dev.specbinder.common.*;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
+import dev.specbinder.feature2junit.exception.ProcessingException;
+import dev.specbinder.feature2junit.support.BaseTypeSupport;
+import dev.specbinder.feature2junit.support.LoggingSupport;
+import dev.specbinder.feature2junit.support.OptionsSupport;
+import dev.specbinder.feature2junit.gherkin.utils.DataTableCollector;
 import dev.specbinder.feature2junit.utils.*;
 import io.cucumber.messages.types.*;
 import org.apache.commons.lang3.StringUtils;
@@ -27,11 +32,13 @@ class ScenarioProcessor implements LoggingSupport, OptionsSupport, BaseTypeSuppo
     private final GeneratorOptions options;
     private final TypeElement baseType;
     private final Set<String> baseClassMethodNames;
+    private final DataTableCollector dataTableCollector;
 
-    public ScenarioProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options, TypeElement baseType) {
+    public ScenarioProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options, TypeElement baseType, DataTableCollector dataTableCollector) {
         this.processingEnv = processingEnv;
         this.options = options;
         this.baseType = baseType;
+        this.dataTableCollector = dataTableCollector;
 
         baseClassMethodNames = ElementMethodUtils.getAllInheritedMethodNames(processingEnv, baseType);
     }
@@ -47,7 +54,6 @@ class ScenarioProcessor implements LoggingSupport, OptionsSupport, BaseTypeSuppo
     public TypeElement getBaseType() {
         return baseType;
     }
-
 
     MethodSpec.Builder processScenario(int scenarioNumber, Scenario scenario, TypeSpec.Builder classBuilder) {
 
@@ -126,7 +132,7 @@ class ScenarioProcessor implements LoggingSupport, OptionsSupport, BaseTypeSuppo
 
             for (Step scenarioStep : scenarioSteps) {
 
-                StepProcessor stepProcessor = new StepProcessor(processingEnv, options);
+                StepProcessor stepProcessor = new StepProcessor(processingEnv, options, dataTableCollector);
                 MethodSpec stepMethodSpec = stepProcessor.processStep(
                         scenarioStep, scenarioMethodBuilder, scenarioStepsMethodSpecs,
                         scenarioParameterNames, testMethodParameterNames

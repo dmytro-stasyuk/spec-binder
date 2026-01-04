@@ -70,6 +70,8 @@ Feature: StepMethodSourceLineComments
     Scenario: Source line comments are added when option is enabled
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -78,7 +80,7 @@ Feature: StepMethodSourceLineComments
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Source Line Comments
           Scenario: Test
@@ -89,6 +91,8 @@ Feature: StepMethodSourceLineComments
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -100,11 +104,11 @@ Feature: StepMethodSourceLineComments
         /**
          * Feature: Source Line Comments
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             public abstract void givenUserExists();
 
             public abstract void whenUserClicksButton();
@@ -142,6 +146,8 @@ Feature: StepMethodSourceLineComments
     Scenario: Only source line comments are added, not @SourceLine annotations
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -150,7 +156,7 @@ Feature: StepMethodSourceLineComments
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Independent Options
           Scenario: Test
@@ -160,6 +166,8 @@ Feature: StepMethodSourceLineComments
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -171,11 +179,11 @@ Feature: StepMethodSourceLineComments
         /**
          * Feature: Independent Options
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             public abstract void givenUserExists();
 
             public abstract void whenUserClicksButton();
@@ -201,6 +209,8 @@ Feature: StepMethodSourceLineComments
     Scenario: Source line comments work with multiple steps
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -209,7 +219,7 @@ Feature: StepMethodSourceLineComments
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Multiple Steps
           Scenario: Test
@@ -221,6 +231,8 @@ Feature: StepMethodSourceLineComments
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -232,11 +244,11 @@ Feature: StepMethodSourceLineComments
         /**
          * Feature: Multiple Steps
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             public abstract void givenUserExists();
 
             public abstract void givenUserIsActive();

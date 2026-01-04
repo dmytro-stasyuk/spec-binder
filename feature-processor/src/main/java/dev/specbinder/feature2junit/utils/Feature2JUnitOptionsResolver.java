@@ -1,11 +1,13 @@
 package dev.specbinder.feature2junit.utils;
 
 import dev.specbinder.annotations.Feature2JUnitOptions;
-import dev.specbinder.common.GeneratorOptions;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.TypeElement;
 import java.util.List;
+
+import static dev.specbinder.annotations.Feature2JUnitOptions.DATA_TABLE_PARAMETER_TYPE.LIST_OF_MAPS;
 
 /**
  * Utility class for resolving and merging Feature2JUnitOptions annotations from a class hierarchy.
@@ -45,6 +47,8 @@ public class Feature2JUnitOptionsResolver {
         }
 
         // Start with defaults
+        boolean shouldBeConcrete = false;
+        String classSuffixIfConcrete = "Test";
         String generatedClassSuffix = "Scenarios";
         boolean addSourceLineAnnotations = false;
         boolean addSourceLineBeforeStepCalls = false;
@@ -54,19 +58,30 @@ public class Feature2JUnitOptionsResolver {
         String tagForRulesWithNoScenarios = "new";
         boolean addCucumberStepAnnotations = false;
         boolean placeGeneratedClassNextToAnnotatedClass = false;
+        String dataTableParameterType = LIST_OF_MAPS.name();
 
         // Merge annotations from parent to child (so child values override parent values)
         for (Feature2JUnitOptions options : annotations) {
             // For boolean properties, we always take the value (can't detect if explicitly set)
+            shouldBeConcrete = options.shouldBeConcrete();
             addSourceLineAnnotations = options.addSourceLineAnnotations();
             addSourceLineBeforeStepCalls = options.addSourceLineBeforeStepCalls();
             failScenariosWithNoSteps = options.failScenariosWithNoSteps();
             failRulesWithNoScenarios = options.failRulesWithNoScenarios();
             addCucumberStepAnnotations = options.addCucumberStepAnnotations();
-            placeGeneratedClassNextToAnnotatedClass = options.placeGeneratedClassNextToAnnotatedClass();
+            placeGeneratedClassNextToAnnotatedClass = false; // option removed
+
+            // For enum properties, convert to String
+            Feature2JUnitOptions.DATA_TABLE_PARAMETER_TYPE enumValue = options.dataTableParameterType();
+            if (enumValue != null) {
+                dataTableParameterType = enumValue.name();
+            }
 
             // For String properties, only override if the value differs from the default
             // This allows child classes to inherit parent's string values
+            if (!"Test".equals(options.classSuffixIfConcrete())) {
+                classSuffixIfConcrete = options.classSuffixIfConcrete();
+            }
             if (!"Scenarios".equals(options.generatedClassSuffix())) {
                 generatedClassSuffix = options.generatedClassSuffix();
             }
@@ -79,6 +94,8 @@ public class Feature2JUnitOptionsResolver {
         }
 
         return new GeneratorOptions(
+                shouldBeConcrete,
+                classSuffixIfConcrete,
                 generatedClassSuffix,
                 addSourceLineAnnotations,
                 addSourceLineBeforeStepCalls,
@@ -87,7 +104,8 @@ public class Feature2JUnitOptionsResolver {
                 tagForScenariosWithNoSteps,
                 tagForRulesWithNoScenarios,
                 addCucumberStepAnnotations,
-                placeGeneratedClassNextToAnnotatedClass
+                placeGeneratedClassNextToAnnotatedClass,
+                dataTableParameterType
         );
     }
 }

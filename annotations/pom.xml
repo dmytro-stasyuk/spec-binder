@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>dev.specbinder</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.1.6</version>
-  </parent>
-  <artifactId>annotations</artifactId>
-  <name>${project.groupId}:${project.artifactId}</name>
-  <description>Public annotations for Spec Binder annotation processors</description>
-  <dependencies>
-    <dependency>
-      <groupId>dev.specbinder</groupId>
-      <artifactId>common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.specbinder</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.1.8-SNAPSHOT</version>
+    </parent>
+    <artifactId>annotations</artifactId>
+    <name>${project.artifactId}</name>
+    <description>Public annotations for Spec Binder annotation processors</description>
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitForPublishCompletion>true</waitForPublishCompletion>
+                    <!--<skipPublishing>${maven.deploy.skip}</skipPublishing>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>

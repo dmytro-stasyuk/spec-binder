@@ -23,8 +23,7 @@ Feature: ClassAnnotationGenerated
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.inventory;
-
+      import com.example.inventory.StockManagement;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;

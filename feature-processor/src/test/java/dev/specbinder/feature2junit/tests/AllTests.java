@@ -1,5 +1,6 @@
 package dev.specbinder.feature2junit.tests;
 
+import dev.specbinder.feature2junit.steps.Steps;
 import io.cucumber.java.BeforeAll;
 import org.junit.platform.suite.api.ExcludePackages;
 import org.junit.platform.suite.api.IncludeClassNamePatterns;

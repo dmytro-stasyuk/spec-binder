@@ -5,17 +5,28 @@
     <parent>
         <groupId>dev.specbinder</groupId>
         <artifactId>parent</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.8-SNAPSHOT</version>
     </parent>
     <artifactId>feature-processor</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Annotation processor for generating JUnit test classes from Cucumber '.feature' files</description>
+    <properties>
+        <cucumber-java.version>7.14.0</cucumber-java.version>
+        <maven.deploy.skip>false</maven.deploy.skip>
+    </properties>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitForPublishCompletion>true</waitForPublishCompletion>
+                    <!--<skipPublishing>${maven.deploy.skip}</skipPublishing>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -26,15 +37,20 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>dev.specbinder</groupId>
-            <artifactId>common</artifactId>
-            <version>${project.version}</version>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>7.23.0</version>
-            <scope>provided</scope>
+            <artifactId>cucumber-gherkin</artifactId>
+            <version>${cucumber-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-gherkin-messages</artifactId>
+            <version>${cucumber-java.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.auto.service</groupId>
@@ -44,27 +60,15 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <!--<version>5.13.4</version>-->
+            <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.jupiter.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.jupiter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <!--<version>7.23.0</version>-->
-            <version>7.14.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-            <!--<version>1.13.4</version>-->
-            <version>1.10.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.squareup</groupId>
@@ -81,14 +85,26 @@
             <artifactId>commons-io</artifactId>
             <version>2.18.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!--======================================================================================================-->
         <!--Test dependencies-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber-java.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>

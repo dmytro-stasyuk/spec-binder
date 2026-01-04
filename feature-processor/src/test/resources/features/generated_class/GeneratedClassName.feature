@@ -22,8 +22,7 @@ Feature: GeneratedClassName
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.cart;
-
+      import com.example.cart.CartFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -72,8 +71,7 @@ Feature: GeneratedClassName
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.payment;
-
+      import com.example.payment.PaymentFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;

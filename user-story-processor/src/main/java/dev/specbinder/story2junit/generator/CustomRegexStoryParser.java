@@ -1,6 +1,6 @@
 package dev.specbinder.story2junit.generator;
 
-import dev.specbinder.common.LoggingSupport;
+import dev.specbinder.story2junit.support.LoggingSupport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jbehave.core.model.Story;

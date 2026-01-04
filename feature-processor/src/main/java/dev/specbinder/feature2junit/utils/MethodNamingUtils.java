@@ -1,7 +1,7 @@
 package dev.specbinder.feature2junit.utils;
 
 import com.squareup.javapoet.MethodSpec;
-import dev.specbinder.common.ProcessingException;
+import dev.specbinder.feature2junit.exception.ProcessingException;
 
 import java.util.List;
 

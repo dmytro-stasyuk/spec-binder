@@ -10,11 +10,11 @@ Feature: FeatureTags
       """
       package com.example.tests;
 
-      @Feature2JUnit("smoke-tests.feature")
+      @Feature2JUnit("features/smoke-tests.feature")
       public abstract class SmokeTests {
       }
       """
-      And the following feature file:
+      And a feature file under path "features/smoke-tests.feature" with the following content:
       """
       @smoke
       Feature: Smoke Tests
@@ -23,8 +23,9 @@ Feature: FeatureTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.tests;
+      package features;
 
+      import com.example.tests.SmokeTests;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -37,7 +38,7 @@ Feature: FeatureTags
       @Tag("smoke")
       @DisplayName("smoke-tests")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
-      @FeatureFilePath("smoke-tests.feature")
+      @FeatureFilePath("features/smoke-tests.feature")
       public abstract class SmokeTestsScenarios extends SmokeTests {
       }
       """
@@ -62,8 +63,7 @@ Feature: FeatureTags
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.api;
-
+      import com.example.api.UserApiTests;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;

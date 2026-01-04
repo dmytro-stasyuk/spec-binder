@@ -5,43 +5,53 @@
     <parent>
         <groupId>dev.specbinder</groupId>
         <artifactId>parent</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.8-SNAPSHOT</version>
     </parent>
+    <groupId>dev.specbinder.examples</groupId>
     <artifactId>examples</artifactId>
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>${project.artifactId}</name>
     <description>Grouping project for examples</description>
     <packaging>pom</packaging>
     <modules>
-        <module>example-feature2junit</module>
+        <module>examples-feature-processor</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>dev.specbinder</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.2.6</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <skipIfEmpty>true</skipIfEmpty>
+                </configuration>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.8.0</version>
-                <executions>
-                    <execution>
-                        <id>injected-central-publishing</id>
-                        <goals>
-                            <goal>publish</goal>
-                        </goals>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>

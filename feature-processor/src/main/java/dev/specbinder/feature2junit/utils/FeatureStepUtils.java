@@ -1,6 +1,6 @@
 package dev.specbinder.feature2junit.utils;
 
-import dev.specbinder.common.ProcessingException;
+import dev.specbinder.feature2junit.exception.ProcessingException;
 import io.cucumber.messages.types.*;
 
 import java.util.List;

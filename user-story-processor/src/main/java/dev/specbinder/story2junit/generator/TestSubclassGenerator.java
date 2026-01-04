@@ -1,9 +1,9 @@
 package dev.specbinder.story2junit.generator;
 
 import com.squareup.javapoet.*;
-import dev.specbinder.common.LoggingSupport;
 import dev.specbinder.story2junit.Story2JUnit;
 import dev.specbinder.story2junit.StoryFilePath;
+import dev.specbinder.story2junit.support.LoggingSupport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

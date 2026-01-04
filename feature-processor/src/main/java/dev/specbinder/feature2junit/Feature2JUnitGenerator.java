@@ -3,8 +3,8 @@ package dev.specbinder.feature2junit;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import dev.specbinder.annotations.Feature2JUnit;
-import dev.specbinder.common.GeneratorOptions;
-import dev.specbinder.common.LoggingSupport;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
+import dev.specbinder.feature2junit.support.LoggingSupport;
 import dev.specbinder.feature2junit.utils.Feature2JUnitOptionsResolver;
 import dev.specbinder.feature2junit.utils.GlobPatternMatcher;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -12,6 +12,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
@@ -23,8 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Annotation processor that generates JUnit test subclasses for classes annotated with {@link Feature2JUnit} annotation.
@@ -33,8 +33,6 @@ import java.util.Set;
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class Feature2JUnitGenerator extends AbstractProcessor implements LoggingSupport {
-
-    static final String defaultSuffixForGeneratedClass = "Test";
 
     /**
      * Default constructor.
@@ -53,6 +51,11 @@ public class Feature2JUnitGenerator extends AbstractProcessor implements Logging
         int totalClassesProcessed = 0;
 
         logInfo("Running " + this.getClass().getSimpleName());
+
+        // Track all generated class names (fully qualified) across all annotated classes
+        // Key: fully qualified class name (package.ClassName)
+        // Value: source information (annotated class + feature file path)
+        Map<String, String> allGeneratedClassNames = new HashMap<>();
 
         for (TypeElement annotation : annotations) {
 
@@ -83,6 +86,17 @@ public class Feature2JUnitGenerator extends AbstractProcessor implements Logging
 
                 String annotationValue = targetAnnotation.value();
 
+                // Check if the annotation value is empty - if so, derive a pattern from the package
+                if (annotationValue == null || annotationValue.isBlank()) {
+                    String packageName = getPackageName(annotatedClass);
+                    if (packageName.isEmpty()) {
+                        annotationValue = "*.feature";
+                    } else {
+                        annotationValue = packageName.replace('.', '/') + "/*.feature";
+                    }
+                    logInfo("Empty annotation value detected, using pattern: " + annotationValue);
+                }
+
                 // Check if the annotation value is a glob pattern
                 if (GlobPatternMatcher.isGlobPattern(annotationValue)) {
                     logInfo("Detected glob pattern: " + annotationValue);
@@ -105,6 +119,27 @@ public class Feature2JUnitGenerator extends AbstractProcessor implements Logging
                     }
 
                     logInfo("Found " + matchingFiles.size() + " files matching pattern: " + annotationValue);
+
+                    // Check for duplicate generated class names (both within pattern and across all annotations)
+                    String suffixToApply = generatorOptions.getGeneratedClassSuffix();
+                    String packageName = getPackageName(annotatedClass);
+
+                    for (String featureFilePath : matchingFiles) {
+                        String generatedClassName = subclassGenerator.extractFeatureFileName(featureFilePath) + suffixToApply;
+                        String fullyQualifiedClassName = packageName.isEmpty()
+                            ? generatedClassName
+                            : packageName + "." + generatedClassName;
+
+                        if (allGeneratedClassNames.containsKey(fullyQualifiedClassName)) {
+                            String errorMessage = "Duplicate generated class name '" + generatedClassName +
+                                    "' from feature file pattern '" + annotationValue + "'.";
+                            logError(errorMessage);
+                            throw new RuntimeException(errorMessage);
+                        }
+
+                        allGeneratedClassNames.put(fullyQualifiedClassName,
+                            "from @Feature2JUnit on " + annotatedClass.getQualifiedName() + " for " + featureFilePath);
+                    }
 
                     // Generate a test class for each matching file
                     for (String featureFilePath : matchingFiles) {
@@ -134,6 +169,22 @@ public class Feature2JUnitGenerator extends AbstractProcessor implements Logging
                         logException(e, annotatedClass);
                         continue;
                     }
+
+                    // Check for duplicate generated class name
+                    String fullyQualifiedClassName = javaFile.packageName.isEmpty()
+                        ? javaFile.typeSpec.name
+                        : javaFile.packageName + "." + javaFile.typeSpec.name;
+
+                    if (allGeneratedClassNames.containsKey(fullyQualifiedClassName)) {
+                        String errorMessage = "Duplicate generated class name '" + javaFile.typeSpec.name +
+                                "' would be generated for feature file '" + annotationValue + "'. " +
+                                "Previously generated " + allGeneratedClassNames.get(fullyQualifiedClassName);
+                        logError(errorMessage);
+                        throw new RuntimeException(errorMessage);
+                    }
+
+                    allGeneratedClassNames.put(fullyQualifiedClassName,
+                        "from @Feature2JUnit on " + annotatedClass.getQualifiedName() + " for " + annotationValue);
 
                     // Write the generated file
                     writeGeneratedFile(javaFile, annotatedClass, generatorOptions);
@@ -240,6 +291,20 @@ public class Feature2JUnitGenerator extends AbstractProcessor implements Logging
      */
     public GlobPatternMatcher createGlobPatternMatcher() {
         return new GlobPatternMatcher(getProcessingEnv());
+    }
+
+    /**
+     * Extracts the package name from a TypeElement.
+     *
+     * @param typeElement the type element to extract the package from
+     * @return the package name, or empty string if no package
+     */
+    private String getPackageName(TypeElement typeElement) {
+        Element enclosingElement = typeElement.getEnclosingElement();
+        if (enclosingElement instanceof PackageElement) {
+            return ((PackageElement) enclosingElement).getQualifiedName().toString();
+        }
+        return "";
     }
 
     // Add this helper method inside the Feature2JUnitGenerator class:

@@ -6,7 +6,14 @@ import javax.tools.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class for verifying that generated Java source code compiles successfully.
@@ -25,18 +32,18 @@ class CompilationVerifier {
         String className = null;
 
         // Extract package name
-        java.util.regex.Pattern packagePattern = java.util.regex.Pattern.compile("^\\s*package\\s+([\\w.]+)\\s*;", java.util.regex.Pattern.MULTILINE);
-        java.util.regex.Matcher packageMatcher = packagePattern.matcher(sourceCode);
+        Pattern packagePattern = Pattern.compile("^\\s*package\\s+([\\w.]+)\\s*;", Pattern.MULTILINE);
+        Matcher packageMatcher = packagePattern.matcher(sourceCode);
         if (packageMatcher.find()) {
             packageName = packageMatcher.group(1);
         }
 
         // Extract class name (supports class, abstract class, interface, enum, record)
-        java.util.regex.Pattern classPattern = java.util.regex.Pattern.compile(
+        Pattern classPattern = Pattern.compile(
                 "^\\s*(?:public\\s+)?(?:abstract\\s+)?(?:final\\s+)?(?:class|interface|enum|record)\\s+(\\w+)",
-                java.util.regex.Pattern.MULTILINE
+                Pattern.MULTILINE
         );
-        java.util.regex.Matcher classMatcher = classPattern.matcher(sourceCode);
+        Matcher classMatcher = classPattern.matcher(sourceCode);
         if (classMatcher.find()) {
             className = classMatcher.group(1);
         }
@@ -56,7 +63,7 @@ class CompilationVerifier {
      * @param featureFilePath optional path to the feature file (used to organize output directories)
      * @throws AssertionError if compilation fails
      */
-    static void verifyCompilation(java.util.Map<String, String> sourceFiles, String featureFilePath) {
+    static void verifyCompilation(Map<String, String> sourceFiles, String featureFilePath) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         Assertions.assertNotNull(compiler, "Java compiler not available. Ensure you're running with JDK, not JRE.");
 
@@ -64,8 +71,8 @@ class CompilationVerifier {
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
 
         // Create in-memory Java file objects for all source files
-        java.util.List<JavaFileObject> compilationUnits = new java.util.ArrayList<>();
-        for (java.util.Map.Entry<String, String> entry : sourceFiles.entrySet()) {
+        List<JavaFileObject> compilationUnits = new ArrayList<>();
+        for (Map.Entry<String, String> entry : sourceFiles.entrySet()) {
             compilationUnits.add(new InMemoryJavaFileObject(entry.getKey(), entry.getValue()));
         }
 
@@ -79,7 +86,7 @@ class CompilationVerifier {
         String classpath = System.getProperty("java.class.path");
 
         // Compiler options: disable annotation processing, use current classpath, and set output directory
-        java.util.List<String> options = java.util.Arrays.asList(
+        List<String> options = Arrays.asList(
                 "-proc:none", // Disable annotation processing to avoid warnings
                 "-classpath", classpath, // Use current classpath to resolve annotations
                 "-d", outputDir.getAbsolutePath() // Output directory for compiled classes
@@ -159,7 +166,7 @@ class CompilationVerifier {
      * @param sourceFiles map of fully qualified class names to their source code
      * @throws AssertionError if compilation fails
      */
-    static void verifyCompilation(java.util.Map<String, String> sourceFiles) {
+    static void verifyCompilation(Map<String, String> sourceFiles) {
         verifyCompilation(sourceFiles, null);
     }
 
@@ -171,7 +178,7 @@ class CompilationVerifier {
      * @throws AssertionError if compilation fails
      */
     static void verifyCompilation(String className, String sourceCode) {
-        java.util.Map<String, String> sourceFiles = new java.util.HashMap<>();
+        Map<String, String> sourceFiles = new HashMap<>();
         sourceFiles.put(className, sourceCode);
         verifyCompilation(sourceFiles);
     }

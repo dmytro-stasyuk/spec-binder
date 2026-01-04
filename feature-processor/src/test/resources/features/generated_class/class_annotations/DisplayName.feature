@@ -27,8 +27,7 @@ Feature: DisplayName
 
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.FeatureTestBase;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -49,12 +48,14 @@ Feature: DisplayName
     Scenario: feature file is in a subdirectory
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit("features/ShoppingCart.feature")
       public abstract class FeatureTestBase extends  {
 
       }
       """
-      And the following feature file:
+      And a feature file under path "features/ShoppingCart.feature" with the following content:
       """
       Feature: Online Shopping Cart
         As a customer
@@ -66,6 +67,9 @@ Feature: DisplayName
 
       Then the content of the generated class should be:
       """
+      package features;
+
+      import com.example.FeatureTestBase;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -88,12 +92,14 @@ Feature: DisplayName
     Scenario: DisplayName is file name even when feature has different description
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit("specs/payment.feature")
       public abstract class FeatureTestBase {
 
       }
       """
-      And the following feature file:
+      And a feature file under path "specs/payment.feature" with the following content:
       """
       Feature: Processing Credit Card Payments and Refunds
         As a payment processor
@@ -105,6 +111,9 @@ Feature: DisplayName
 
       Then the content of the generated class should be:
       """
+      package specs;
+
+      import com.example.FeatureTestBase;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;

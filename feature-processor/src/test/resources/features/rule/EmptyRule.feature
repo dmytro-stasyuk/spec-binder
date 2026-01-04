@@ -9,6 +9,8 @@ Feature: EmptyRule
     Scenario: where failRulesWithNoScenarios = enabled
       Given the following base class:
       """
+      package com.example.payment;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         failRulesWithNoScenarios = true
@@ -16,7 +18,7 @@ Feature: EmptyRule
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/payment/TestFeature.feature" with the following content:
       """
       Feature: feature with empty rule
 
@@ -25,6 +27,8 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example.payment;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -44,7 +48,7 @@ Feature: EmptyRule
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/payment/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Nested
           @Order(1)
@@ -63,6 +67,8 @@ Feature: EmptyRule
     Scenario: where failRulesWithNoScenarios = disabled
       Given the following base class:
       """
+      package com.example.payment;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         failRulesWithNoScenarios = false
@@ -70,7 +76,7 @@ Feature: EmptyRule
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/payment/TestFeature.feature" with the following content:
       """
       Feature: feature with empty rule
 
@@ -79,6 +85,8 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example.payment;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.ClassOrderer;
@@ -95,7 +103,7 @@ Feature: EmptyRule
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/payment/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Nested
           @Order(1)
@@ -111,11 +119,13 @@ Feature: EmptyRule
     Scenario: base class with default options i.e. no explicit Feature2JUnitOptions
       Given the following base class:
       """
+      package com.example.payment;
+
       @Feature2JUnit
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/payment/TestFeature.feature" with the following content:
       """
       Feature: feature with empty rule
 
@@ -124,6 +134,8 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example.payment;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -143,7 +155,7 @@ Feature: EmptyRule
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/payment/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Nested
           @Order(1)
@@ -164,6 +176,8 @@ Feature: EmptyRule
     Scenario: Empty rule with custom tag
       Given the following base class:
       """
+      package com.example.payment;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         tagForRulesWithNoScenarios = "incomplete"
@@ -171,7 +185,7 @@ Feature: EmptyRule
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/payment/TestFeature.feature" with the following content:
       """
       Feature: feature with empty rule
 
@@ -180,6 +194,8 @@ Feature: EmptyRule
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example.payment;
+      
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -199,7 +215,7 @@ Feature: EmptyRule
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/payment/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Nested
           @Order(1)

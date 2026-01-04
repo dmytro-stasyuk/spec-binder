@@ -22,8 +22,7 @@ Feature: ClassAnnotationTestClassOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.simple;
-
+      import com.example.simple.SimpleFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -70,8 +69,7 @@ Feature: ClassAnnotationTestClassOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.rules;
-
+      import com.example.rules.BusinessRules;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -135,8 +133,7 @@ Feature: ClassAnnotationTestClassOrder
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example.workflow;
-
+      import com.example.workflow.WorkflowTests;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;

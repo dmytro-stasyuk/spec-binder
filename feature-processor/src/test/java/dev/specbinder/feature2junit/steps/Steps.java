@@ -16,7 +16,9 @@ import org.mockito.Mockito;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
@@ -25,12 +27,14 @@ import javax.lang.model.type.NoType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.FileObject;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -148,6 +152,11 @@ public class Steps {
         // to maintain compatibility with existing tests
         TypeElement typeElement = mock(TypeElement.class);
         classInfo.typeElement = typeElement;
+
+        // Extract and mock methods from the base class
+        List<String> methodNames = BaseClassCodeParser.extractMethodNames(docString);
+        List<? extends Element> enclosedElements = createMethodMocks(methodNames);
+        when(typeElement.getEnclosedElements()).thenReturn((List) enclosedElements);
         // Set up basic TypeElement properties
         when(typeElement.getKind()).thenReturn(ElementKind.CLASS);
         // Set up type parameters and type mirror
@@ -232,8 +241,8 @@ public class Steps {
     public void the_following_feature_file(String docString) throws IOException {
         // Use the path from @Feature2JUnit annotation if available, otherwise use default
         String path = annotatedFeatureFilePath != null
-            ? annotatedFeatureFilePath
-            : "MockedAnnotatedTestClass.feature";
+                ? annotatedFeatureFilePath
+                : "MockedAnnotatedTestClass.feature";
         featureFiles.put(path, docString);
         setupFeatureFileMocks();
     }
@@ -258,7 +267,7 @@ public class Steps {
 
                     // If still not found and the requestedPath is explicitly specified (not null), throw FileNotFoundException
                     if (content == null && requestedPath != null && !requestedPath.isEmpty()) {
-                        throw new java.io.FileNotFoundException("Feature file not found: " + requestedPath);
+                        throw new FileNotFoundException("Feature file not found: " + requestedPath);
                     }
 
                     FileObject specFile = mock(FileObject.class);
@@ -308,17 +317,16 @@ public class Steps {
             generatorException.printStackTrace(System.err);
         }
 
-        String generatedClas = generatedClassWriter.toString().trim();
+        String generatedClass = generatedClassWriter.toString().trim();
         String expectedClass = docString.trim();
-        Assertions.assertEquals(expectedClass, generatedClas);
 
         // Verify that the generated code actually compiles (if enabled)
         if (verifyCompilation) {
-            String generatedClassName = CompilationVerifier.extractFullyQualifiedClassName(generatedClas);
+            String generatedClassName = CompilationVerifier.extractFullyQualifiedClassName(generatedClass);
             if (generatedClassName != null) {
                 // Create a map of source files to compile
                 Map<String, String> sourceFiles = new HashMap<>();
-                sourceFiles.put(generatedClassName, generatedClas);
+                sourceFiles.put(generatedClassName, generatedClass);
 
                 // Create stubs for all classes in the hierarchy
                 if (baseClassHierarchy.isEmpty()) {
@@ -326,23 +334,22 @@ public class Steps {
                     // Include @Feature2JUnit annotation to match what the generator expects
                     String baseClassSource =
                             "import dev.specbinder.annotations.Feature2JUnit;\n\n" +
-                            "@Feature2JUnit(\"MockedAnnotatedTestClass.feature\")\n" +
-                            "public abstract class MockedAnnotatedTestClass {\n" +
-                            "}\n";
+                                    "@Feature2JUnit(\"MockedAnnotatedTestClass.feature\")\n" +
+                                    "public abstract class MockedAnnotatedTestClass {\n" +
+                                    "}\n";
                     sourceFiles.put("MockedAnnotatedTestClass", baseClassSource);
                 } else {
-                    // Create stubs for all classes in hierarchy based on insert order
+                    // Create complete stubs from source code for all classes in hierarchy
                     for (int i = 0; i < baseClassHierarchy.size(); i++) {
                         BaseClassInfo classInfo = baseClassHierarchy.get(i);
 
                         // Each class extends the previous one in insert order
                         String extendsClause = i > 0
-                            ? " extends " + baseClassHierarchy.get(i - 1).className
-                            : "";
+                                ? " extends " + baseClassHierarchy.get(i - 1).className
+                                : "";
 
-                        String baseClassSource = BaseClassStubGenerator.createBaseClassStubWithSuperclass(
-                                classInfo.packageName,
-                                classInfo.className,
+                        String baseClassSource = BaseClassStubGenerator.createCompleteStub(
+                                classInfo.sourceCode,
                                 extendsClause);
 
                         String baseClassQualifiedName = classInfo.packageName != null && !classInfo.packageName.isEmpty()
@@ -355,6 +362,13 @@ public class Steps {
                 // Compile all source files together
                 CompilationVerifier.verifyCompilation(sourceFiles, currentFeatureFilePath);
             }
+
+            // also compare the generated code textually
+            Assertions.assertEquals(expectedClass, generatedClass);
+
+        } else {
+            // Simply compare the generated code textually
+            Assertions.assertEquals(expectedClass, generatedClass);
         }
     }
 
@@ -398,6 +412,26 @@ public class Steps {
         String expectedContentTrimmed = expectedContent.trim();
 
         Assertions.assertEquals(expectedContentTrimmed, actualContent);
+    }
+
+    /**
+     * Creates ExecutableElement mocks for the given method names.
+     *
+     * @param methodNames the list of method names to create mocks for
+     * @return a list of ExecutableElement mocks
+     */
+    private List<ExecutableElement> createMethodMocks(List<String> methodNames) {
+        List<ExecutableElement> methodElements = new ArrayList<>();
+        for (String methodName : methodNames) {
+            ExecutableElement methodElement = mock(ExecutableElement.class);
+            when(methodElement.getKind()).thenReturn(ElementKind.METHOD);
+            when(methodElement.getModifiers()).thenReturn(new HashSet<>()); // Non-private
+            Name methodNameMock = mock(Name.class);
+            when(methodNameMock.toString()).thenReturn(methodName);
+            when(methodElement.getSimpleName()).thenReturn(methodNameMock);
+            methodElements.add(methodElement);
+        }
+        return methodElements;
     }
 
     /**

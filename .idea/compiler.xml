@@ -7,11 +7,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="annotations" />
-        <module name="common" />
-        <module name="user-story-processor" />
+        <module name="example-5" />
+        <module name="example-6" />
         <module name="feature-processor" />
+        <module name="example-3" />
+        <module name="example-4" />
+        <module name="example-1" />
+        <module name="annotations" />
+        <module name="example-2" />
+        <module name="user-story-processor" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="17" />
+      <module name="example-2 (1)" target="1.5" />
+      <module name="example-6.main" target="17" />
+      <module name="example-6.test" target="17" />
+      <module name="spec2test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

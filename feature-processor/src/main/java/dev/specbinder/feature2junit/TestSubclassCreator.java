@@ -3,14 +3,24 @@ package dev.specbinder.feature2junit;
 import com.squareup.javapoet.*;
 import dev.specbinder.annotations.Feature2JUnit;
 import dev.specbinder.annotations.output.FeatureFilePath;
-import dev.specbinder.common.GeneratorOptions;
-import dev.specbinder.common.LoggingSupport;
-import dev.specbinder.common.OptionsSupport;
-import dev.specbinder.common.ProcessingException;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
+import dev.specbinder.feature2junit.support.LoggingSupport;
+import dev.specbinder.feature2junit.support.OptionsSupport;
+import dev.specbinder.feature2junit.exception.ProcessingException;
 import dev.specbinder.feature2junit.gherkin.FeatureFileParser;
 import dev.specbinder.feature2junit.gherkin.FeatureProcessor;
+import dev.specbinder.feature2junit.gherkin.utils.DataTableCollector;
+import dev.specbinder.feature2junit.gherkin.utils.RecordGenerator;
+import dev.specbinder.feature2junit.gherkin.utils.RecordMetadata;
 import dev.specbinder.feature2junit.utils.*;
+import io.cucumber.messages.types.Background;
 import io.cucumber.messages.types.Feature;
+import io.cucumber.messages.types.FeatureChild;
+import io.cucumber.messages.types.Rule;
+import io.cucumber.messages.types.RuleChild;
+import io.cucumber.messages.types.Scenario;
+import io.cucumber.messages.types.Step;
+import io.cucumber.messages.types.TableCell;
 import io.cucumber.messages.types.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -26,6 +36,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import static dev.specbinder.annotations.Feature2JUnitOptions.DATA_TABLE_PARAMETER_TYPE.LIST_OF_MAPS;
 
 /**
  * Creates a JUnit test subclass for a given type element annotated with {@link Feature2JUnit}.
@@ -77,7 +89,12 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
      * @throws IOException if an error occurs during file generation
      */
     public JavaFile createTestSubclass(TypeElement annotatedClass, String featureFilePath, boolean deriveClassNameFromFile) throws IOException {
-        String suffixToApply = options.getGeneratedClassSuffix();
+        String suffixToApply;
+        if (options.isShouldBeConcrete()) {
+            suffixToApply = options.getClassSuffixIfConcrete();
+        } else {
+            suffixToApply = options.getGeneratedClassSuffix();
+        }
         String generatedClassName;
         String featureFilePathForParsing;
 
@@ -114,7 +131,7 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
             String featureFilePathForAnnotation,
             String generatedClassName) throws IOException {
 
-        String packageName = extractPackageName(annotatedClass);
+        String packageName = extractPackageNameFromFeaturePath(featureFilePathForParsing);
         String annotatedClassName = annotatedClass.getSimpleName().toString();
 
         // Parse the feature file
@@ -125,7 +142,11 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
         TypeSpec.Builder classBuilder = TypeSpec
                 .classBuilder(generatedClassName)
                 .superclass(asTypeMirror)
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+                .addModifiers(Modifier.PUBLIC);
+
+        if (!options.isShouldBeConcrete()) {
+            classBuilder.addModifiers(Modifier.ABSTRACT);
+        }
 
         // Add feature documentation and process feature content
         if (feature != null) {
@@ -133,11 +154,27 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
                     feature.getKeyword(), feature.getName(), feature.getDescription());
             classBuilder.addJavadoc(CodeBlock.of(featureTextJavaDoc));
 
-            FeatureProcessor featureProcessor = new FeatureProcessor(processingEnv, options, annotatedClass);
+            // Pass 1: Collect data table metadata for LIST_OF_OBJECT_PARAMS option
+            DataTableCollector dataTableCollector = null;
+            if ("LIST_OF_OBJECT_PARAMS".equals(options.getDataTableParameterType())) {
+                dataTableCollector = new DataTableCollector();
+                collectDataTableMetadata(feature, dataTableCollector);
+            }
+
+            // Pass 2: Process feature and generate code
+            FeatureProcessor featureProcessor = new FeatureProcessor(processingEnv, options, annotatedClass, dataTableCollector);
             featureProcessor.processFeature(feature, classBuilder);
 
+            // Generate record types for LIST_OF_OBJECT_PARAMS
+            if (dataTableCollector != null && dataTableCollector.hasDataTables()) {
+                for (RecordMetadata metadata : dataTableCollector.getRecordMetadataMap().values()) {
+                    TypeSpec recordType = RecordGenerator.generateRecord(metadata);
+                    classBuilder.addType(recordType);
+                }
+            }
+
             // Add createDataTable method if needed
-            addDataTableMethodsIfNeeded(annotatedClass, feature, classBuilder);
+            addDataTableMethodsIfNeeded(annotatedClass, feature, classBuilder, dataTableCollector);
         }
 
         // Add class annotations
@@ -180,6 +217,25 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
     }
 
     /**
+     * Extracts the package name from the feature file path.
+     * Example: "features/checkout/cart/cart.feature" → "features.checkout.cart"
+     */
+    private String extractPackageNameFromFeaturePath(String featureFilePath) {
+        String packagePath = featureFilePath;
+
+        // Remove the file name (everything after the last /)
+        if (packagePath.contains("/")) {
+            packagePath = packagePath.substring(0, packagePath.lastIndexOf("/"));
+        } else {
+            // If there's no directory separator, the file is in the root, return empty package
+            return "";
+        }
+
+        // Replace / with . to create a valid Java package name
+        return packagePath.replace("/", ".");
+    }
+
+    /**
      * Determines the feature file path to use for parsing.
      * If the provided path is blank, constructs a default path based on the package and class name.
      */
@@ -203,7 +259,7 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
      * Extracts the feature file name (without extension) from a feature file path.
      * Example: "features/user/Login.feature" → "Login"
      */
-    private String extractFeatureFileName(String featureFilePath) {
+    String extractFeatureFileName(String featureFilePath) {
         String fileName = featureFilePath;
 
         // Remove directory path
@@ -220,25 +276,109 @@ class TestSubclassCreator implements LoggingSupport, OptionsSupport {
     }
 
     /**
+     * Collects data table metadata from all steps in the feature.
+     * This is the first pass that identifies all record types needed for LIST_OF_OBJECT_PARAMS generation.
+     */
+    private void collectDataTableMetadata(Feature feature, DataTableCollector collector) {
+        for (FeatureChild child : feature.getChildren()) {
+            if (child.getScenario().isPresent()) {
+                Scenario scenario = child.getScenario().get();
+                collectDataTableMetadataFromSteps(scenario.getSteps(), collector);
+            } else if (child.getRule().isPresent()) {
+                Rule rule = child.getRule().get();
+                for (RuleChild ruleChild : rule.getChildren()) {
+                    if (ruleChild.getBackground().isPresent()) {
+                        Background background = ruleChild.getBackground().get();
+                        collectDataTableMetadataFromSteps(background.getSteps(), collector);
+                    }
+                    if (ruleChild.getScenario().isPresent()) {
+                        Scenario scenario = ruleChild.getScenario().get();
+                        collectDataTableMetadataFromSteps(scenario.getSteps(), collector);
+                    }
+                }
+            } else if (child.getBackground().isPresent()) {
+                Background background = child.getBackground().get();
+                collectDataTableMetadataFromSteps(background.getSteps(), collector);
+            }
+        }
+    }
+
+    /**
+     * Collects data table metadata from a list of steps.
+     */
+    private void collectDataTableMetadataFromSteps(List<Step> steps, DataTableCollector collector) {
+        for (Step step : steps) {
+            if (step.getDataTable().isPresent()) {
+                io.cucumber.messages.types.DataTable dt = step.getDataTable().get();
+                List<String> headers = dt.getRows().get(0).getCells()
+                        .stream()
+                        .map(TableCell::getValue)
+                        .toList();
+                String stepText = step.getKeyword() + step.getText();
+                collector.registerDataTable(stepText, headers);
+            }
+        }
+    }
+
+    /**
      * Adds DataTable helper methods to the class builder if the feature contains steps with data tables.
      */
     private void addDataTableMethodsIfNeeded(
             TypeElement annotatedClass,
             Feature feature,
-            TypeSpec.Builder classBuilder) {
+            TypeSpec.Builder classBuilder,
+            DataTableCollector dataTableCollector) {
 
         boolean featureHasStepWithDataTable = FeatureStepUtils.featureHasStepWithDataTable(feature);
         if (featureHasStepWithDataTable) {
             Set<String> allInheritedMethodNames = ElementMethodUtils.getAllInheritedMethodNames(
                     processingEnv, annotatedClass);
-            boolean alreadyHasCreateDataTable = allInheritedMethodNames.contains("createDataTable");
 
-            if (!alreadyHasCreateDataTable) {
-                MethodSpec getTableConverterMethod = TableUtils.createGetTableConverterMethod(processingEnv);
-                classBuilder.addMethod(getTableConverterMethod);
+            String dataTableParameterType = options.getDataTableParameterType();
 
-                MethodSpec createDataTableMethod = TableUtils.createDataTableMethod(processingEnv);
-                classBuilder.addMethod(createDataTableMethod);
+            if ("LIST_OF_OBJECT_PARAMS".equals(dataTableParameterType)) {
+                // Add createListOfMaps base method if not present in class hierarchy
+                boolean alreadyHasCreateListOfMaps = allInheritedMethodNames.contains("createListOfMaps");
+                if (!alreadyHasCreateListOfMaps) {
+                    MethodSpec createListOfMapsMethod = TableUtils.createListOfMapsMethod(processingEnv);
+                    classBuilder.addMethod(createListOfMapsMethod);
+                }
+
+                // Add createListOf<RecordName> methods for each record type
+                if (dataTableCollector != null && dataTableCollector.hasDataTables()) {
+                    for (RecordMetadata recordMetadata : dataTableCollector.getRecordMetadataMap().values()) {
+                        String methodName = "createListOf" + recordMetadata.getRecordName();
+                        boolean alreadyHasMethod = allInheritedMethodNames.contains(methodName);
+
+                        if (!alreadyHasMethod) {
+                            MethodSpec createListOfRecordMethod =
+                                    TableUtils.createListOfRecordMethod(processingEnv, recordMetadata);
+                            classBuilder.addMethod(createListOfRecordMethod);
+                        }
+                    }
+                }
+            } else if (LIST_OF_MAPS.name().equals(dataTableParameterType)) {
+                // Add createListOfMaps if not present in class hierarchy
+                boolean alreadyHasCreateListOfMaps = allInheritedMethodNames.contains("createListOfMaps");
+                if (!alreadyHasCreateListOfMaps) {
+                    MethodSpec createListOfMapsMethod = TableUtils.createListOfMapsMethod(processingEnv);
+                    classBuilder.addMethod(createListOfMapsMethod);
+                }
+            } else {
+                // Default: CUCUMBER_DATA_TABLE
+                // Add getTableConverter if not present in class hierarchy
+                boolean alreadyHasGetTableConverter = allInheritedMethodNames.contains("getTableConverter");
+                if (!alreadyHasGetTableConverter) {
+                    MethodSpec getTableConverterMethod = TableUtils.createGetTableConverterMethod(processingEnv);
+                    classBuilder.addMethod(getTableConverterMethod);
+                }
+
+                // Add createDataTable if not present in class hierarchy
+                boolean alreadyHasCreateDataTable = allInheritedMethodNames.contains("createDataTable");
+                if (!alreadyHasCreateDataTable) {
+                    MethodSpec createDataTableMethod = TableUtils.createDataTableMethod(processingEnv);
+                    classBuilder.addMethod(createDataTableMethod);
+                }
             }
         }
     }

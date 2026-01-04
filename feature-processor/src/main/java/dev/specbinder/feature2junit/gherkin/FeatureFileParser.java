@@ -1,7 +1,7 @@
 package dev.specbinder.feature2junit.gherkin;
 
-import dev.specbinder.common.LoggingSupport;
-import dev.specbinder.common.ProcessingException;
+import dev.specbinder.feature2junit.support.LoggingSupport;
+import dev.specbinder.feature2junit.exception.ProcessingException;
 import io.cucumber.gherkin.GherkinParser;
 import io.cucumber.messages.types.Envelope;
 import io.cucumber.messages.types.Feature;

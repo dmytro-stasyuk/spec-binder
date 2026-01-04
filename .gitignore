@@ -19,3 +19,5 @@ buildNumber.properties
 .DS_Store
 
 **/*Scenarios.java
+/_resources/
+**/.flattened-pom.xml

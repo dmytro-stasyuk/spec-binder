@@ -1,6 +1,6 @@
 Feature: CucumberStepAnnotations
   As a developer
-  I want Cucumber step annotations to be added to the generated step method signatures
+  I want Cucumber step annotations to be optionally added to the generated step method signatures
   So that IDE plugins can provide navigation between feature files and step implementations
 
   Rule: When addCucumberStepAnnotations option is enabled, step methods are annotated with @Given/@When/@Then
@@ -10,6 +10,8 @@ Feature: CucumberStepAnnotations
     Scenario: Given step generates @Given annotation with simple regex
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -18,7 +20,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Simple Given
           Scenario: Test
@@ -27,6 +29,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import javax.annotation.processing.Generated;
@@ -39,11 +43,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Simple Given
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^user exists$")
             public abstract void givenUserExists();
 
@@ -62,6 +66,8 @@ Feature: CucumberStepAnnotations
     Scenario: When step generates @When annotation with simple regex
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -77,8 +83,10 @@ Feature: CucumberStepAnnotations
             When user clicks button
         """
       When the generator is run
-      Then the content of the generated class should be:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.When;
         import javax.annotation.processing.Generated;
@@ -91,11 +99,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Simple When
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @When("^user clicks button$")
             public abstract void whenUserClicksButton();
 
@@ -114,6 +122,8 @@ Feature: CucumberStepAnnotations
     Scenario: Then step generates @Then annotation with simple regex
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -122,7 +132,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Simple Then
           Scenario: Test
@@ -131,6 +141,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Then;
         import javax.annotation.processing.Generated;
@@ -143,11 +155,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Simple Then
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Then("^result is displayed$")
             public abstract void thenResultIsDisplayed();
 
@@ -168,6 +180,8 @@ Feature: CucumberStepAnnotations
     Scenario: And step generates annotation according to the keyword from previous step
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -176,7 +190,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: And Inherits Annotation
           Scenario: Test
@@ -190,6 +204,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
@@ -204,11 +220,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: And Inherits Annotation
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^user exists$")
             public abstract void givenUserExists();
 
@@ -262,6 +278,8 @@ Feature: CucumberStepAnnotations
     Scenario: But step generates annotation according to the keyword from previous step
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -270,7 +288,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: But Inherits Annotation
           Scenario: Test
@@ -284,6 +302,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
@@ -298,11 +318,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: But Inherits Annotation
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^user is logged in$")
             public abstract void givenUserIsLoggedIn();
 
@@ -356,6 +376,8 @@ Feature: CucumberStepAnnotations
     Scenario: * step generates annotation according to the keyword from previous step
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -364,7 +386,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Asterisk Inherits Annotation
           Scenario: Test
@@ -378,6 +400,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import io.cucumber.java.en.Then;
@@ -392,11 +416,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Asterisk Inherits Annotation
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^system is ready$")
             public abstract void givenSystemIsReady();
 
@@ -452,6 +476,8 @@ Feature: CucumberStepAnnotations
     Scenario: with one quoted parameter
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -460,7 +486,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Parameter Capture
           Scenario: Test
@@ -469,6 +495,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -482,11 +510,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Parameter Capture
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^user (?<p1>.*) exists$")
             public abstract void givenUser$p1Exists(String p1);
 
@@ -505,6 +533,8 @@ Feature: CucumberStepAnnotations
     Scenario: Step with multiple quoted parameters
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -513,7 +543,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Multiple Captures
           Scenario: Test
@@ -522,6 +552,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.When;
         import java.lang.String;
@@ -535,11 +567,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Multiple Captures
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @When("^user (?<p1>.*) sends message (?<p2>.*) to (?<p3>.*)$")
             public abstract void whenUser$p1SendsMessage$p2To$p3(String p1, String p2, String p3);
 
@@ -560,6 +592,8 @@ Feature: CucumberStepAnnotations
     Scenario: Step with special regex characters
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -568,7 +602,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Regex Escaping
           Scenario: Test
@@ -577,6 +611,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Then;
         import javax.annotation.processing.Generated;
@@ -589,11 +625,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: Regex Escaping
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Then("^balance is \\$100\\.50 \\(verified\\)$")
             public abstract void thenBalanceIs$10050Verified();
 
@@ -614,6 +650,8 @@ Feature: CucumberStepAnnotations
     Scenario: Step with DocString
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.annotations.Feature2JUnit;
         import dev.specbinder.annotations.Feature2JUnitOptions;
 
@@ -622,7 +660,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: DocString Annotation
           Scenario: Test
@@ -634,6 +672,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import io.cucumber.java.en.Given;
         import java.lang.String;
@@ -647,11 +687,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: DocString Annotation
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             @Given("^document contains:$")
             public abstract void givenDocumentContains(String docString);
 
@@ -673,96 +713,115 @@ Feature: CucumberStepAnnotations
 
     Scenario: Step with DataTable
       Given the following base class:
-        """
-        import dev.specbinder.annotations.Feature2JUnit;
-        import dev.specbinder.annotations.Feature2JUnitOptions;
+      """
+      package com.example;
 
-        @Feature2JUnit
-        @Feature2JUnitOptions(addCucumberStepAnnotations = true)
-        public abstract class MockedAnnotatedTestClass {
-        }
-        """
-      Given the following feature file:
-        """
-        Feature: DataTable Annotation
-          Scenario: Test
-            Given the following users exist:
-              | name  | age |
-              | Alice | 30  |
-              | Bob   | 25  |
-        """
+      import dev.specbinder.annotations.Feature2JUnit;
+      import dev.specbinder.annotations.Feature2JUnitOptions;
+
+      @Feature2JUnit
+      @Feature2JUnitOptions(addCucumberStepAnnotations = true)
+      public abstract class MockedAnnotatedTestClass {
+      }
+      """
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
+      """
+      Feature: DataTable Annotation
+        Scenario: Test
+          Given the following users exist:
+            | name  | age |
+            | Alice | 30  |
+            | Bob   | 25  |
+      """
       When the generator is run
       Then the content of the generated class should be:
-        """
-        import dev.specbinder.annotations.output.FeatureFilePath;
-        import io.cucumber.datatable.DataTable;
-        import io.cucumber.java.en.Given;
-        import java.lang.String;
-        import java.util.ArrayList;
-        import java.util.List;
-        import javax.annotation.processing.Generated;
-        import org.junit.jupiter.api.DisplayName;
-        import org.junit.jupiter.api.MethodOrderer;
-        import org.junit.jupiter.api.Order;
-        import org.junit.jupiter.api.Test;
-        import org.junit.jupiter.api.TestMethodOrder;
+      """
+      package com.example;
 
-        /**
-         * Feature: DataTable Annotation
-         */
-        @DisplayName("MockedAnnotatedTestClass")
-        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
-        @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-            @Given("^the following users exist:$")
-            public abstract void givenTheFollowingUsersExist(DataTable dataTable);
+      import dev.specbinder.annotations.output.FeatureFilePath;
+      import io.cucumber.java.en.Given;
+      import java.lang.Math;
+      import java.lang.String;
+      import java.util.ArrayList;
+      import java.util.HashMap;
+      import java.util.List;
+      import java.util.Map;
+      import javax.annotation.processing.Generated;
+      import org.junit.jupiter.api.DisplayName;
+      import org.junit.jupiter.api.MethodOrderer;
+      import org.junit.jupiter.api.Order;
+      import org.junit.jupiter.api.Test;
+      import org.junit.jupiter.api.TestMethodOrder;
 
-            @Test
-            @Order(1)
-            @DisplayName("Scenario: Test")
-            public void scenario_1() {
-                /*
-                 * Given the following users exist:
-                 */
-                givenTheFollowingUsersExist(createDataTable(\"\"\"
-                        | name  | age |
-                        | Alice | 30  |
-                        | Bob   | 25  |
-                        \"\"\"));
-            }
+      /**
+       * Feature: DataTable Annotation
+       */
+      @DisplayName("TestFeature")
+      @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
+      @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+      @FeatureFilePath("com/example/TestFeature.feature")
+      public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
+          @Given("^the following users exist:$")
+          public abstract void givenTheFollowingUsersExist(List<Map<String, String>> data);
 
-            protected abstract DataTable.TableConverter getTableConverter();
+          @Test
+          @Order(1)
+          @DisplayName("Scenario: Test")
+          public void scenario_1() {
+              /*
+               * Given the following users exist:
+               */
+              givenTheFollowingUsersExist(createListOfMaps(\"\"\"
+                      | name  | age |
+                      | Alice | 30  |
+                      | Bob   | 25  |
+                      \"\"\"));
+          }
 
-            protected DataTable createDataTable(String tableLines) {
+          protected List<Map<String, String>> createListOfMaps(String tableLines) {
 
-                String[] tableRows = tableLines.split("\\n");
-                List<List<String>> rawDataTable = new ArrayList<>(tableRows.length);
+              String[] tableRows = tableLines.split("\\n");
+              List<Map<String, String>> listOfMaps = new ArrayList<>();
 
-                for (String tableRow : tableRows) {
-                    String trimmedLine = tableRow.trim();
-                    if (!trimmedLine.isEmpty()) {
-                        String[] columns = trimmedLine.split("\\|");
-                        List<String> rowColumns = new ArrayList<>(columns.length);
-                        for (int i = 1; i < columns.length; i++) {
-                            String column = columns[i].trim();
-                            rowColumns.add(column);
-                        }
-                        rawDataTable.add(rowColumns);
-                    }
-                }
+              if (tableRows.length < 2) {
+                  return listOfMaps;
+              }
 
-                DataTable dataTable = DataTable.create(rawDataTable, getTableConverter());
-                return dataTable;
-            }
-        }
-        """
+              String[] headers = null;
+              for (int i = 0; i < tableRows.length; i++) {
+                  String trimmedLine = tableRows[i].trim();
+                  if (!trimmedLine.isEmpty()) {
+                      String[] columns = trimmedLine.split("\\|");
+                      List<String> rowColumns = new ArrayList<>(columns.length);
+                      for (int j = 1; j < columns.length; j++) {
+                          String column = columns[j].trim();
+                          rowColumns.add(column);
+                      }
+
+                      if (headers == null) {
+                          headers = rowColumns.toArray(new String[0]);
+                      } else {
+                          Map<String, String> rowMap = new HashMap<>();
+                          for (int j = 0; j < Math.min(headers.length, rowColumns.size()); j++) {
+                              rowMap.put(headers[j], rowColumns.get(j));
+                          }
+                          listOfMaps.add(rowMap);
+                      }
+                  }
+              }
+
+              return listOfMaps;
+          }
+      }
+      """
 
   Rule: when the addCucumberStepAnnotations option is disabled, step methods are not annotated
 
     Scenario: option is disabled
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.feature2junit.Feature2JUnit;
         import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
@@ -771,7 +830,7 @@ Feature: CucumberStepAnnotations
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: No Annotations
           Scenario: Test
@@ -780,6 +839,8 @@ Feature: CucumberStepAnnotations
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import javax.annotation.processing.Generated;
         import org.junit.jupiter.api.DisplayName;
@@ -791,11 +852,11 @@ Feature: CucumberStepAnnotations
         /**
          * Feature: No Annotations
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             public abstract void givenUserExists();
 
             @Test

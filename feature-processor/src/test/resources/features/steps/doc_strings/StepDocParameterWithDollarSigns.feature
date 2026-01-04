@@ -1,0 +1,58 @@
+Feature: StepDocParameterWithDollarSigns
+  As a developer
+  I want dollar signs ($) in step doc parameter text to be handled correctly
+  So that method calls work properly with JavaPoet's formatting system
+
+  Rule: Dollar signs in DocStrings are escaped for JavaPoet
+  - Dollar signs in DocString content are doubled ($$) for JavaPoet
+  - This ensures JavaPoet doesn't interpret them as format placeholders
+
+    Scenario: DocString with dollar signs
+      Given the following feature file:
+        """
+        Feature: DocString Dollar Signs
+          Scenario: Test
+            Given document contains:
+              \"\"\"
+              Price: $100
+              Tax: $15
+              Total: $115
+              \"\"\"
+        """
+      When the generator is run
+      Then the content of the generated class should be:
+        """
+        import dev.specbinder.annotations.output.FeatureFilePath;
+        import java.lang.String;
+        import javax.annotation.processing.Generated;
+        import org.junit.jupiter.api.DisplayName;
+        import org.junit.jupiter.api.MethodOrderer;
+        import org.junit.jupiter.api.Order;
+        import org.junit.jupiter.api.Test;
+        import org.junit.jupiter.api.TestMethodOrder;
+
+        /**
+         * Feature: DocString Dollar Signs
+         */
+        @DisplayName("MockedAnnotatedTestClass")
+        @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
+        @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+        @FeatureFilePath("MockedAnnotatedTestClass.feature")
+        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+            public abstract void givenDocumentContains(String docString);
+
+            @Test
+            @Order(1)
+            @DisplayName("Scenario: Test")
+            public void scenario_1() {
+                /*
+                 * Given document contains:
+                 */
+                givenDocumentContains(\"\"\"
+                        Price: $100
+                        Tax: $15
+                        Total: $115
+                        \"\"\");
+            }
+        }
+        """

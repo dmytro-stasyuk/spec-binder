@@ -225,6 +225,8 @@ Feature: StepMethodJavaDocComments
     Scenario: JavaDoc comments include source line numbers when option is enabled
       Given the following base class:
         """
+        package com.example;
+
         import dev.specbinder.feature2junit.Feature2JUnit;
         import dev.specbinder.feature2junit.Feature2JUnitOptions;
 
@@ -233,7 +235,7 @@ Feature: StepMethodJavaDocComments
         public abstract class MockedAnnotatedTestClass {
         }
         """
-      Given the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
         """
         Feature: Source Line Annotations
           Scenario: Test
@@ -244,6 +246,8 @@ Feature: StepMethodJavaDocComments
       When the generator is run
       Then the content of the generated class should be:
         """
+        package com.example;
+
         import dev.specbinder.annotations.output.FeatureFilePath;
         import dev.specbinder.annotations.output.SourceLine;
         import javax.annotation.processing.Generated;
@@ -256,11 +260,11 @@ Feature: StepMethodJavaDocComments
         /**
          * Feature: Source Line Annotations
          */
-        @DisplayName("MockedAnnotatedTestClass")
+        @DisplayName("TestFeature")
         @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
         @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-        @FeatureFilePath("MockedAnnotatedTestClass.feature")
-        public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
+        @FeatureFilePath("com/example/TestFeature.feature")
+        public abstract class TestFeatureScenarios extends MockedAnnotatedTestClass {
             public abstract void givenUserExists();
 
             public abstract void whenUserClicksButton();

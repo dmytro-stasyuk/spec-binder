@@ -1,7 +1,11 @@
 package dev.specbinder.feature2junit.utils;
 
+import java.lang.annotation.Annotation;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +31,7 @@ public class TypeMirrorUtils {
      * @param <A>              the type of the annotation
      * @return the found annotation instance, or null if not found
      */
-    public static <A extends java.lang.annotation.Annotation> A findAnnotationOnHierarchy(
+    public static <A extends Annotation> A findAnnotationOnHierarchy(
             TypeElement start, Class<A> annotationClass, ProcessingEnvironment processingEnv
     ) {
 
@@ -40,12 +44,12 @@ public class TypeMirrorUtils {
                 return ann;
             }
 
-            javax.lang.model.type.TypeMirror superMirror = current.getSuperclass();
-            if (superMirror == null || superMirror.getKind() == javax.lang.model.type.TypeKind.NONE) {
+            TypeMirror superMirror = current.getSuperclass();
+            if (superMirror == null || superMirror.getKind() == TypeKind.NONE) {
                 break;
             }
 
-            javax.lang.model.element.Element superElement = typeUtils.asElement(superMirror);
+            Element superElement = typeUtils.asElement(superMirror);
             if (!(superElement instanceof TypeElement)) {
                 break;
             }
@@ -65,7 +69,7 @@ public class TypeMirrorUtils {
      * @param <A>              the type of the annotation
      * @return a list of annotation instances ordered from parent to child (most distant ancestor first)
      */
-    public static <A extends java.lang.annotation.Annotation> List<A> collectAnnotationsFromHierarchy(
+    public static <A extends Annotation> List<A> collectAnnotationsFromHierarchy(
             TypeElement start, Class<A> annotationClass, ProcessingEnvironment processingEnv
     ) {
 
@@ -79,12 +83,12 @@ public class TypeMirrorUtils {
                 annotations.add(ann);
             }
 
-            javax.lang.model.type.TypeMirror superMirror = current.getSuperclass();
-            if (superMirror == null || superMirror.getKind() == javax.lang.model.type.TypeKind.NONE) {
+            TypeMirror superMirror = current.getSuperclass();
+            if (superMirror == null || superMirror.getKind() == TypeKind.NONE) {
                 break;
             }
 
-            javax.lang.model.element.Element superElement = typeUtils.asElement(superMirror);
+            Element superElement = typeUtils.asElement(superMirror);
             if (!(superElement instanceof TypeElement)) {
                 break;
             }

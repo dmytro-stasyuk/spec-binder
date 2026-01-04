@@ -1473,9 +1473,8 @@ public abstract class CartFeature extends BaseFeatureOptions { }
 ## Installation
 
 > **Requirements:** Java **17+**, JUnit 5, Maven/Gradle with **annotation processing** enabled, IDE with APT enabled (e.g., IntelliJ).
-> 
-> `cucumber-java` library is still used by this APT processor for the initial parsing of Gherkin feature files during compile time and for converting
-> step Data Table parameters to instances of `io.cucumber.datatable.DataTable` which facilitates runtime conversion to object types. 
+>
+> **Optional:** The `cucumber-java` library is **not required by default**. You only need to add it as a dependency if you want to map Gherkin data tables to instances of Cucumber's `io.cucumber.datatable.DataTable` type. For an example of this usage, see the [example-2 module README](examples/examples-feature-processor/example-2/README.md) and its `pom.xml`. 
 
 <details>
 
@@ -1483,35 +1482,22 @@ public abstract class CartFeature extends BaseFeatureOptions { }
 
 ```xml
 <dependencies>
-  <!-- specbinder annotation + SPI -->
+  <!-- Spec Binder annotations -->
   <dependency>
     <groupId>dev.specbinder</groupId>
-    <artifactId>feature2junit</artifactId>
-    <version>0.1.6</version>
+    <artifactId>annotations</artifactId>
+    <version>0.1.8-SNAPSHOT</version>
+    <scope>test</scope>
+  </dependency>
+
+  <!-- Spec Binder annotation processor -->
+  <dependency>
+    <groupId>dev.specbinder</groupId>
+    <artifactId>feature-processor</artifactId>
+    <version>0.1.8-SNAPSHOT</version>
     <scope>test</scope>
   </dependency>
 </dependencies>
-
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.13.0</version>
-      <configuration>
-        <annotationProcessorPaths>
-          <!-- specifying annotation processor paths like this is usually optional -->
-          <!-- as they are typically auto discovered from the classpath            -->
-          <path>
-            <groupId>dev.specbinder</groupId>
-            <artifactId>feature2junit</artifactId>
-            <version>0.1.6</version>
-          </path>
-        </annotationProcessorPaths>
-      </configuration>
-    </plugin>
-  </plugins>
-</build>
 ```
 
 </details>

@@ -3,10 +3,10 @@ Feature: StepMethodDeduplication
   I want the generator to detect and skip duplicate step method declarations
   So that I can reuse steps across scenarios and inherit step implementations from base classes without compilation errors
 
-  Rule: Step method signatures are deduplicated
-  Before adding a step method to the generated class, the generator checks if a method with the same name already exists.
-  If the method exists in the current class or base class, generation is skipped.
-  This prevents duplicate method declarations.
+  Rule: same steps do not generate duplicate methods
+  - Before adding a step method to the generated class, the generator checks if a method with the same name already exists
+  - If the method exists in the current class or base class, and if so it calls the already existing method
+  - This prevents duplicate method declarations
 
     Scenario: Same step appears multiple times in one feature
       Given the following feature file:
@@ -60,9 +60,3 @@ Feature: StepMethodDeduplication
             }
         }
         """
-
-    @todo
-    Scenario: Step method exists in base class
-
-    @todo
-    Scenario: Step method exists in ancestor class

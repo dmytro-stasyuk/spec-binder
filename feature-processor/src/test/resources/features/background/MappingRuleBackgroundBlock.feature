@@ -370,10 +370,12 @@ Feature: MappingRuleBackgroundBlock
       Then the content of the generated class should be:
       """
       import dev.specbinder.annotations.output.FeatureFilePath;
-      import io.cucumber.datatable.DataTable;
+      import java.lang.Math;
       import java.lang.String;
       import java.util.ArrayList;
+      import java.util.HashMap;
       import java.util.List;
+      import java.util.Map;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.BeforeEach;
       import org.junit.jupiter.api.ClassOrderer;
@@ -394,34 +396,45 @@ Feature: MappingRuleBackgroundBlock
       @TestClassOrder(ClassOrderer.OrderAnnotation.class)
       @FeatureFilePath("MockedAnnotatedTestClass.feature")
       public abstract class MockedAnnotatedTestClassScenarios extends MockedAnnotatedTestClass {
-          public abstract void givenTheFollowingServicesAreConfigured(DataTable dataTable);
+          public abstract void givenTheFollowingServicesAreConfigured(List<Map<String, String>> data);
 
           public abstract void whenConfigurationIsValidated();
 
           public abstract void thenAllServicesShouldBeReady();
 
-          protected abstract DataTable.TableConverter getTableConverter();
-
-          protected DataTable createDataTable(String tableLines) {
+          protected List<Map<String, String>> createListOfMaps(String tableLines) {
 
               String[] tableRows = tableLines.split("\\n");
-              List<List<String>> rawDataTable = new ArrayList<>(tableRows.length);
+              List<Map<String, String>> listOfMaps = new ArrayList<>();
 
-              for (String tableRow : tableRows) {
-                  String trimmedLine = tableRow.trim();
+              if (tableRows.length < 2) {
+                  return listOfMaps;
+              }
+
+              String[] headers = null;
+              for (int i = 0; i < tableRows.length; i++) {
+                  String trimmedLine = tableRows[i].trim();
                   if (!trimmedLine.isEmpty()) {
                       String[] columns = trimmedLine.split("\\|");
                       List<String> rowColumns = new ArrayList<>(columns.length);
-                      for (int i = 1; i < columns.length; i++) {
-                          String column = columns[i].trim();
+                      for (int j = 1; j < columns.length; j++) {
+                          String column = columns[j].trim();
                           rowColumns.add(column);
                       }
-                      rawDataTable.add(rowColumns);
+
+                      if (headers == null) {
+                          headers = rowColumns.toArray(new String[0]);
+                      } else {
+                          Map<String, String> rowMap = new HashMap<>();
+                          for (int j = 0; j < Math.min(headers.length, rowColumns.size()); j++) {
+                              rowMap.put(headers[j], rowColumns.get(j));
+                          }
+                          listOfMaps.add(rowMap);
+                      }
                   }
               }
 
-              DataTable dataTable = DataTable.create(rawDataTable, getTableConverter());
-              return dataTable;
+              return listOfMaps;
           }
 
           @Nested
@@ -435,7 +448,7 @@ Feature: MappingRuleBackgroundBlock
                   /*
                    * Given the following services are configured:
                    */
-                  givenTheFollowingServicesAreConfigured(createDataTable(\"\"\"
+                  givenTheFollowingServicesAreConfigured(createListOfMaps(\"\"\"
                           | service  | port |
                           | api      | 8080 |
                           | database | 5432 |

@@ -12,7 +12,7 @@ Feature: FeatureFilePath
       public abstract class CartFeatureBase {
       }
       """
-    And the following feature file:
+    And a feature file under path "features/shopping/cart.feature" with the following content:
       """
       Feature: Shopping Cart Management
         As a customer
@@ -21,8 +21,9 @@ Feature: FeatureFilePath
     When the generator is run
     Then the content of the generated class should be:
       """
-      package com.example.shop;
+      package features.shopping;
 
+      import com.example.shop.CartFeatureBase;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -50,7 +51,7 @@ Feature: FeatureFilePath
       public abstract class PaymentProcessing {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/payment/TestFeature.feature" with the following content:
       """
       Feature: Payment Processing
         As a payment system
@@ -70,10 +71,10 @@ Feature: FeatureFilePath
        *   As a payment system
        *   I want to process payments
        */
-      @DisplayName("PaymentProcessing")
+      @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
-      @FeatureFilePath("com/example/payment/PaymentProcessing.feature")
-      public abstract class PaymentProcessingScenarios extends PaymentProcessing {
+      @FeatureFilePath("com/example/payment/TestFeature.feature")
+      public abstract class TestFeatureScenarios extends PaymentProcessing {
       }
       """
 

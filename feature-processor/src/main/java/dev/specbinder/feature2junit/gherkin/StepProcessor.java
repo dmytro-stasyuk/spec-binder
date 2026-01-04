@@ -1,19 +1,17 @@
 package dev.specbinder.feature2junit.gherkin;
 
-import com.squareup.javapoet.AnnotationSpec;
-import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import dev.specbinder.common.GeneratorOptions;
-import dev.specbinder.common.LoggingSupport;
-import dev.specbinder.common.OptionsSupport;
-import dev.specbinder.common.ProcessingException;
+import com.squareup.javapoet.*;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
+import dev.specbinder.feature2junit.support.LoggingSupport;
+import dev.specbinder.feature2junit.support.OptionsSupport;
+import dev.specbinder.feature2junit.exception.ProcessingException;
+import dev.specbinder.feature2junit.gherkin.utils.DataTableCollector;
 import dev.specbinder.feature2junit.utils.MethodNamingUtils;
 import dev.specbinder.feature2junit.utils.TableUtils;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.messages.types.DataTable;
 import io.cucumber.messages.types.DocString;
 import io.cucumber.messages.types.Location;
 import io.cucumber.messages.types.Step;
@@ -25,19 +23,24 @@ import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static dev.specbinder.annotations.Feature2JUnitOptions.DATA_TABLE_PARAMETER_TYPE.LIST_OF_MAPS;
 
 class StepProcessor implements LoggingSupport, OptionsSupport {
 
     private final ProcessingEnvironment processingEnv;
     private final GeneratorOptions options;
+    private final DataTableCollector dataTableCollector;
 
     private static final Pattern parameterPattern = Pattern.compile("(?<parameter>(\")(?<parameterValue>[^\"]+?)(\"))");
 
-    public StepProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options) {
+    public StepProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options, DataTableCollector dataTableCollector) {
         this.processingEnv = processingEnv;
         this.options = options;
+        this.dataTableCollector = dataTableCollector;
     }
 
     public ProcessingEnvironment getProcessingEnv() {
@@ -92,7 +95,11 @@ class StepProcessor implements LoggingSupport, OptionsSupport {
                 .methodBuilder(stepMethodName)
                 .addModifiers(Modifier.PUBLIC);
 
-        stepMethodBuilder.addModifiers(Modifier.ABSTRACT);
+        if (options.isShouldBeConcrete()) {
+            stepMethodBuilder.addStatement("$T.fail(\"Step is not yet implemented\")", Assertions.class);
+        } else {
+            stepMethodBuilder.addModifiers(Modifier.ABSTRACT);
+        }
 
         if (options.isAddCucumberStepAnnotations()) {
             AnnotationSpec annotationSpec = buildGWTAnnotation(scenarioStepsMethodSpecs,
@@ -117,10 +124,44 @@ class StepProcessor implements LoggingSupport, OptionsSupport {
          * check if step has a data table
          */
         if (step.getDataTable().isPresent()) {
-            //            String parameterName = "p" + (parameterValues.size()); // data table is the last parameter
-            ParameterSpec dataTableParameterSpec = ParameterSpec
-                    .builder(io.cucumber.datatable.DataTable.class, "dataTable")
-                    .build();
+
+            ParameterSpec dataTableParameterSpec;
+            String dataTableType = options.getDataTableParameterType();
+
+            if (LIST_OF_MAPS.name().equals(dataTableType)) {
+                // Generate List<Map<String, String>> data parameter
+                ParameterizedTypeName mapType = ParameterizedTypeName.get(
+                        ClassName.get(Map.class),
+                        ClassName.get(String.class),
+                        ClassName.get(String.class)
+                );
+                ParameterizedTypeName listOfMapsType = ParameterizedTypeName.get(
+                        ClassName.get(List.class),
+                        mapType
+                );
+                dataTableParameterSpec = ParameterSpec
+                        .builder(listOfMapsType, "data")
+                        .build();
+            } else if ("LIST_OF_OBJECT_PARAMS".equals(dataTableType)) {
+                // Generate List<RecordType> parameter with name derived from step text
+                String recordName = dataTableCollector.deriveRecordNameFromStepText(stepText);
+                String parameterName = dataTableCollector.deriveParameterNameFromStepText(stepText);
+
+                ClassName recordType = ClassName.get("", recordName);
+                ParameterizedTypeName listOfRecordsType = ParameterizedTypeName.get(
+                        ClassName.get(List.class),
+                        recordType
+                );
+                dataTableParameterSpec = ParameterSpec
+                        .builder(listOfRecordsType, parameterName)
+                        .build();
+            } else {
+                // Default: use Cucumber DataTable
+                dataTableParameterSpec = ParameterSpec
+                        .builder(DataTable.class, "dataTable")
+                        .build();
+            }
+
             stepMethodBuilder.addParameter(dataTableParameterSpec);
         }
         /**
@@ -223,11 +264,26 @@ class StepProcessor implements LoggingSupport, OptionsSupport {
                 parameterValuesSB.append(", ");
             }
 
-            DataTable dataTableMsg = step.getDataTable().get();
+            io.cucumber.messages.types.DataTable dataTableMsg = step.getDataTable().get();
             List<Integer> maxColumnLength = TableUtils.workOutMaxColumnLength(dataTableMsg);
             String dataTableAsString = TableUtils.convertDataTableToString(dataTableMsg, maxColumnLength);
 
-            parameterValuesSB.append("createDataTable(");
+            // Choose method name based on data table parameter type
+            String helperMethodName;
+            String dataTableType = options.getDataTableParameterType();
+
+            if ("LIST_OF_MAPS".equals(dataTableType)) {
+                helperMethodName = "createListOfMaps";
+            } else if ("LIST_OF_OBJECT_PARAMS".equals(dataTableType)) {
+                String stepTextForRecord = step.getKeyword() + step.getText();
+                String recordName = dataTableCollector.deriveRecordNameFromStepText(stepTextForRecord);
+                helperMethodName = "createListOf" + recordName;
+            } else {
+                helperMethodName = "createDataTable";
+            }
+
+            parameterValuesSB.append(helperMethodName);
+            parameterValuesSB.append("(");
             parameterValuesSB.append("\"\"\"\n");
             parameterValuesSB.append(dataTableAsString);
             parameterValuesSB.append("\n\"\"\"");

@@ -7,7 +7,7 @@ import java.util.List;
  * Test utility for matching file paths against glob patterns.
  * This is used in tests to simulate pattern matching without filesystem access.
  */
-public class TestPatternMatcher {
+class TestPatternMatcher {
 
     /**
      * Matches a list of file paths against a glob pattern.
@@ -57,9 +57,17 @@ public class TestPatternMatcher {
                     break;
                 case '*':
                     if (i + 1 < glob.length() && glob.charAt(i + 1) == '*') {
-                        // ** matches any number of directories
-                        regex.append(".*");
-                        i++; // Skip next *
+                        // ** matches zero or more directory segments
+                        // Check if followed by / to handle **/ pattern
+                        if (i + 2 < glob.length() && glob.charAt(i + 2) == '/') {
+                            // **/ should match zero or more directory levels
+                            regex.append("(?:(?:[^/]+/)*)");
+                            i += 2; // Skip ** and /
+                        } else {
+                            // ** alone matches any number of characters
+                            regex.append(".*");
+                            i++; // Skip next *
+                        }
                     } else {
                         // * matches anything except /
                         regex.append("[^/]*");

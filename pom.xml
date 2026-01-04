@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.specbinder</groupId>
     <artifactId>parent</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.8-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Used to generate JUnit test classes from a specification file</description>
     <url>https://github.com/dmytro-stasyuk/spec-binder/tree/main</url>
@@ -31,21 +31,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
     <modules>
-        <module>common</module>
         <module>annotations</module>
         <module>feature-processor</module>
         <module>user-story-processor</module>
-        <!--<module>examples</module>-->
+        <module>examples</module>
     </modules>
     <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.jupiter.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -83,6 +77,31 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <flattenMode>oss</flattenMode>
+                    <skip>${maven.deploy.skip}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.10.1</version>
@@ -102,39 +121,27 @@
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
-                        <!--            <phase>verify</phase>-->
-                        <!--            <phase>install</phase>-->
                         <phase>deploy</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>
                         <configuration>
-                            <!--              <skip>true</skip>-->
+                            <skip>${maven.deploy.skip}</skip>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.8.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <autoPublish>true</autoPublish>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-    <!--    <distributionManagement>-->
-    <!--        <snapshotRepository>-->
-    <!--            <id>ossrh</id>-->
-    <!--            <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-    <!--            <url>https://central.sonatype.com/repository/maven-snapshots/</url>-->
-    <!--        </snapshotRepository>-->
-    <!--        <repository>-->
-    <!--            <id>ossrh</id>-->
-    <!--            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-    <!--        </repository>-->
-    <!--    </distributionManagement>-->
+    <!--<distributionManagement>-->
+    <!--    <snapshotRepository>-->
+    <!--        <id>ossrh</id>-->
+    <!--        &lt;!&ndash;<url>https://oss.sonatype.org/content/repositories/snapshots</url>&ndash;&gt;-->
+    <!--        <url>https://central.sonatype.com/repository/maven-snapshots/</url>-->
+    <!--    </snapshotRepository>-->
+    <!--    <repository>-->
+    <!--        <id>ossrh</id>-->
+    <!--        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+    <!--    </repository>-->
+    <!--</distributionManagement>-->
 </project>

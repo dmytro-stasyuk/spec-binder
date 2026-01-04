@@ -35,8 +35,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import javax.annotation.processing.Generated;
@@ -102,8 +101,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import javax.annotation.processing.Generated;
@@ -173,8 +171,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import io.cucumber.java.en.Given;
       import javax.annotation.processing.Generated;
@@ -241,8 +238,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -313,8 +309,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -380,8 +375,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -441,8 +435,7 @@ Feature: GeneratorOptionsInheritance
       When the generator is run
       Then the content of the generated class should be:
       """
-      package com.example;
-
+      import com.example.TestFeature;
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;

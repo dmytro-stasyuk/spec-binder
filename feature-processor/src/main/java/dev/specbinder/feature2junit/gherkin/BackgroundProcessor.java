@@ -3,10 +3,11 @@ package dev.specbinder.feature2junit.gherkin;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import dev.specbinder.common.BaseTypeSupport;
-import dev.specbinder.common.GeneratorOptions;
-import dev.specbinder.common.LoggingSupport;
-import dev.specbinder.common.OptionsSupport;
+import dev.specbinder.feature2junit.support.BaseTypeSupport;
+import dev.specbinder.feature2junit.config.GeneratorOptions;
+import dev.specbinder.feature2junit.support.LoggingSupport;
+import dev.specbinder.feature2junit.support.OptionsSupport;
+import dev.specbinder.feature2junit.gherkin.utils.DataTableCollector;
 import dev.specbinder.feature2junit.utils.ElementMethodUtils;
 import dev.specbinder.feature2junit.utils.JavaDocUtils;
 import dev.specbinder.feature2junit.utils.LocationUtils;
@@ -30,11 +31,13 @@ class BackgroundProcessor implements LoggingSupport, OptionsSupport, BaseTypeSup
     private final GeneratorOptions options;
     private final TypeElement baseType;
     private final Set<String> baseClassMethodNames;
+    private final DataTableCollector dataTableCollector;
 
-    BackgroundProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options, TypeElement baseType) {
+    BackgroundProcessor(ProcessingEnvironment processingEnv, GeneratorOptions options, TypeElement baseType, DataTableCollector dataTableCollector) {
         this.processingEnv = processingEnv;
         this.options = options;
         this.baseType = baseType;
+        this.dataTableCollector = dataTableCollector;
 
         baseClassMethodNames = ElementMethodUtils.getAllInheritedMethodNames(processingEnv, baseType);
     }
@@ -93,7 +96,7 @@ class BackgroundProcessor implements LoggingSupport, OptionsSupport, BaseTypeSup
 
         for (Step scenarioStep : backgroundSteps) {
 
-            StepProcessor stepProcessor = new StepProcessor(processingEnv, options);
+            StepProcessor stepProcessor = new StepProcessor(processingEnv, options, dataTableCollector);
             MethodSpec stepMethodSpec = stepProcessor.processStep(scenarioStep, backgroundMethodBuilder, backgroundStepsMethodSpecs);
             backgroundStepsMethodSpecs.add(stepMethodSpec);
 

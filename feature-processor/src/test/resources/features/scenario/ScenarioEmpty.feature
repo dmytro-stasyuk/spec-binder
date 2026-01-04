@@ -8,6 +8,8 @@ Feature: ScenarioEmpty
     Scenario: with failScenariosWithNoSteps = enabled
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         failScenariosWithNoSteps = true
@@ -15,7 +17,7 @@ Feature: ScenarioEmpty
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
       """
       Feature: feature with empty scenario
 
@@ -24,6 +26,8 @@ Feature: ScenarioEmpty
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -40,7 +44,7 @@ Feature: ScenarioEmpty
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Test
           @Order(1)
@@ -55,6 +59,8 @@ Feature: ScenarioEmpty
     Scenario: Empty scenario with failScenariosWithNoSteps disabled
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         failScenariosWithNoSteps = false
@@ -62,7 +68,7 @@ Feature: ScenarioEmpty
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
       """
       Feature: feature with empty scenario
 
@@ -71,6 +77,8 @@ Feature: ScenarioEmpty
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -86,7 +94,7 @@ Feature: ScenarioEmpty
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Test
           @Order(1)
@@ -102,6 +110,8 @@ Feature: ScenarioEmpty
     Scenario: Empty scenario with custom tag
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         tagForScenariosWithNoSteps = "todo"
@@ -116,8 +126,10 @@ Feature: ScenarioEmpty
         Scenario: Not implemented yet
       """
       When the generator is run
-      Then the content of the generated class should be:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
       """
+      package com.example;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -134,7 +146,7 @@ Feature: ScenarioEmpty
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Test
           @Order(1)
@@ -151,11 +163,13 @@ Feature: ScenarioEmpty
     Scenario: Empty scenario with default tag
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
       """
       Feature: feature with empty scenario
 
@@ -164,6 +178,8 @@ Feature: ScenarioEmpty
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.Assertions;
@@ -180,7 +196,7 @@ Feature: ScenarioEmpty
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Test
           @Order(1)
@@ -197,6 +213,8 @@ Feature: ScenarioEmpty
     Scenario: Empty scenario with custom tag but failScenariosWithNoSteps disabled
       Given the following base class:
       """
+      package com.example;
+
       @Feature2JUnit
       @Feature2JUnitOptions(
         failScenariosWithNoSteps = false,
@@ -205,7 +223,7 @@ Feature: ScenarioEmpty
       public class TestFeature {
       }
       """
-      And the following feature file:
+      And a feature file under path "com/example/TestFeature.feature" with the following content:
       """
       Feature: feature with empty scenario
 
@@ -214,6 +232,8 @@ Feature: ScenarioEmpty
       When the generator is run
       Then the content of the generated class should be:
       """
+      package com.example;
+
       import dev.specbinder.annotations.output.FeatureFilePath;
       import javax.annotation.processing.Generated;
       import org.junit.jupiter.api.DisplayName;
@@ -229,7 +249,7 @@ Feature: ScenarioEmpty
       @DisplayName("TestFeature")
       @Generated("dev.specbinder.feature2junit.Feature2JUnitGenerator")
       @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-      @FeatureFilePath("TestFeature.feature")
+      @FeatureFilePath("com/example/TestFeature.feature")
       public abstract class TestFeatureScenarios extends TestFeature {
           @Test
           @Order(1)
